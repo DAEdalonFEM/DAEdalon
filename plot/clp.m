@@ -1,0 +1,2 @@
+%Abkürzung für:
+clearplot

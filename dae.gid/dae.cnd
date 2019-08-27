@@ -1,0 +1,72 @@
+NUMBER: 1 CONDITION: Point-Constraints
+CONDTYPE: over points
+CONDMESHTYPE: over nodes
+QUESTION: X-Constraint#CB#(0,1)
+VALUE: 1
+QUESTION: X-Value
+VALUE: 0.0
+QUESTION: Y-Constraint#CB#(0,1)
+VALUE: 1
+QUESTION: Y-Value
+VALUE: 0.0
+QUESTION: Z-Constraint#CB#(0,1)
+VALUE: 0
+QUESTION: Z-Value
+VALUE: 0.0
+END CONDITION
+NUMBER: 2 CONDITION: Line-Constraints
+CONDTYPE: over lines
+CONDMESHTYPE: over nodes
+QUESTION: X-Constraint#CB#(0,1)
+VALUE: 1
+QUESTION: X-Value
+VALUE: 0.0
+QUESTION: Y-Constraint#CB#(0,1)
+VALUE: 1
+QUESTION: Y-Value
+VALUE: 0.0
+QUESTION: Z-Constraint#CB#(0,1)
+VALUE: 0
+QUESTION: Z-Value
+VALUE: 0.0
+END CONDITION
+NUMBER: 3 CONDITION: Surface-Constraints
+CONDTYPE: over surfaces
+CONDMESHTYPE: over nodes
+QUESTION: X-Constraint#CB#(0,1)
+VALUE: 1
+QUESTION: X-Value
+VALUE: 0.0
+QUESTION: Y-Constraint#CB#(0,1)
+VALUE: 1
+QUESTION: Y-Value
+VALUE: 0.0
+QUESTION: Z-Constraint#CB#(0,1)
+VALUE: 0
+QUESTION: Z-Value
+VALUE: 0.0
+END CONDITION
+NUMBER: 4 CONDITION: Face-Load
+CONDTYPE: over lines
+CONDMESHTYPE: over nodes
+QUESTION: Normal-Pressure
+VALUE: 0
+QUESTION: Tangent-Pressure
+VALUE: 0
+END CONDITION
+NUMBER: 5 CONDITION: Point-Load
+CONDTYPE: over points
+CONDMESHTYPE: over nodes
+QUESTION: X-Force
+VALUE: 0.0
+QUESTION: Y-Force
+VALUE: 0.0
+QUESTION: Z-Force
+VALUE: 0.0
+END CONDITION
+NUMBER: 6 CONDITION: Surface-Load
+CONDTYPE: over surfaces
+CONDMESHTYPE: over nodes
+QUESTION: Normal-Pressure
+VALUE: 0.0
+END CONDITION
