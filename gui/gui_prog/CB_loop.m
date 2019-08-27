@@ -44,16 +44,16 @@ global Bw;          % Breite Mini-Buttons
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob Fenster bereits offen
-if findobj('Name','Zeitschritte')
+if ishghandle('Name','Zeitschritte')
     figure(fid_time)
     return
 end
 
-if findobj('Name','out(NAME)')
+if ishghandle('Name','out(NAME)')
     close(fid_out)
 end
 
-if findobj('Name','histout(NAME)')
+if ishghandle('Name','histout(NAME)')
     close(fid_histout)
 end
 

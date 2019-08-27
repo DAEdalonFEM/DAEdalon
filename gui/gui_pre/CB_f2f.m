@@ -46,7 +46,7 @@ global ls;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. aktivieren
-if findobj('Name','FEAP-Input')
+if ishghandle('Name','FEAP-Input')
     figure(fid_f2f)
     return
 end

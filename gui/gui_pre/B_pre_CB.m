@@ -44,23 +44,23 @@ global Bw;          % Breite Mini-Buttons
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. schliessen
-if findobj('Name','PreProcess')
+if ishghandle('Name','PreProcess')
     figure(fid_pre)
-    if findobj('Name','FEAP-Input')
+    if ishghandle('Name','FEAP-Input')
         figure(fid_f2f)
     end
     return
 end
 
-if findobj('Name','ProgFlow')
+if ishghandle('Name','ProgFlow')
     close(fid_prog)
 end
 
-if findobj('Name','PlotControl')
+if ishghandle('Name','PlotControl')
     close(fid_plot)
 end
 
-if findobj('Name','DAEOptions')
+if ishghandle('Name','DAEOptions')
     close(fid_opt)
 end
 

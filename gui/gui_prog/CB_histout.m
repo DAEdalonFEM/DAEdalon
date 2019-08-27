@@ -46,7 +46,7 @@ global X_check_hist;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob Fenster bereits offen
-if findobj('Name','histout(NAME)')
+if ishghandle('Name','histout(NAME)')
     figure(fid_histout)
     return
 end
@@ -54,7 +54,7 @@ end
 X_check_hist = '';
 
 % Check ob loop Fenster bereits offen
-if findobj('Name','Zeitschritte')
+if ishghandle('Name','Zeitschritte')
     close(fid_time)
 end
 
@@ -82,7 +82,7 @@ set(fid_histout,'pos',pi_histout)
 po_histout = get(fid_histout,'OuterPosition');
 
 % Position für Eingabe-Fenster ableiten und zuweisen
-if findobj('Name','out(NAME)')
+if ishghandle('Name','out(NAME)')
     po_out = get(fid_out,'OuterPosition');
     
     po_histout(1) = po_out(1);

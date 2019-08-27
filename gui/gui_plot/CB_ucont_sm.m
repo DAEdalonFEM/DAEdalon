@@ -46,21 +46,21 @@ global Bw;          % Breite Mini-Buttons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob Fenster bereits offen
-if findobj('Name','ucont_sm(X,Y)')
+if ishghandle('Name','ucont_sm(X,Y)')
     figure(fid_ucont_sm)
     return
 end
 
 % Check ob ein anderes Eingabe-Fenster bereits offen
-if findobj('Name','cont(X)')
+if ishghandle('Name','cont(X)')
     delete(fid_cont)
 end
 
-if findobj('Name','ucont(X)')
+if ishghandle('Name','ucont(X)')
     delete(fid_ucont)
 end
 
-if findobj('Name','cont_sm(X,Y)')
+if ishghandle('Name','cont_sm(X,Y)')
     delete(fid_cont_sm)
 end
 

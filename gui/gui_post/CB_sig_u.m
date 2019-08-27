@@ -53,29 +53,29 @@ global ls;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. aktivieren
-if findobj('Name','sig_u.pl')
+if ishghandle('Name','sig_u.pl')
     figure(fid_su)
     return
 end
 
 % Check ob bereits ein anderes script-Fenster offen
-if findobj('Name','sel_nodes.pl')
+if ishghandle('Name','sel_nodes.pl')
     delete(fid_sn)
 end
 
-if findobj('Name','Info: sel_nodes.pl')
+if ishghandle('Name','Info: sel_nodes.pl')
     delete(fid_sn_info)
 end
 
-if findobj('Name','get_value.pl')
+if ishghandle('Name','get_value.pl')
     delete(fid_gv)
 end
 
-if findobj('Name','get_val2.pl')
+if ishghandle('Name','get_val2.pl')
     delete(fid_gv2)
 end
 
-if findobj('Name','merge.pl')
+if ishghandle('Name','merge.pl')
     delete(fid_merge)
 end
 
@@ -101,7 +101,7 @@ fid_su = figure('NumberTitle','off',...
                 'menubar','none');
 
 % Check ob Info Fenster offen
-if findobj('Name','Info: sig_u.pl')
+if ishghandle('Name','Info: sig_u.pl')
     p = get(fid_su_info,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');

@@ -50,32 +50,32 @@ global contvar;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob bereits ein Menu-Fenster offen, ggf. schliessen
-if findobj('Name','PlotControl')
+if ishghandle('Name','PlotControl')
     figure(fid_plot)
-    if findobj('Name','cont(X)')
+    if ishghandle('Name','cont(X)')
         figure(fid_cont)
     end
-    if findobj('Name','cont_sm(X,Y)')
+    if ishghandle('Name','cont_sm(X,Y)')
         figure(fid_cont_sm)
     end
-    if findobj('Name','ucont(X)')
+    if ishghandle('Name','ucont(X)')
         figure(fid_ucont)
     end
-    if findobj('Name','ucont_sm(X,Y)')
+    if ishghandle('Name','ucont_sm(X,Y)')
         figure(fid_ucont_sm)
     end
     return
 end
 
-if findobj('Name','PreProcess')
+if ishghandle('Name','PreProcess')
     close(fid_pre)
 end
 
-if findobj('Name','ProgFlow')
+if ishghandle('Name','ProgFlow')
     close(fid_prog)
 end
 
-if findobj('Name','DAEOptions')
+if ishghandle('Name','DAEOptions')
     close(fid_opt)
 end
 

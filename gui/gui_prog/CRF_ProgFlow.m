@@ -33,15 +33,15 @@ global fid_time
 global fid_out
 global fid_histout
 
-if findobj('Name','Zeitschritte')
+if ishghandle('Name','Zeitschritte')
     delete(fid_time)
 end
 
-if findobj('Name','out(NAME)')
+if ishghandle('Name','out(NAME)')
     delete(fid_out)
 end
 
-if findobj('Name','histout(NAME)')
+if ishghandle('Name','histout(NAME)')
     delete(fid_histout)
 end
 

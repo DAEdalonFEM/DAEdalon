@@ -34,19 +34,19 @@ global fid_cont_sm
 global fid_ucont
 global fid_ucont_sm
 
-if findobj('Name','cont(X)')
+if ishghandle('Name','cont(X)')
     delete(fid_cont)
 end
 
-if findobj('Name','ucont(X)')
+if ishghandle('Name','ucont(X)')
     delete(fid_ucont)
 end
 
-if findobj('Name','cont_sm(X,Y)')
+if ishghandle('Name','cont_sm(X,Y)')
     delete(fid_cont_sm)
 end
 
-if findobj('Name','ucont_sm(X,Y)')
+if ishghandle('Name','ucont_sm(X,Y)')
     delete(fid_ucont_sm)
 end
 
