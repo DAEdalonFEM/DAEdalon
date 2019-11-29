@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
-# Dies ist ein Skript fuer ein Macro in ParaView, das die von-Mises-Vergleichsspannung berechnet
+# Dies ist ein Skript fuer ein Macro in ParaView, das zu einer ausgewaehlten vtu/pvd
+# einen ProgrammableFilter anlegt,
+# welcher die von-Mises-Vergleichsspannung aus Knoten-Spannungswerten berechnet.
 
 from paraview.simple import *   # FindSource(), GetActiveSource()
 
