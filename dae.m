@@ -46,7 +46,7 @@ clear all
 
 setGloVar;
 
-% Auf welchem System läuft's ?  -  HBaa, 15.10.2016
+% Auf welchem System laeuft's ?  -  HBaa, 15.10.2016
 %
 % Projekt WiSe 2015 - HBaa
 isOctave = exist('OCTAVE_VERSION', 'builtin') ~= 0;   % 11.01.2016
@@ -56,7 +56,7 @@ elseif isOctave == 0
     mat_oct_flag = false;
 end
 %
-% HBaa - 14.10.2016: "ispc", "isunix", "ismac"           --- Geht das schöner ?
+% HBaa - 14.10.2016: "ispc", "isunix", "ismac"           --- Geht das schoener ?
 if isOctave == 1
 	pc_environ = ispc;
 elseif isOctave == 0
@@ -75,7 +75,7 @@ else
 end
 aP = [pwd,dir_trenn];
 
-% Pfade hinzufügen
+% Pfade hinzufuegen
 addpath([aP,'plot'])
 addpath([aP,'input'])
 addpath([aP,'elem'])
@@ -97,6 +97,9 @@ addpath([aP,'gui',dir_trenn,'gui_opt'])
 
 % aT: Bogenlaengenverfahren
 addpath([aP,'arcLength'])
+
+% Paraview-Macros in Paraview-Konfig-Ordner kopieren, falls Ordner vorhanden
+paraview_check
 
 % gui initialisieren
 crf
