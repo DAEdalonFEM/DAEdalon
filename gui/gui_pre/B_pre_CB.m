@@ -84,7 +84,7 @@ pi_pre   = get(fid_pre,'pos');
 pi_pre(1) = pi_pre(1);
 pi_pre(2) = pi_pre(2);
 pi_pre(3) = pi_dc(3);
-pi_pre(4) = 2*Bh;
+pi_pre(4) = 3*Bh;
 
 set(fid_pre,'Position',pi_pre);
 
@@ -102,6 +102,18 @@ set(fid_pre,'OuterPosition',po_pre);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Buttons anlegen
 
+%Button 0
+%Groesse deklarieren und zuweisen
+pB0(1) = 0.5*Bh;
+pB0(2) = Bh+0.6*Bh;
+pB0(3) = 2.03*Bw;
+pB0(4) = Bh;
+B0 = uicontrol(fid_pre,'Style','pushbutton',...
+                       'String','inp_convert',...
+                       'pos',pB0,...
+                       'Callback','inp_convert');
+                   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 1
 % Groesse deklarieren und zuweisen
 pB1(1) = 0.5*Bh;
