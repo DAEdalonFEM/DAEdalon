@@ -9,5 +9,5 @@ end
 
 % Falls Paraview-Konfig-Ordner vorhanden, paraview-Macros dorthin kopieren
 if isfolder(paraview_config_path)
-    copyfile('paraview/vonMises.py', strcat(paraview_config_path,'/Macros/vonMises.py'))
+    copyfile(strcat('paraview',filesep,'vonMises.py'), strcat(paraview_config_path,filesep,'Macros',filesep,'vonMises.py'))
 end
