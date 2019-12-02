@@ -1,5 +1,5 @@
 
-list = {'Einzellast','Flächenlast'};
+list = {'Einzellast','Flaechenlast'};
 Einzellast={'x-Koordinate','y-Koordinate','z-Koordinate','Betrag in N','Richtung (x=1,y=2,z=3)'};
 
 
@@ -13,7 +13,7 @@ while button1==0
         switch button1
             case 'Ja'
                 button1=1;
-                fprintf('Es wurden keine/keine weiteren Veränderungen an der force.inp Datei vorgenommen');
+                fprintf('Es wurden keine/keine weiteren Veraenderungen an der force.inp Datei vorgenommen.\n');
             case 'Nein'
                 button1=0;
         end
@@ -38,7 +38,7 @@ while button1==0
                 end
             end
         elseif indx==2
-            
+
         end
 
     end

@@ -1,7 +1,7 @@
-%Code welcher den Output für Gruppe 5 Postprozessor generiert
+%Skript zum Herausschreiben der Loesung als vtu-Datei
 
 %FileID zur Erstellung der Datei mit Schreib- und Leseberechtigung
-name=inputdlg('Ihr gewünschter Dateiname:','Output',1,{'default_out'})';
+name=inputdlg('Ihr gewuenschter Dateiname:','Output',1,{'default_out'})';
 if isempty(name)
     name={'default_output'};
 end
@@ -10,7 +10,7 @@ fid=fopen(name,'w+');
 
 %Erstellung des Standard Header des .vtu Dateiformats
 fprintf(fid,'%s\n','<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">');
-fprintf(fid,'%s\n','<!--This file was created by meshio v3.1.6-->');
+fprintf(fid,'%s\n','<!--This file was created by DAEdalon/write_out.m-->');
 fprintf(fid,'%s\n','<UnstructuredGrid>');
 fprintf(fid,'%s%s%s%s%s\n','<Piece NumberOfPoints="',num2str(size(node,1)),'" NumberOfCells="',num2str(size(el,1)),'">');
 
