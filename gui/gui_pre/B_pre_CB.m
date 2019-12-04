@@ -74,17 +74,17 @@ fid_pre = figure('NumberTitle','off',...
                  'Name','PreProcess',...
                  'MenuBar','none',...
                  'CloseRequestFcn','CRF_PreProcess');
-             
+
 set(fid_pre,'Resize','off');
-             
+
 % PreProcess-Fenster: Innenmass einlesen
 pi_pre   = get(fid_pre,'pos');
-     
+
 % Größe des PreProcess-Fensters deklarieren und zuweisen
 pi_pre(1) = pi_pre(1);
 pi_pre(2) = pi_pre(2);
 pi_pre(3) = pi_dc(3);
-pi_pre(4) = 3*Bh;
+pi_pre(4) = 4*Bh;
 
 set(fid_pre,'Position',pi_pre);
 
@@ -101,23 +101,50 @@ set(fid_pre,'OuterPosition',po_pre);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Buttons anlegen
+% 1. Stufe
+y1 = 0.5*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh;
+y2 = 0.5*Bh + Bh + 0.2*Bh;
+y3 = 0.5*Bh;
 
 %Button 0
 %Groesse deklarieren und zuweisen
-pB0(1) = 0.5*Bh;
-pB0(2) = Bh+0.6*Bh;
-pB0(3) = 2.03*Bw;
+pB0(1) = 0.5*Bh + Bw + 0.1*Bh - 0.5*Bw;
+pB0(2) = y1;
+pB0(3) = Bw;
 pB0(4) = Bh;
 B0 = uicontrol(fid_pre,'Style','pushbutton',...
                        'String','inp_convert',...
                        'pos',pB0,...
                        'Callback','inp_convert');
-                   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Button 0.1
+%Groesse deklarieren und zuweisen
+pB01(1) = 0.5*Bh;
+pB01(2) = y2;
+pB01(3) = Bw;
+pB01(4) = Bh;
+B01 = uicontrol(fid_pre,'Style','pushbutton',...
+                       'String','edis',...
+                       'pos',pB01,...
+                       'Callback','edis');
+
+%Button 0.2
+%Groesse deklarieren und zuweisen
+pB02(1) = 0.5*Bh + Bw + 0.2*Bh;
+pB02(2) = y2;
+pB02(3) = Bw;
+pB02(4) = Bh;
+B02 = uicontrol(fid_pre,'Style','pushbutton',...
+                       'String','force',...
+                       'pos',pB02,...
+                       'Callback','force');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 1
 % Groesse deklarieren und zuweisen
 pB1(1) = 0.5*Bh;
-pB1(2) = 0.5*Bh;
+pB1(2) = y3;
 pB1(3) = Bw;
 pB1(4) = Bh;
 
@@ -129,8 +156,8 @@ B1 = uicontrol(fid_pre,'Style','pushbutton',...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 2
 % Groesse deklarieren und zuweisen
-pB2(1) = 0.5*Bh + Bw + 0.1*Bh;
-pB2(2) = 0.5*Bh;
+pB2(1) = 0.5*Bh + Bw + 0.2*Bh;
+pB2(2) = y3;
 pB2(3) = Bw;
 pB2(4) = Bh;
 
@@ -138,5 +165,5 @@ B2 = uicontrol(fid_pre,'Style','pushbutton',...
                        'String','f2f.pl',...
                        'pos',pB2,...
                        'Callback','CB_f2f');
-                   
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
