@@ -9,11 +9,15 @@ function edis()
     Titel='Edis';
     lines=1;
     default={'1','0','1,2,3','0','0.1'};
+    
+    xyz=['x' 'y' 'z'];
 
     disp=[];
     fid=fopen(['input',filesep,'node.inp']);
     temp=textscan(fid,'%f%f%f');
     node=[temp{1,1},temp{1,2},temp{1,3}];
+    
+    fprintf('Die Datei input/displ.inp wird neu angelegt.\n');
 
     button=0;
     while button==0
@@ -40,8 +44,13 @@ function edis()
             data=[str2double(Eingaben{1}),str2double(Eingaben{2}),str2double(Eingaben{4})];
             index=find(node(:,data(1,1))<=data(1,2)+tol & node(:,data(1,1))>=data(1,2)-tol);
             for i=1:length(v)
-            disp=[disp;index,ones(length(index),1)*v(1,i),data(1,3)*ones(length(index),1)];
+                disp=[disp;index,ones(length(index),1)*v(1,i),data(1,3)*ones(length(index),1)];
             end
+            fprintf('Verschiebungsrandbedingung: %u Knoten',length(index));
+            fprintf(' bei %s = %s (+- %s)mm',xyz(data(1)),num2str(data(2)),num2str(tol));
+            fprintf(' in Richtung');
+            fprintf(' %i',v);
+            fprintf(' um %smm verschieben.\n',num2str(data(3)));
         end
     end
 
