@@ -9,8 +9,8 @@ name=['output',filesep,name{1},'.vtu'];
 fid=fopen(name,'w+');
 
 %Erstellung des Standard Header des .vtu Dateiformats
-fprintf(fid,'%s\n','<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">');
-fprintf(fid,'%s\n','<!--This file was created by DAEdalon/vtu_out.m-->');
+fprintf(fid,'%s\n','<VTKFile type="UnstructuredGrid" version="0.1">');
+fprintf(fid,'%s%s%s\n','<!--This file was created by DAEdalon/',mfilename,'.m-->');
 fprintf(fid,'%s\n','<UnstructuredGrid>');
 fprintf(fid,'%s%s%s%s%s\n','<Piece NumberOfPoints="',num2str(size(node,1)),'" NumberOfCells="',num2str(size(el,1)),'">');
 
