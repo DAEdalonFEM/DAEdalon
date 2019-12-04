@@ -5,7 +5,7 @@ name=inputdlg('Ihr gewuenschter Dateiname:','Output',1,{'default_out'})';
 if isempty(name)
     name={'default_output'};
 end
-name=[name{1} '.vtu'];
+name=['output',filesep,name{1},'.vtu'];
 fid=fopen(name,'w+');
 
 %Erstellung des Standard Header des .vtu Dateiformats
@@ -42,11 +42,11 @@ fprintf(fid,'%s\n','</DataArray>');
 
 fprintf(fid,'%s\n','</PointData>');
 
-%Innerhalb des Cell Felds stehen Informationen über Konnektivität der
+%Innerhalb des Cell Felds stehen Informationen Ã¼ber KonnektivitÃ¤t der
 %Elemente, offsets und Typ der Elemente
 fprintf(fid,'%s\n','<Cells>');
 
-%Konnektivität
+%KonnektivitÃ¤t
 % el2=el;
 % el2(:,[2,3])=el2(:,[3,2]);
 fprintf(fid,'%s\n','<DataArray type="Int64" Name="connectivity" format="ascii">');
@@ -71,3 +71,4 @@ fprintf(fid,'%s\n','</UnstructuredGrid>');
 fprintf(fid,'%s\n','</VTKFile>');
 
 fclose(fid);
+fprintf('Datei herausgeschrieben: %s\n',name);
