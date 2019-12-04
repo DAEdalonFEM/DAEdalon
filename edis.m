@@ -1,4 +1,4 @@
-%Funktion zum Erstellen einer Displacement-Datei
+%Funktion zum Erstellen der displ.inp fuer Knoten in einer Koordinatenebene
 function edis()
 
     Knotenpunkt={'Koordinatenrichtung(x=1,y=2,z=3)',...
