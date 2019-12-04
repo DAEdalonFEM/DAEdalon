@@ -19,8 +19,8 @@ programmableFilter1.PythonPath = ''
 programmableFilter1.Script = """
 from paraview import vtk
 
-# evt. abzuaendern: - Name des Ursprungs-DataArrays (data_array_name)
-#                   - Reihenfolge der Voigt-Notation
+# evtl. abzuaendern: - Name des Ursprungs-DataArrays (data_array_name)
+#                    - Reihenfolge der Voigt-Notation
 
 pdi = self.GetInputDataObject(0,0)
 pdo = self.GetOutputDataObject(0)
