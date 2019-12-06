@@ -2,7 +2,7 @@
 
 % Ort des Konfig-Ordnes, je nach Betriebssystem
 if ispc
-    paraview_config_path = strcat(getenv('APPDATA'),'\ParaView');
+    paraview_config_path = strcat(getenv('APPDATA'),'\Roaming\ParaView');
 elseif isunix || ismac
     paraview_config_path = strcat(getenv('HOME'),'/.config/ParaView');
 end
