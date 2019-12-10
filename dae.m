@@ -99,7 +99,8 @@ addpath([aP,'gui',dir_trenn,'gui_opt'])
 addpath([aP,'arcLength'])
 
 % Paraview-Macros in Paraview-Konfig-Ordner kopieren, falls Ordner vorhanden
-paraview_check
+addpath([aP,'paraview'])
+paraview_check_func
 
 % gui initialisieren
 crf
