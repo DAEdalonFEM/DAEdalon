@@ -1,7 +1,2 @@
-input/displ.inp
-input/el.inp
-input/force.inp
-input/geom.inp
-input/mat1.inp
-input/node.inp
+input/
 gui/gui_check.txt
