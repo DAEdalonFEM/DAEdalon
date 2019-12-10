@@ -78,7 +78,7 @@ fid_prog = figure('NumberTitle','off',...
                   'Name','ProgFlow',...
                   'MenuBar','none',...
                   'CloseRequestFcn','CRF_ProgFlow');
-              
+
 set(fid_prog,'Resize','off');
 
 % ProgFlow-Fenster: Innenmass einlesen
@@ -106,10 +106,16 @@ set(fid_prog,'OuterPosition',po_prog);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Buttons anlegen
 Bx = 0.5*Bh + Bw + 0.1*Bh - Bw/2;
+
+y1 = 0.5*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh;
+y2 = 0.5*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh;
+y3 = 0.5*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh;
+y4 = 0.5*Bh + Bh + 0.2*Bh + Bh + 0.2*Bh;
+y5 = 0.5*Bh + Bh + 0.2*Bh;
+y6 = 0.5*Bh;
+
 % Button 1
 % Groesse deklarieren und zuweisen
-y1 = pi_prog(4) - 0.5*Bh - Bh;
-
 pB1(1) = Bx;
 pB1(2) = y1;
 pB1(3) = Bw;
@@ -123,8 +129,6 @@ B1 = uicontrol(fid_prog,'Style','pushbutton',...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 2
 % Groesse deklarieren und zuweisen
-y2 = y1 - 0.2*Bh - Bh;
-
 pB2(1) = Bx;
 pB2(2) = y2;
 pB2(3) = Bw;
@@ -138,8 +142,6 @@ B2 = uicontrol(fid_prog,'Style','pushbutton',...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 3
 % Groesse deklarieren und zuweisen
-y3 = y2 - 0.2*Bh - Bh;
-
 pB3(1) = Bx;
 pB3(2) = y3;
 pB3(3) = Bw;
@@ -149,33 +151,42 @@ B3 = uicontrol(fid_prog,'Style','pushbutton',...
                         'String','loop',...
                         'pos',pB3,...
                         'Callback','CB_loop');
-                    
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 4
 % Groesse deklarieren und zuweisen
-y4 = y3 - 0.2*Bh - Bh - 0.2*Bh - Bh;
-
 pB4(1) = Bx;
 pB4(2) = y4;
 pB4(3) = Bw;
 pB4(4) = Bh;
 
 B4 = uicontrol(fid_prog,'Style','pushbutton',...
-                        'String','out',...
+                        'String','vtu_out',...
                         'pos',pB4,...
-                        'Callback','CB_out');
-                    
+                        'Callback','vtu_out');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 5
 % Groesse deklarieren und zuweisen
-y5 = y4 - 0.2*Bh - Bh;
-
 pB5(1) = Bx;
 pB5(2) = y5;
 pB5(3) = Bw;
 pB5(4) = Bh;
 
 B5 = uicontrol(fid_prog,'Style','pushbutton',...
-                        'String','histout',...
+                        'String','out',...
                         'pos',pB5,...
+                        'Callback','CB_out');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Button 6
+% Groesse deklarieren und zuweisen
+pB6(1) = Bx;
+pB6(2) = y6;
+pB6(3) = Bw;
+pB6(4) = Bh;
+
+B6 = uicontrol(fid_prog,'Style','pushbutton',...
+                        'String','histout',...
+                        'pos',pB6,...
                         'Callback','CB_histout');
