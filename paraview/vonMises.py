@@ -68,6 +68,21 @@ renderView1 = GetActiveViewOrCreate('RenderView')
 # show data in view
 programmableFilter1Display = Show(programmableFilter1, renderView1)
 
+# set scalar coloring
+ColorBy(programmableFilter1Display, ('POINTS', 'S_mises'))
+
+# rescale color and/or opacity maps used to include current data range
+programmableFilter1Display.RescaleTransferFunctionToDataRange(True, False)
+
+# show color bar/color legend
+programmableFilter1Display.SetScalarBarVisibility(renderView1, True)
+
+# get color transfer function/color map for 'Mises'
+s_misesLUT = GetColorTransferFunction('S_mises')
+
+# get opacity transfer function/opacity map for 'Mises'
+s_misesPWF = GetOpacityTransferFunction('S_mises')
+
 # hide data in view
 Hide(src, renderView1)
 
