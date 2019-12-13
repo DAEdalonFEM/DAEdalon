@@ -31,29 +31,36 @@ fprintf(fid,'%s\n','</Points>');
 fprintf(fid,'%s\n','<PointData>');
 
 %Schreiben der Verschiebungen
-fprintf(fid,'%s%s%s\n','<DataArray type="Float64" Name="Disp" NumberOfComponents="',num2str(ndf),'" format="ascii">');
+fprintf(fid,'%s%s%s\n','<DataArray type="Float64" Name="Verschiebungen" NumberOfComponents="',num2str(ndf),'" format="ascii">');
 fprintf(fid,'%f ',u);
 fprintf(fid,'\n%s\n','</DataArray>');
 
-%Schreiben der Dehnungen
-fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="6" format="ascii">');
-fprintf(fid,'%f ',cont_mat_node(:,1:6)');
-fprintf(fid,'\n%s\n','</DataArray>');
+%Schreiben der Dehnungen und Spannungen
+if ndf==2
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="3" format="ascii">');
+  fprintf(fid,'%f ',cont_mat_node(:,1:3)');
+  fprintf(fid,'\n%s\n','</DataArray>');
 
-%Schreiben der Spannungen
-fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="6" format="ascii">');
-fprintf(fid,'%f ',cont_mat_node(:,7:12)');
-fprintf(fid,'\n%s\n','</DataArray>');
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="3" format="ascii">');
+  fprintf(fid,'%f ',cont_mat_node(:,4:6)');
+  fprintf(fid,'\n%s\n','</DataArray>');
+elseif ndf==3
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="6" format="ascii">');
+  fprintf(fid,'%f ',cont_mat_node(:,1:6)');
+  fprintf(fid,'\n%s\n','</DataArray>');
+
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="6" format="ascii">');
+  fprintf(fid,'%f ',cont_mat_node(:,7:12)');
+  fprintf(fid,'\n%s\n','</DataArray>');
+end
 
 fprintf(fid,'%s\n','</PointData>');
 
-%Innerhalb des Cell Felds stehen Informationen Ã¼ber KonnektivitÃ¤t der
+%Innerhalb des Cell Felds stehen Informationen über Konnektivität der
 %Elemente, offsets und Typ der Elemente
 fprintf(fid,'%s\n','<Cells>');
 
-%KonnektivitÃ¤t
-% el2=el;
-% el2(:,[2,3])=el2(:,[3,2]);
+%Konnektivität
 fprintf(fid,'%s\n','<DataArray type="Int32" Name="connectivity" format="ascii">');
 fprintf(fid,'%i ',(el-1)');
 fprintf(fid,'\n%s\n','</DataArray>');
