@@ -14,7 +14,7 @@ function edis()
     lines=1;                              % lines bestimmt die Größe eines Edit-Fields
     default={'1','0','1,2,3','0','0.1'};  % Dies sind Default-Werte, welche im Edit-Feld angezeigt werden
 
-    xyz=['x' 'y' 'z'];                    % Dient in spaeterer Print-Ausgabe zum besseren Verstaendnis als '1,2,3'
+    xyz=["x", "y", "z"];                    % Dient in spaeterer Print-Ausgabe zum besseren Verstaendnis als '1,2,3'
 
     disp=[]; % Die Variable disp, welche zum Schluss ausgegeben werden soll
              % wird als neue leere Variable deklariert
@@ -23,7 +23,7 @@ function edis()
     % load() ermöglicht das sofortige Erstellen einer gleichnamigen Variable
 
 
-    fprintf('Die Datei input/displ.inp wird neu angelegt.\n');
+    fprintf('\nDie Datei input/displ.inp wird neu angelegt.\n');
 
     % Alle folgenden button* Variablen dienen als Schleifenabbruchbedingungen
     % dabei aendert sich der Wert dieser Variablen falls man im Abfrage-Fenster
