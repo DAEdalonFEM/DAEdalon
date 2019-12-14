@@ -3,7 +3,9 @@
 %FileID zur Erstellung der Datei mit Schreib- und Leseberechtigung
 name=inputdlg('Ihr gewuenschter Dateiname:','Output',1,{'default_out'})';
 if isempty(name)
-    name={'default_output'};
+  % Falls leerer Dateiname oder Cancel gedrueckt wurde, keine vtu-Datei herausschreiben
+  fprintf('Es wurde keine vtu-Datei herausgeschrieben!\n');
+  return
 end
 name=['output',filesep,name{1},'.vtu'];
 fid=fopen(name,'w+');
