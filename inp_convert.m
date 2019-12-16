@@ -32,10 +32,40 @@ nu=inf;
 %DATEI IM INPUTDATEI FESTLEGEN
 %Dateiname und Ordnerpfad speichern
 [Inputdatei,inpOrdner]=uigetfile('*.inp','Inputdatei im Abaqus-Format fuer DAEdalon festlegen');
+while inpOrdner==0
+    answer0=questdlg('Praeprozessor beenden?', ...
+	'WARNUNG', ...
+	'Ja','Nein','Nein');
+
+    switch answer0
+        case 'Ja'
+            %Abbruch des Codes, wenn Ja gewaehlt wird
+            return;
+
+        case 'Nein'
+            [Inputdatei,inpOrdner]=uigetfile('*.inp','Inputdatei im Abaqus-Format fuer DAEDALON festlegen');
+
+    end
+end
 
 %OUTPUT ORDNER FESTLEGE
 %Ordnerpfad speichern
 outOrdner=uigetdir('input','Outputordner fuer DAEdalon-*.inp festlegen');
+while outOrdner==0
+    answer01=questdlg('Praeprozessor beenden?', ...
+	'WARNUNG', ...
+	'Ja','Nein','Nein');
+
+    switch answer01
+        case 'Ja'
+            %Abbruch des Codes, wenn Ja gewaehlt wird
+            return;
+
+        case 'Nein'
+            outOrdner=uigetdir('input','Outputordner fuer DAEdalon-*.inp festlegen');
+
+    end
+end
 
 %Abfrage, ob schon Dateien vorhanden sind
 if (isfile([outOrdner,filesep,'node.inp']) ==1 )
@@ -90,6 +120,21 @@ while Emod<=Emodmin || nu>numax || nu<numin
   end
   dlgtitle = 'INPUT';
   answer2 = inputdlg(prompt,dlgtitle,[1 40],definput);
+  while isempty(answer2)==1
+      answer02=questdlg('Praeprozessor beenden?', ...
+	       'WARNUNG', ...
+	       'Ja','Nein','Nein');
+
+      switch answer02
+          case 'Ja'
+              %Abbruch des Codes, wenn Ja gewaehlt wird
+              return;
+
+          case 'Nein'
+              answer2 = inputdlg(prompt,dlgtitle,[1 40],definput);
+      end
+  end
+
   Emod = str2num(answer2{1});
   nu = str2num(answer2{2});
 
@@ -112,6 +157,9 @@ fid_geom = fopen( pfad_geom, 'w' );
 fid_mat = fopen( pfad_mat, 'w' );
 
 fid = fopen(pfad);
+
+%Status der Konvertierung
+msgbox_begin=msgbox('Inputdatei wird konvertiert.');
 
 %EXTRAHIEREN START
 a = {};
@@ -164,10 +212,10 @@ while ischar(tline)
     %Umschreiben des CellArrays in eine Matrix 'm_node'
     if (start2==true)
 
-            %Suchen nach einer leeren Zeile
-            if((isempty(tline)==1))
-                e2line=length(a)-2;
-            end
+        %Suchen nach einer leeren Zeile
+        if((isempty(tline)==1))
+            e2line=length(a)-2;
+        end
 
         if((length(a)>=s2line)&&length(a)<=(e2line))
             count=count+1;
@@ -229,5 +277,13 @@ fprintf(fid_mat, '\n');
 fprintf(fid_mat, '%g\t', [nu]); %Zeile 6: Querkontraktionszahl (Poissonzahl)
 fclose (fid_mat);
 fprintf('Erzeugt: %s\n',pfad_mat);
+
+close(msgbox_begin);
+
+text_end = 'Konvertierung beendet - Ordner pruefen';
+fprintf('\n%s\n',text_end);
+msgbox_end=msgbox(text_end);
+pause(5);
+close(ancestor(msgbox_end, 'figure'));
 
 end % function
