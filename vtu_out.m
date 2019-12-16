@@ -28,8 +28,9 @@ fprintf(fid,'%f ',node');
 fprintf(fid,'\n%s\n','</DataArray>');
 fprintf(fid,'%s\n','</Points>');
 
-%Innerhalb des PointData Feldes stehen alle Informationen zu den einzelnen
-%Punkten wie zB. (Verschiebungen, Dehnungen, Spannungen)
+%Innerhalb des PointData-Feldes stehen alle Informationen zu den einzelnen
+%Punkten wie zB. (Verschiebungen, Dehnungen, Spannungen).
+%Anfang des PointData-Feldes
 fprintf(fid,'%s\n','<PointData>');
 
 %Schreiben der Verschiebungen
@@ -56,13 +57,31 @@ elseif ndf==3
   fprintf(fid,'\n%s\n','</DataArray>');
 end
 
+%Schreiben der Kraftrandbedingungen
+if force_len > 0
+  % Kraft_RB initialisieren
+  Kraft_RB = zeros(numnp,3);
+  % force ist gespeichert als (Knoten, FHG, Kraftwert).
+  % Kraft_RB mit diesen Werten fuellen
+  for i=1:force_len
+    Kraft_RB(force(i,1),force(i,2)) = force(i,3);
+  end
+  % Eintraege von Kraft_RB hintereiander als Vektor darstellen.
+  % Dazu muss Kraft_RB transponiert werden
+  Kraft_RB = reshape(Kraft_RB',[],1);
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Kraft_RB" NumberOfComponents="3" format="ascii">');
+  fprintf(fid,'%f ',Kraft_RB);
+  fprintf(fid,'\n%s\n','</DataArray>');
+end
+
+%Ende des PointData-Feldes
 fprintf(fid,'%s\n','</PointData>');
 
-%Innerhalb des Cell Felds stehen Informationen über Konnektivität der
+%Innerhalb des Cell Felds stehen Informationen Ã¼ber KonnektivitÃ¤t der
 %Elemente, offsets und Typ der Elemente
 fprintf(fid,'%s\n','<Cells>');
 
-%Konnektivität
+%KonnektivitÃ¤t
 fprintf(fid,'%s\n','<DataArray type="Int32" Name="connectivity" format="ascii">');
 fprintf(fid,'%i ',(el-1)');
 fprintf(fid,'\n%s\n','</DataArray>');
