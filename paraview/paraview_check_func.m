@@ -19,8 +19,8 @@ if isfolder(paraview_config_path) && ~paraview_check
     fclose(paraID);
 
     % Question-Dialogbox
-    questans = questdlg('Paraview Konfig-Ordner gefunden. Macro dorthin kopieren?', ...
-      'Paraview Macro kopieren?', ...
+    questans = questdlg('Paraview Konfig-Ordner gefunden. Macros dorthin kopieren?', ...
+      'Paraview Macros kopieren?', ...
       'Ja','Nein','Ja');
     switch questans
       case 'Ja'
@@ -33,7 +33,10 @@ if isfolder(paraview_config_path) && ~paraview_check
         end
         % vonMises-Macro in Paraview Macros-Ordner kopieren
         copyfile(strcat('paraview',filesep,'vonMises.py'), strcat(paraview_macros_path,filesep,'vonMises.py'));
-        fprintf('Paraview Macro nach %s kopiert.\n',paraview_macros_path);
+        fprintf('Paraview Macro %s nach %s kopiert.\n','vonMises.py',paraview_macros_path);
+	% KraftRB-Macro in Paraview Macros-Ordner kopieren
+        copyfile(strcat('paraview',filesep,'KraftRB.py'), strcat(paraview_macros_path,filesep,'KraftRB.py'));
+        fprintf('Paraview Macro %s nach %s kopiert.\n','KraftRB.py',paraview_macros_path);
     end
 end
 
