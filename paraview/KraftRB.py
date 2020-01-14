@@ -16,17 +16,27 @@ while k < len(lim):
   dim.append(abs(limtemp))
   k = k+2
 
-nodeforces = []
+f = []  # Liste fuer Kraftkomponenten eines Knotens
+nodeforces = []  # Liste fuer Kraftbetraege aller Knoten
 numPts = data.GetNumberOfPoints()
+kraftarray = data.GetPointData().GetArray('Kraft_RB')
+numComps = kraftarray.GetNumberOfComponents()
 # Durchlaufe alle Knoten
 for i in range(numPts):
-  # Hole pro Knoten die Kraft in x-, y- und z-Richtung
-  fx = data.GetPointData().GetArray('Kraft_RB').GetComponent(i,0)
-  fy = data.GetPointData().GetArray('Kraft_RB').GetComponent(i,1)
-  fz = data.GetPointData().GetArray('Kraft_RB').GetComponent(i,2)
+  # Hole pro Knoten die Kraft in die einzelnen Koordinatenrichtungen
+  for j in range(numComps):
+
+    # Kraftkomponente j des Knotens i
+    fcomp = kraftarray.GetComponent(i,j)
+
+    # Fuege die quadrierte Knotenkraftkomponente der Liste 'f' an
+    f.append(fcomp*fcomp)
 
   # Berechne den Betrag der Knotenkraft und fuege ihn an die Liste 'nodeforces' an
-  nodeforces.append(math.sqrt(fx*fx + fy*fy + fz*fz))
+  nodeforces.append(math.sqrt(sum(f)))
+
+  # Leere die Liste mit den Knotenkraftkomponenten fuer den naechsten Knoten i
+  f = []
 
 # Skaliere die betragsmaessig maximale Knotenkraft auf die kleinste Kantenlaenge des o.g. Quaders (kleinste Bauteilabmessung)
 scalefactor=min(dim)/max(nodeforces)
