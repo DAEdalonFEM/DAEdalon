@@ -9,33 +9,37 @@ from paraview.simple import *   # FindSource(), GetActiveSource()
 src = GetActiveSource()
 
 # create a new 'Programmable Filter'
-programmableFilter1 = ProgrammableFilter(Input=src)
-programmableFilter1.Script = ''
-programmableFilter1.RequestInformationScript = ''
-programmableFilter1.RequestUpdateExtentScript = ''
-programmableFilter1.PythonPath = ''
+programmableFilter_mises = ProgrammableFilter(Input=src)
+programmableFilter_mises.Script = ''
+programmableFilter_mises.RequestInformationScript = ''
+programmableFilter_mises.RequestUpdateExtentScript = ''
+programmableFilter_mises.PythonPath = ''
 
-# Properties modified on programmableFilter1
-programmableFilter1.Script = """
+# Properties modified on programmableFilter_mises
+programmableFilter_mises.Script = """
 from paraview import vtk
+import math
 
 # evtl. abzuaendern: - Name des Ursprungs-DataArrays (data_array_name)
 #                    - Reihenfolge der Voigt-Notation
 
+# Input einlesen und Output initialisieren
 pdi = self.GetInputDataObject(0,0)
 pdo = self.GetOutputDataObject(0)
 
+# Auszulesendes DataArray festlegen und dessen Anzahl an Komponenten holen
 data_array_name = 'Spannungen'
 input_array = pdi.GetPointData().GetArray(data_array_name)
 numComp = input_array.GetNumberOfComponents()
 
+# Knoten des Inputs auf Output uebertragen
 pdo.SetPoints(pdi.GetPoints())
+
+# Anzahl der Knoten des Inputs holen
 numPts = pdo.GetNumberOfPoints()
 
-numArr = pdi.GetPointData().GetNumberOfArrays()
-
 mises_array = vtk.vtkDoubleArray()
-mises_array.SetName('S_mises')
+mises_array.SetName('sig_vonMises')
 
 for point in range(numPts):
 
@@ -58,30 +62,32 @@ for point in range(numPts):
 
 pdo.GetPointData().AddArray(mises_array)
 """
-programmableFilter1.RequestInformationScript = ''
-programmableFilter1.RequestUpdateExtentScript = ''
-programmableFilter1.PythonPath = ''
+
+
 
 # get active view
 renderView1 = GetActiveViewOrCreate('RenderView')
 
 # show data in view
-programmableFilter1Display = Show(programmableFilter1, renderView1)
+programmableFilter_misesDisplay = Show(programmableFilter_mises, renderView1)
 
 # set scalar coloring
-ColorBy(programmableFilter1Display, ('POINTS', 'S_mises'))
+ColorBy(programmableFilter_misesDisplay, ('POINTS', 'sig_vonMises'))
 
 # rescale color and/or opacity maps used to include current data range
-programmableFilter1Display.RescaleTransferFunctionToDataRange(True, False)
+programmableFilter_misesDisplay.RescaleTransferFunctionToDataRange(True, False)
 
 # show color bar/color legend
-programmableFilter1Display.SetScalarBarVisibility(renderView1, True)
+programmableFilter_misesDisplay.SetScalarBarVisibility(renderView1, True)
 
 # get color transfer function/color map for 'Mises'
-s_misesLUT = GetColorTransferFunction('S_mises')
+sig_vonmisesLUT = GetColorTransferFunction('sig_vonMises')
 
 # get opacity transfer function/opacity map for 'Mises'
-s_misesPWF = GetOpacityTransferFunction('S_mises')
+sig_vonmisesPWF = GetOpacityTransferFunction('sig_vonMises')
+
+# rename source object
+RenameSource('vonMises Vergleichsspannung', programmableFilter_mises)
 
 # hide data in view
 Hide(src, renderView1)
