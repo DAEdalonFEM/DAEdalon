@@ -11,7 +11,7 @@ function edis()
         'Freiheitsgradwert/Verschiebung in mm',...
         'Toleranz fuer obigen Koordinatenwert in mm'};
     Titel='Edis';                         % Titel legt den Titel des Dialogfensters fest
-    lines=1;                              % lines bestimmt die Größe eines Edit-Fields
+    lines=1;                              % lines bestimmt die Groesse eines Edit-Fields
     default={'1','0','1,2,3','0','0.1'};  % Dies sind Default-Werte, welche im Edit-Feld angezeigt werden
 
     xyz=["x", "y", "z"];                    % Dient in spaeterer Print-Ausgabe zum besseren Verstaendnis als '1,2,3'
@@ -20,7 +20,7 @@ function edis()
              % wird als neue leere Variable deklariert
 
     load(['input',filesep,'node.inp']); % Einlesen der Knotendatei
-    % load() ermöglicht das sofortige Erstellen einer gleichnamigen Variable
+    % load() ermoeglicht das sofortige Erstellen einer gleichnamigen Variable
 
 
     fprintf('\nDie Datei input/displ.inp wird neu angelegt.\n');
@@ -66,6 +66,11 @@ function edis()
 
             data=[str2double(Eingaben{1}),str2double(Eingaben{2}),str2double(Eingaben{4})];
             index=find(node(:,data(1,1))<=data(1,2)+tol & node(:,data(1,1))>=data(1,2)-tol);
+            
+            if isempty(index)
+                uiwait(warndlg('ACHTUNG! Es wurden keine Knoten in der angegebenen Ebene gefunden!','Warnung'));
+                continue             
+            end
 
             % Gefundene Knoten werden mit der entsprechenden Verschiebung
             % korrekt formatiert in der Variablen disp gespeichert
@@ -75,13 +80,14 @@ function edis()
             end
             fprintf('Verschiebungsrandbedingung: %u Knoten',length(index));
             fprintf(' bei %s = %s (+- %s)mm',xyz(data(1)),num2str(data(2)),num2str(tol));
-            fprintf(' in Richtung');
-            fprintf(' %i',v);
-            fprintf(' um %smm verschieben.\n',num2str(data(3)));
+            fprintf(' in');
+            fprintf(' %s-',xyz(v));
+            fprintf(' Richtung');
+            fprintf(' um %s mm verschieben.\n',num2str(data(3)));
         end
     end
 
-    % Abschließend wird die vollendete Variable disp in eine Datei mit dem
+    % Abschliessend wird die vollendete Variable disp in eine Datei mit dem
     % Namen disp.inp geschrieben und abgespeichert
 
     pfad_disp=fopen(['input',filesep,'displ.inp'],'w');
