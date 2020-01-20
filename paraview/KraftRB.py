@@ -81,9 +81,6 @@ glyph1.ScaleArray = ['POINTS', 'Kraft_RB']
 # update the view to ensure updated data information
 renderView1.Update()
 
-# Properties modified on glyph1
-#glyph1.ScaleFactor = 0.001
-
 # update the view to ensure updated data information
 renderView1.Update()
 
@@ -113,10 +110,4 @@ forcePWF = GetOpacityTransferFunction('Kraft_RB')
 
 # rename source object
 RenameSource('Kraftrandbedingungen', glyph1)
-
-
-
-
-
-
 
