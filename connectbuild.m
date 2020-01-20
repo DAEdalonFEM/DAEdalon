@@ -2,6 +2,13 @@ function nodeforce=connectbuild(coord_plane,coord_wert,tol,aforce,node,el)
 
 temp={};rows=[];
 nodenr=find(node(:,coord_plane)<=coord_wert+tol & node(:,coord_plane)>=coord_wert-tol);
+
+if isempty(nodenr)
+    uiwait(warndlg('ACHTUNG! Es wurden keine Knoten in der angegebenen Ebene gefunden!','Warnung'));
+    nodeforce=[];
+    return
+end
+
 max=1;
 for i=1:length(nodenr)
     x=find(el==nodenr(i));

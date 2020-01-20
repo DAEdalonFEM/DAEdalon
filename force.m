@@ -16,6 +16,7 @@ function force()
     singleforce=[];
     nodeforce=[];
     button1=0;
+    flag=[];
     while button1==0
         [indx,tf] = listdlg('ListString',list,'Name','Force','SelectionMode','single','ListSize',[200 75]);
         temp=isempty(indx);
@@ -30,13 +31,17 @@ function force()
             end
         else
             if indx==1
+                flag=1;
                 button2=0;
-                while button2==0
+                while button2==0  % Einzellasteingabe
                     inp_singl=inputdlg(Einzellast,'Einzellast',[1 50],{'0','0','0','0.1','0','0','0'});
+
                     v=[inp_singl{1:length(inp_singl)}];
                     if ~isempty(find(v==','))
                         uiwait(warndlg('Bitte geben Sie Dezimalzahlen mit Punkttrennung ein.','Warnung'));
+                        continue
                     end
+
                     temp=isempty(inp_singl);
                     if temp == 1
                         button2=questdlg('Sind alle Einzellasten bestimmt?','Abfrage','Ja','Nein','Nein');
@@ -53,6 +58,15 @@ function force()
                         index=find(node(:,1)<=coord(1,1)+tol & node(:,1)>=coord(1,1)-tol &...
                                    node(:,2)<=coord(1,2)+tol & node(:,2)>=coord(1,2)-tol &...
                                    node(:,3)<=coord(1,3)+tol & node(:,3)>=coord(1,3)-tol);
+
+                        if isempty(index)
+                            uiwait(warndlg('ACHTUNG! Es wurde kein Knoten mit den angegebenen Koordinaten gefunden!','Warnung'));
+                            continue
+                        elseif size(index,1)>1
+                            uiwait(warndlg('ACHTUNG! Es wurden mehrere Knoten innerhalb der Toleranz gefunden! Toleranz verringern.','Warnung'));
+                            continue
+                        end
+
                         for i=1:3
                             if forces(i)~=0
                                 singleforce=[singleforce;index,i,forces(i)];
@@ -64,11 +78,19 @@ function force()
                     end
                 end
             elseif indx==2
+                flag=1;
                 button3=0;
-                while button3==0
+                while button3==0  %Flaechenlasteingabe
                     inp_area=inputdlg(Flaechenlast,'Flaechenlast',[1 50],{'1','0','0.1','0'});
                     xyz1 = ["x", "y", "z"];
                     xyz2 = ["yz", "xz", "xy"];
+
+%                     v=[inp_area{1:length(inp_area)}];
+%                     if ~isempty(find(v==','))
+%                         uiwait(warndlg('Bitte geben Sie Dezimalzahlen mit Punkttrennung ein.','Warnung'));
+%                         continue
+%                     end
+
                     temp=isempty(inp_area);
                     if temp == 1
                         button3=questdlg('Sind alle Flaechenlasten bestimmt?','Abfrage','Ja','Nein','Nein');
@@ -82,13 +104,31 @@ function force()
                         tol=str2double(inp_area{3});
                         data=[str2double(inp_area{1}),str2double(inp_area{2}),str2double(inp_area{4})];
                         nodeforce=connectbuild(data(1),data(2),tol,data(3),node,el);
+
+                        if isempty(nodeforce)
+                           continue
+                        end
+
                         fprintf('Kraftrandbedingung: %u Knoten',size(nodeforce,1));
                         fprintf(' auf %s-Ebene bei %s = %s (+- %s)',xyz2(data(1)),xyz1(data(1)),inp_area{2},inp_area{3});
                         fprintf(' mit Flaechenlast von %sN/mm^2 beaufschlagt.\n',inp_area{4});
                     end
                 end
             elseif indx==3
-                gesforce=[];
+                if flag==1
+                    button4=questdlg('Es wurden bereits Lasten bestimmt. Bestehende Lasten loeschen?','Warning','Ja','Nein','Nein');
+                    switch button4
+                        case 'Ja'
+                            singleforce=[];
+                            nodeforce=[];
+                            fprintf('Alle aufgebrachten Lasten wurden geloescht!\n\n');
+                            continue
+                        case 'Nein'
+                            continue
+                    end
+                else
+                    break
+                end
             end
         end
     end
@@ -103,17 +143,23 @@ function force()
                 row=find(nodeforce(:,1)==singleforce(i,1)&nodeforce(:,2)==singleforce(i,2));
                 if ~isempty(row)
                     nodeforce(row,3)=nodeforce(row,3)+singleforce(i,3);
+                    singlforce(i,:)=0;
                 end
             end
-            gesforce=nodeforce;
+            delete=find(singlforce(:,1)==0&singlforce(:,2)==0&singlforce(:,3)==0);
+            singlforce(delete,:)=[];
+            gesforce=[nodeforce;singlforce];
         else
             for i=1:size(nodeforce,1)
                 row=find(singleforce(:,1)==nodeforce(i,1)&singleforce(:,2)==nodeforce(i,2));
                 if ~isempty(row)
                     singleforce(row,3)=singleforce(row,3)+nodeforce(i,3);
+                    nodeforce(i,:)=0;
                 end
             end
-            gesforce=singleforce;
+            delete=find(nodeforce(:,1)==0&nodeforce(:,2)==0&nodeforce(:,3)==0);
+            nodeforce(delete,:)=[];
+            gesforce=[singlforce;nodeforce];
         end
     end
 
