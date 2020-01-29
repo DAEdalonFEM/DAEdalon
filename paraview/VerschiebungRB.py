@@ -171,6 +171,9 @@ glyph_displ_fix_xDisplay.OpacityTransferFunction = 'PiecewiseFunction'
 glyph_displ_fix_xDisplay.DataAxesGrid = 'GridAxesRepresentation'
 glyph_displ_fix_xDisplay.PolarAxes = 'PolarAxesRepresentation'
 
+# update the view to ensure updated data information
+renderView1.Update()
+
 # Properties modified on glyph_displ_fix_x
 glyph_displ_fix_x.GlyphType = 'Line'
 glyph_displ_fix_x.OrientationArray = ['POINTS', 'displ_fix_x']
@@ -224,11 +227,14 @@ glyph_displ_fix_yDisplay.OpacityTransferFunction = 'PiecewiseFunction'
 glyph_displ_fix_yDisplay.DataAxesGrid = 'GridAxesRepresentation'
 glyph_displ_fix_yDisplay.PolarAxes = 'PolarAxesRepresentation'
 
+# update the view to ensure updated data information
+renderView1.Update()
+
 # Properties modified on glyph_displ_fix_y
+glyph_displ_fix_y.GlyphType = 'Line'
 glyph_displ_fix_y.OrientationArray = ['POINTS', 'displ_fix_y']
 glyph_displ_fix_y.ScaleArray = ['POINTS', 'displ_fix_y']
 glyph_displ_fix_y.GlyphMode = 'All Points'
-glyph_displ_fix_y.GlyphType = 'Line'
 
 # change solid color
 glyph_displ_fix_yDisplay.AmbientColor = [1.0, 0.0, 0.0]
@@ -277,11 +283,14 @@ glyph_displ_fix_zDisplay.OpacityTransferFunction = 'PiecewiseFunction'
 glyph_displ_fix_zDisplay.DataAxesGrid = 'GridAxesRepresentation'
 glyph_displ_fix_zDisplay.PolarAxes = 'PolarAxesRepresentation'
 
+# update the view to ensure updated data information
+renderView1.Update()
+
 # Properties modified on glyph_displ_fix_z
+glyph_displ_fix_z.GlyphType = 'Line'
 glyph_displ_fix_z.OrientationArray = ['POINTS', 'displ_fix_z']
 glyph_displ_fix_z.ScaleArray = ['POINTS', 'displ_fix_z']
 glyph_displ_fix_z.GlyphMode = 'All Points'
-glyph_displ_fix_z.GlyphType = 'Line'
 
 # change solid color
 glyph_displ_fix_zDisplay.AmbientColor = [1.0, 0.0, 0.0]
@@ -308,7 +317,6 @@ glyph_displ_load.OrientationArray = ['POINTS', 'No orientation array']
 glyph_displ_load.ScaleArray = ['POINTS', 'No scale array']
 glyph_displ_load.ScaleFactor = scale
 glyph_displ_load.GlyphTransform = 'Transform2'
-glyph_displ_load.GlyphMode = 'All Points'
 
 # show data in view
 glyph_displ_loadDisplay = Show(glyph_displ_load, renderView1)
@@ -331,15 +339,24 @@ glyph_displ_loadDisplay.OpacityTransferFunction = 'PiecewiseFunction'
 glyph_displ_loadDisplay.DataAxesGrid = 'GridAxesRepresentation'
 glyph_displ_loadDisplay.PolarAxes = 'PolarAxesRepresentation'
 
+# update the view to ensure updated data information
+renderView1.Update()
+
 # Properties modified on glyph_displ_load
+glyph_displ_load.GlyphType = 'Arrow'
 glyph_displ_load.OrientationArray = ['POINTS', 'displ_load']
 glyph_displ_load.ScaleArray = ['POINTS', 'displ_load']
 glyph_displ_load.GlyphMode = 'All Points'
-glyph_displ_load.GlyphType = 'Arrow'
 
 # change solid color
 glyph_displ_loadDisplay.AmbientColor = [0.0, 0.0, 1.0]
 glyph_displ_loadDisplay.DiffuseColor = [0.0, 0.0, 1.0]
+
+# toggle 3D widget visibility (only when running from the GUI)
+Show3DWidgets(proxy=glyph_displ_load.GlyphType)
+
+# update the view to ensure updated data information
+renderView1.Update()
 
 # rename source object
 RenameSource('Nicht-Null-Verschiebungen', glyph_displ_load)
