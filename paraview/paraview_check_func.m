@@ -37,6 +37,9 @@ if isfolder(paraview_config_path) && ~paraview_check
 	% KraftRB-Macro in Paraview Macros-Ordner kopieren
         copyfile(strcat('paraview',filesep,'KraftRB.py'), strcat(paraview_macros_path,filesep,'KraftRB.py'));
         fprintf('Paraview Macro %s nach %s kopiert.\n','KraftRB.py',paraview_macros_path);
+        % VerschiebungRB-Macro in Paraview Macros-Ordner kopieren
+        copyfile(strcat('paraview',filesep,'VerschiebungRB.py'), strcat(paraview_macros_path,filesep,'VerschiebungRB.py'));
+        fprintf('Paraview Macro %s nach %s kopiert.\n','VerschiebungRB.py',paraview_macros_path);
     end
 end
 

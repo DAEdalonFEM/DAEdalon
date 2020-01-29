@@ -74,6 +74,34 @@ if force_len > 0
   fprintf(fid,'\n%s\n','</DataArray>');
 end
 
+% Schreiben der Verschiebungsrandbedingungen
+Verschiebung_RB=zeros(numnp,3);
+for i=1:length(displ)
+  % displ(i,1) entspricht der Knotennummer
+  % displ(i,2) entspricht dem Freiheitsgrad
+  % displ(i,3) entspricht dem Verschiebungswert
+  % Null-Verschiebungen mit "1" markieren
+  if displ(i,3)==0
+    Verschiebung_RB(displ(i,1),displ(i,2))=1;
+  % Negative Verschiebungs-RBen mit "-2" markieren
+  elseif displ(i,3)<0
+    Verschiebung_RB(displ(i,1),displ(i,2))=-2;
+  % Positive Verschiebungs-RBen mit "2" markieren
+  elseif displ(i,3)>0
+    Verschiebung_RB(displ(i,1),displ(i,2))=2;
+  % wieso nicht einfach:
+  % Nicht-Null-Verschiebungs-RBen mit "2" markieren
+  % else
+  %   Verschiebung_RB(displ(i,1),displ(i,2))=2;
+  end
+end
+% Eintraege von Verschiebung_RB hintereinander als Vektor darstellen.
+% Dazu muss Verschiebung_RB transponiert werden.
+Verschiebung_RB=reshape(Verschiebung_RB',[],1);
+fprintf(fid,'%s\n','<DataArray type="Float64" Name="Verschiebung_RB" NumberOfComponents="3" format="ascii">');
+fprintf(fid,'%f ',Verschiebung_RB);
+fprintf(fid,'\n%s\n','</DataArray>');
+
 %Ende des PointData-Feldes
 fprintf(fid,'%s\n','</PointData>');
 
