@@ -89,10 +89,6 @@ for i=1:length(displ)
   % Positive Verschiebungs-RBen mit "2" markieren
   elseif displ(i,3)>0
     Verschiebung_RB(displ(i,1),displ(i,2))=2;
-  % wieso nicht einfach:
-  % Nicht-Null-Verschiebungs-RBen mit "2" markieren
-  % else
-  %   Verschiebung_RB(displ(i,1),displ(i,2))=2;
   end
 end
 % Eintraege von Verschiebung_RB hintereinander als Vektor darstellen.

@@ -1,8 +1,3 @@
-# trace generated using paraview version 5.7.0
-#
-# To ensure correct image size when batch processing, please search
-# for and uncomment the line `# renderView*.ViewSize = [*,*]`
-
 #### import the simple module from the paraview
 from paraview.simple import *   # fuer GetActiveSource(), GetActiveViewOrCreate(), ...
 
@@ -23,8 +18,6 @@ programmableFilter1.PythonPath = ''
 
 # get active view
 renderView1 = GetActiveViewOrCreate('RenderView')
-# uncomment following to set a specific view size
-# renderView1.ViewSize = [1870, 821]
 
 # show data in view
 programmableFilter1Display = Show(programmableFilter1, renderView1)
