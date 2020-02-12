@@ -85,6 +85,7 @@ for i in range(numPts):
         # Werte mit Null initialisieren
         displ_fix_x.SetComponent(i,j,0)
         displ_fix_y.SetComponent(i,j,0)
+        displ_fix_z.SetComponent(i,j,0)
         displ_load.SetComponent(i,j,0)
 
         # Werte ggf. ueberschreiben, falls 1,2,-2
