@@ -1,5 +1,6 @@
 #### import the simple module from the paraview
 from paraview.simple import *   # fuer GetActiveSource(), GetActiveViewOrCreate(), ...
+import math
 
 src = GetActiveSource()
 
@@ -88,7 +89,7 @@ for i in range(numPts):
         displ_fix_z.SetComponent(i,j,0)
         displ_load.SetComponent(i,j,0)
 
-        # Werte ggf. ueberschreiben, falls 1,2,-2
+        # Werte ggf. ueberschreiben, falls 1,2
         if pdi.GetPointData().GetArray('Verschiebung_RB').GetComponent(i,j)==1:
             if j==0:
                 displ_fix_x.SetComponent(i,0,1)
@@ -98,9 +99,8 @@ for i in range(numPts):
                 displ_fix_z.SetComponent(i,2,1)
 
         elif pdi.GetPointData().GetArray('Verschiebung_RB').GetComponent(i,j)==2:
-            displ_load.SetComponent(i,j,2)
-        elif pdi.GetPointData().GetArray('Verschiebung_RB').GetComponent(i,j)==-2:
-            displ_load.SetComponent(i,j,-2)
+            tempval = pdi.GetPointData().GetArray('Verschiebungen').GetComponent(i,j)
+            displ_load.SetComponent(i,j,tempval)
 
 
 pdo.GetPointData().AddArray(displ_fix_x)
@@ -113,6 +113,25 @@ pdo.GetPointData().AddArray(displ_load)
 
 data = servermanager.Fetch(src)
 
+# Vorgehen im kommenden Block, vgl. mit KraftRB.py
+# Zweck: Berechnung der betragsmaessig groessten Verschiebung
+#        zur Normierung aller Verschiebungen auf diesen Maximalwert
+#        fuer die spaetere Anzeige als Glyph in ParaView
+d = []
+nodedisp = []
+disparray = data.GetPointData().GetArray('Verschiebungen')
+# durchlaufe alle Knoten
+for i in range(data.GetNumberOfPoints()):
+  # durchlaufe alle Komponenten des Knotens
+  for j in range(disparray.GetNumberOfComponents()):
+    dcomp = disparray.GetComponent(i,j)
+    # berechne das Quadrat der Verschiebungskomponente
+    d.append(dcomp*dcomp)
+  # addiere die quadrierten Verschiebungskomponenten auf und ziehe Wurzel
+  nodedisp.append(math.sqrt(sum(d)))
+  # setze Liste mit temporaeren Verschiebungskomponenten wieder auf Null
+  d = []
+
 dim=[]
 k=0
 #dim sind die Dimensionen des Bauteils
@@ -123,7 +142,8 @@ while k <len(lim):
   dim.append(abs(limtemp))
   k=k+2
 
-scale=min(dim)/10.0
+scale_fix=min(dim)/10.0
+scale_load=min(dim)/max(nodedisp)
 
 # update the view to ensure updated data information
 renderView1.Update()
@@ -141,7 +161,7 @@ glyph_displ_fix_x = Glyph(Input=programmableFilter1,
     GlyphType='Arrow')
 glyph_displ_fix_x.OrientationArray = ['POINTS', 'No orientation array']
 glyph_displ_fix_x.ScaleArray = ['POINTS', 'No scale array']
-glyph_displ_fix_x.ScaleFactor = scale
+glyph_displ_fix_x.ScaleFactor = scale_fix
 glyph_displ_fix_x.GlyphTransform = 'Transform2'
 
 # show data in view
@@ -197,7 +217,7 @@ glyph_displ_fix_y = Glyph(Input=programmableFilter1,
     GlyphType='Arrow')
 glyph_displ_fix_y.OrientationArray = ['POINTS', 'No orientation array']
 glyph_displ_fix_y.ScaleArray = ['POINTS', 'No scale array']
-glyph_displ_fix_y.ScaleFactor = scale
+glyph_displ_fix_y.ScaleFactor = scale_fix
 glyph_displ_fix_y.GlyphTransform = 'Transform2'
 
 # show data in view
@@ -253,7 +273,7 @@ glyph_displ_fix_z = Glyph(Input=programmableFilter1,
     GlyphType='Arrow')
 glyph_displ_fix_z.OrientationArray = ['POINTS', 'No orientation array']
 glyph_displ_fix_z.ScaleArray = ['POINTS', 'No scale array']
-glyph_displ_fix_z.ScaleFactor = scale
+glyph_displ_fix_z.ScaleFactor = scale_fix
 glyph_displ_fix_z.GlyphTransform = 'Transform2'
 
 # show data in view
@@ -309,7 +329,7 @@ glyph_displ_load = Glyph(Input=programmableFilter1,
     GlyphType='Arrow')
 glyph_displ_load.OrientationArray = ['POINTS', 'No orientation array']
 glyph_displ_load.ScaleArray = ['POINTS', 'No scale array']
-glyph_displ_load.ScaleFactor = scale
+glyph_displ_load.ScaleFactor = scale_load
 glyph_displ_load.GlyphTransform = 'Transform2'
 
 # show data in view

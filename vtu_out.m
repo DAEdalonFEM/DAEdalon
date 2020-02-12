@@ -83,11 +83,8 @@ for i=1:length(displ)
   % Null-Verschiebungen mit "1" markieren
   if displ(i,3)==0
     Verschiebung_RB(displ(i,1),displ(i,2))=1;
-  % Negative Verschiebungs-RBen mit "-2" markieren
-  elseif displ(i,3)<0
-    Verschiebung_RB(displ(i,1),displ(i,2))=-2;
-  % Positive Verschiebungs-RBen mit "2" markieren
-  elseif displ(i,3)>0
+  % Nicht-Null-Verschiebungen mit "2" markieren
+  else
     Verschiebung_RB(displ(i,1),displ(i,2))=2;
   end
 end
