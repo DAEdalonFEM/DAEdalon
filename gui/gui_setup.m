@@ -76,7 +76,7 @@ end
 if mat_oct_flag          % --> octave            % HBaa - 17.12.2015
     warning('off', 'Octave:GraphicsMagic-Quantum-Depth')
 end
- 
+
 if ~isempty(findobj('Name','DAEControl'))
     return
 end
@@ -116,7 +116,12 @@ gui_close = uimenu(dae_menu,'Label','&Close GUI','Callback','CB_GUI_close');
 dae_web   = uimenu(fid_dae,'Label','DAE&Online','Callback','dae_link');
 
 % GUI aufrufen
-z = dlmread('./gui/gui_check.txt');
+try
+    z = dlmread('./gui/gui_check.txt');
+catch
+    dlmwrite('./gui/gui_check.txt', '0');
+    z = dlmread('./gui/gui_check.txt');
+end
 
 if z == 1
     DAEGui_dummy
