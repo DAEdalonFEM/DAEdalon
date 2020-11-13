@@ -115,8 +115,11 @@ fprintf(fid,'\n%s\n','</DataArray>');
 
 %vtk-spezifische Elementnummern definieren (bei "quadratischen" Elementen nur zus. Kantenknoten beruecksichtigt)
 if ndm==2
+    % lin. Linie
+    if nel==2
+        vtktype=3;
     % lin. Tri
-    if nel==3
+    elseif nel==3
         vtktype=5;
     % lin. Quad
     elseif nel==4
@@ -129,8 +132,11 @@ if ndm==2
         vtktype=23;
     end
 elseif ndm==3
+    % lin. Linie
+    if nel==2
+        vtktype=3;
     % lin. Tet
-    if nel==4
+    elseif nel==4
         vtktype=10;
     % lin. Hex
     elseif nel==8
