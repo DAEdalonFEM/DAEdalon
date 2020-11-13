@@ -44,11 +44,10 @@ vers_nr = sscanf(version,'%f');
 % Infos ausgeben und Logo im Grafikfenster plotten
 
 % Aktuelle Versionsnummer
-%versnum = 2.10;                 % online  -  2016-08-23
-versnum = 2.11;                 % online  -  2016-10-16
+versnum = '3.2';
 
 disp(sprintf('\nDAEdalon Finite-Element-Project'))
-disp(sprintf('Version: %3.2f',versnum))
+disp(sprintf(['Version ',versnum]))
 disp(sprintf(['This Project is placed under the GNU General ', ...
 	      'Public License\n(for Details read file COPYING.TXT).']))
 disp(sprintf('Contact: http://www.daedalon.org'))
@@ -95,7 +94,7 @@ axis image;
 
 set(gca,'XTick',[])
 set(gca,'YTick',[])
-text(20,620,['Version ',num2str(versnum)],'fontsize',16,'color','b')
+text(20,620,['Version ',versnum],'fontsize',16,'color','b')
 xlabel('www.DAEdalon.org','fontsize',16)
 % Ende dae.m
 
