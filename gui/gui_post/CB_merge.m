@@ -101,18 +101,18 @@ ytitle = yls + 5.1*Bh;
 fid_merge = figure('NumberTitle','off',...
                    'Name','merge.pl',...
                    'menubar','none');
- 
+
 % Check ob Info Fenster offen
 if ishghandle('Name','Info: merge.pl')
     p = get(fid_merge_info,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');
 end
-             
+
 % merge.pl-Fenster: Innenmass einelsen
 pi_merge = get(fid_merge,'pos');
 
-% Groesse für Eingabe-Fenster initialisieren und zuweisen
+% Groesse fuer Eingabe-Fenster initialisieren und zuweisen
 pi_merge(1) = pi_merge(1);
 pi_merge(2) = pi_merge(2);
 pi_merge(3) = 3*Bw+1.4*Bh;
@@ -123,7 +123,7 @@ set(fid_merge,'pos',pi_merge)
 % merge.pl-Fenster: Aussenmass einelsen
 po_merge = get(fid_merge,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_merge(1) = p(1);
 po_merge(2) = p(2) - po_merge(4);
 po_merge(3) = po_merge(3);
@@ -161,7 +161,7 @@ I1_merge = uicontrol(fid_merge,'Style','edit',...
                            'String','',...
                            'BackGroundColor','w',...
                            'pos',pI1);
-                  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2. Parameter: Knotenfile
 pT2(1) = 0.5*Bh;
@@ -211,7 +211,7 @@ I3_merge = uicontrol(fid_merge,'Style','edit',...
                            'HorizontalAlignment','left',...
                            'BackGroundColor','w',...
                            'pos',pI3);
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 4. Parameter: Sortieren nach Spalte
 pT4(1) = 0.5*Bh;
@@ -235,7 +235,7 @@ I4_merge = uicontrol(fid_merge,'Style','edit',...
                                'String','1',...
                                'BackGroundColor','w',...
                                'pos',pI4);
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Buttons anlegen
 
@@ -276,7 +276,7 @@ pB3(4) = Bh;
 B3 = uicontrol(fid_merge,'Style','pushbutton',...
                          'String','apply',...
                          'pos',pB3);
-                   
+
 set(B3,'Callback','CB_merge_apply');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

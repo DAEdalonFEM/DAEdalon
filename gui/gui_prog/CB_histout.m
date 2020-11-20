@@ -64,7 +64,7 @@ fid_histout = figure('NumberTitle','off',...
                      'Name','histout(NAME)',...
                      'menubar','none');
 
-% ProgFlow-Fenster: Aussenmass einlesen              
+% ProgFlow-Fenster: Aussenmass einlesen
 p_prog = get(fid_prog,'OuterPosition');
 
 % histout-Fenster: Innenmass einlesen
@@ -81,10 +81,10 @@ set(fid_histout,'pos',pi_histout)
 % histout-Fenster: Aussenmass einlesen
 po_histout = get(fid_histout,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 if ishghandle('Name','out(NAME)')
     po_out = get(fid_out,'OuterPosition');
-    
+
     po_histout(1) = po_out(1);
     po_histout(2) = po_out(2) - po_histout(4);
     po_histout(3) = po_histout(3);
@@ -93,7 +93,7 @@ else
     po_histout(1) = p_prog(1);
     po_histout(2) = p_prog(2) - po_histout(4);
     po_histout(3) = po_histout(3);
-    po_histout(4) = po_histout(4);             
+    po_histout(4) = po_histout(4);
 end
 
 set(fid_histout,'OuterPosition',po_histout)

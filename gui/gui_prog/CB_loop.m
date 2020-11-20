@@ -66,7 +66,7 @@ fid_time = figure('NumberTitle','off',...
                   'Name','Zeitschritte',...
                   'menubar','none');
 
-% ProgFlow-Fenster: Aussenmass einlesen              
+% ProgFlow-Fenster: Aussenmass einlesen
 p_prog = get(fid_prog,'OuterPosition');
 
 % Zeitschritte-Fenster: Innenmass einlesen
@@ -83,11 +83,11 @@ set(fid_time,'pos',pi_time)
 % Zeitschritte-Fenster: Aussenmass einlesen
 po_time = get(fid_time,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_time(1) = p_prog(1);
 po_time(2) = p_prog(2) - po_time(4);
 po_time(3) = po_time(3);
-po_time(4) = po_time(4);             
+po_time(4) = po_time(4);
 
 set(fid_time,'OuterPosition',po_time)
 set(fid_time,'Resize','off')
@@ -163,7 +163,7 @@ T  = uicontrol(fid_time,'Style','text',...
                         'HorizontalAlignment','left',...
                         'pos',pT,...
                         'BackgroundColor',cT);
-                    
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Vor und Zurueck Buttons
 
@@ -189,4 +189,4 @@ pBff(4) = Bh;
 Brew = uicontrol(fid_time,'Style','pushbutton',...
                           'String','>>',...
                           'pos',pBff,...
-                          'Callback','CB_loop_ff');                    
+                          'Callback','CB_loop_ff');

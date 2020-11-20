@@ -84,7 +84,7 @@ set(fid_prog,'Resize','off');
 % ProgFlow-Fenster: Innenmass einlesen
 pi_prog   = get(fid_prog,'Position');
 
-% Größe des ProgFlow-Fensters deklarieren und zuweisen
+% Groesse des ProgFlow-Fensters deklarieren und zuweisen
 pi_prog(1) = pi_prog(1);
 pi_prog(2) = pi_prog(2);
 pi_prog(3) = pi_dc(3);

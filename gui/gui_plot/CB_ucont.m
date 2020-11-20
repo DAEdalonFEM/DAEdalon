@@ -72,7 +72,7 @@ X = 0;
 fid_ucont = figure('NumberTitle','off',...
                    'Name','ucont(X)',...
                    'MenuBar','none');
-              
+
 % PlotControl-Fenster: Aussenmass einlesen
 p_plot  = get(fid_plot,'OuterPosition');
 
@@ -89,8 +89,8 @@ set(fid_ucont,'pos',pi_ucont)
 
 % ucont(X)-Fenster: Aussenmass einlesen
 po_ucont = get(fid_ucont,'OuterPosition');
-              
-% Position für Eingabe-Fenster ableiten und zuweisen
+
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_ucont(1) = p_plot(1);
 po_ucont(2) = p_plot(2) - po_ucont(4);
 po_ucont(3) = po_ucont(3);
@@ -173,7 +173,7 @@ T  = uicontrol(fid_ucont,'Style','text',...
                          'HorizontalAlignment','left',...
                          'pos',pT,...
                          'BackgroundColor',cT);
-                    
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Vor und Zurueck Buttons
 

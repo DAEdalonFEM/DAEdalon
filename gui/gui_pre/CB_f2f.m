@@ -68,11 +68,11 @@ fid_f2f = figure('NumberTitle','off',...
 
 % PreProcess-Fenster: Aussenmass einlesen
 p_pre  = get(fid_pre,'OuterPosition');
-             
+
 % FEAP-Input-Fenster: Innenmass einelsen
 pi_f2f = get(fid_f2f,'pos');
 
-% Groesse für Eingabe-Fenster initialisieren und zuweisen
+% Groesse fuer Eingabe-Fenster initialisieren und zuweisen
 pi_f2f(1) = pi_f2f(1);
 pi_f2f(2) = pi_f2f(2);
 pi_f2f(3) = 3*Bw+1.4*Bh;
@@ -83,7 +83,7 @@ set(fid_f2f,'pos',pi_f2f)
 % FEAP-Input-Fenster: Aussenmass einelsen
 po_f2f = get(fid_f2f,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_f2f(1) = p_pre(1);
 po_f2f(2) = p_pre(2) - po_f2f(4);
 po_f2f(3) = po_f2f(3);
@@ -133,7 +133,7 @@ pB3(4) = Bh;
 B3 = uicontrol(fid_f2f,'Style','pushbutton',...
                        'String','apply',...
                        'pos',pB3);
-                   
+
 set(B3,'Callback','CB_f2f_apply');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

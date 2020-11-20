@@ -36,7 +36,7 @@ global X;
 % Doppelklick
 i = get(ls,'Value');
 
-% Skript bereits durch Doppelklick ausgeführt
+% Skript bereits durch Doppelklick ausgefuehrt
 if i == X
     delete(fid_f2f)
     return

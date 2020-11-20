@@ -80,7 +80,7 @@ set(fid_pre,'Resize','off');
 % PreProcess-Fenster: Innenmass einlesen
 pi_pre   = get(fid_pre,'pos');
 
-% Größe des PreProcess-Fensters deklarieren und zuweisen
+% Groesse des PreProcess-Fensters deklarieren und zuweisen
 pi_pre(1) = pi_pre(1);
 pi_pre(2) = pi_pre(2);
 pi_pre(3) = pi_dc(3);

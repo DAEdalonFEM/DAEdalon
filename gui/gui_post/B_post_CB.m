@@ -51,8 +51,8 @@ if ishghandle('Name','PostProcess')
     if ishghandle('Name','sel_nodes.pl')
         figure(fid_sn)
     end
-    
-    
+
+
     return
 end
 
@@ -82,13 +82,13 @@ fid_post = figure('NumberTitle','off',...
                   'Name','PostProcess',...
                   'MenuBar','none',...
                   'CloseRequestFcn','CRF_PostProcess');
-             
+
 set(fid_post,'Resize','off');
-             
+
 % PostProcess-Fenster: Innenmass einlesen
 pi_post   = get(fid_post,'pos');
-     
-% Größe des PostProcess-Fensters deklarieren und zuweisen
+
+% Groesse des PostProcess-Fensters deklarieren und zuweisen
 pi_post(1) = pi_post(1);
 pi_post(2) = pi_post(2);
 pi_post(3) = pi_dc(3);
@@ -133,7 +133,7 @@ pB1_help(4) = Bh;
 %                              'String','?',...
 %                              'pos',pB1_help,...
 %                              'Callback','CB_sel_nodes_info');
-                         
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 2
 % Groesse deklarieren und zuweisen
@@ -146,8 +146,8 @@ B2 = uicontrol(fid_post,'Style','pushbutton',...
                         'String','sig_u.pl',...
                         'pos',pB2,...
                         'Callback','CB_sig_u');
-                   
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 3
 % Groesse deklarieren und zuweisen
 pB3(1) = pB1(1);
@@ -160,7 +160,7 @@ B3 = uicontrol(fid_post,'Style','pushbutton',...
                         'pos',pB3,...
                         'Callback','CB_get_value');
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 4
 % Groesse deklarieren und zuweisen
 pB4(1) = pB1(1);
@@ -172,8 +172,8 @@ B4 = uicontrol(fid_post,'Style','pushbutton',...
                         'String','get_val2.pl',...
                         'pos',pB4,...
                         'Callback','CB_get_val2');
-                    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 5
 % Groesse deklarieren und zuweisen
 pB5(1) = pB1(1);

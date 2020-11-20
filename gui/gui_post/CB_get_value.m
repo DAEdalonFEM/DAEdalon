@@ -105,11 +105,11 @@ if ishghandle('Name','Info: get_value.pl')
 else
     p = get(fid_post,'OuterPosition');
 end
-             
+
 % get_value.pl-Fenster: Innenmass einelsen
 pi_gv = get(fid_gv,'pos');
 
-% Groesse für Eingabe-Fenster initialisieren und zuweisen
+% Groesse fuer Eingabe-Fenster initialisieren und zuweisen
 pi_gv(1) = pi_gv(1);
 pi_gv(2) = pi_gv(2);
 pi_gv(3) = 3*Bw+1.4*Bh;
@@ -120,7 +120,7 @@ set(fid_gv,'pos',pi_gv)
 % get_value.pl-Fenster: Aussenmass einelsen
 po_gv = get(fid_gv,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_gv(1) = p(1);
 po_gv(2) = p(2) - po_gv(4);
 po_gv(3) = po_gv(3);
@@ -158,7 +158,7 @@ I1_gv = uicontrol(fid_gv,'Style','edit',...
                          'String','',...
                          'BackGroundColor','w',...
                          'pos',pI1);
-                  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2. Parameter: Zeilennummer
 pT2(1) = 0.5*Bh;
@@ -206,7 +206,7 @@ I3_gv = uicontrol(fid_gv,'Style','edit',...
                          'String','',...
                          'BackGroundColor','w',...
                          'pos',pI3);
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Buttons anlegen
 
@@ -247,7 +247,7 @@ pB3(4) = Bh;
 B3 = uicontrol(fid_gv,'Style','pushbutton',...
                        'String','apply',...
                        'pos',pB3);
-                   
+
 set(B3,'Callback','CB_get_value_apply');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -83,13 +83,13 @@ pi_dc = get(fid_dc,'pos');
 fid_opt = figure('NumberTitle','off',...
                  'Name','DAEOptions',...
                  'MenuBar','none');
-             
-set(fid_opt,'Resize','off')             
+
+set(fid_opt,'Resize','off')
 
 % DAEOptions-Fenster: Innenmass einlesen
 pi_opt   = get(fid_opt,'Position');
 
-% Größe des PlotControl-Fensters deklarieren und zuweisen
+% Groesse des PlotControl-Fensters deklarieren und zuweisen
 pi_opt(1) = pi_opt(1);
 pi_opt(2) = pi_opt(2);
 pi_opt(3) = 3*Bw+1.4*Bh;
@@ -156,7 +156,7 @@ T_sf = uicontrol(fid_opt,'Style','text',...
                          'String','sparse_flag',...
                          'HorizontalAlignment','left',...
                          'BackgroundColor',cT);
-                       
+
 Th_sf = get(T_sf,'Extent');
 pT_sf(4) = Th_sf(4);
 set(T_sf,'pos',pT_sf)
@@ -184,7 +184,7 @@ C_sf = uicontrol(fid_opt,'Style','checkbox',...
                          'String',stat_sf,...
                          'Value',val_sf,...
                          'BackGroundColor',cc);
-                      
+
 set(C_sf,'pos',pC_sf)
 set(C_sf,'Callback','CB_check_sf')
 
@@ -199,7 +199,7 @@ T_lf = uicontrol(fid_opt,'Style','text',...
                          'String','load_flag',...
                          'HorizontalAlignment','left',...
                          'BackgroundColor',cT);
-                       
+
 Th_lf = get(T_lf,'Extent');
 pT_lf(4) = Th_lf(4);
 set(T_lf,'pos',pT_lf)
@@ -229,7 +229,7 @@ C_lf = uicontrol(fid_opt,'Style','checkbox',...
                          'String',stat_lf,...
                          'Value',val_lf,...
                          'BackGroundColor',cc);
-                      
+
 set(C_lf,'pos',pC_lf)
 set(C_lf,'Callback','CB_check_lf')
 
@@ -244,7 +244,7 @@ T_mf = uicontrol(fid_opt,'Style','text',...
                          'String','movie_flag',...
                          'HorizontalAlignment','left',...
                          'BackgroundColor',cT);
-                       
+
 Th_mf = get(T_mf,'Extent');
 pT_mf(4) = Th_mf(4);
 set(T_mf,'pos',pT_mf)
@@ -272,7 +272,7 @@ C_mf = uicontrol(fid_opt,'Style','checkbox',...
                          'String',stat_mf,...
                          'Value',val_mf,...
                          'BackGroundColor',cc);
-                      
+
 set(C_mf,'pos',pC_mf)
 set(C_mf,'Callback','CB_check_mf')
 
@@ -287,7 +287,7 @@ T_dt = uicontrol(fid_opt,'Style','text',...
                          'String','dt',...
                          'HorizontalAlignment','left',...
                          'BackgroundColor',cT);
-                       
+
 Th_dt = get(T_dt,'Extent');
 pT_dt(4) = Th_dt(4);
 set(T_dt,'pos',pT_dt)
@@ -307,7 +307,7 @@ global E_dt;
 E_dt = uicontrol(fid_opt,'Style','edit',...
                          'String',dt,...
                          'BackgroundColor','w');
-                       
+
 set(E_dt,'pos',pE_dt)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -323,7 +323,7 @@ T_scal = uicontrol(fid_opt,'Style','text',...
                            'String','defo_scal',...
                            'HorizontalAlignment','left',...
                            'BackgroundColor',cT);
-                       
+
 Th_scal = get(T_scal,'Extent');
 pT_scal(4) = Th_scal(4);
 set(T_scal,'pos',pT_scal)
@@ -344,7 +344,7 @@ global E_scal;
 E_scal = uicontrol(fid_opt,'Style','edit',...
                            'String',defo_scal,...
                            'BackgroundColor','w');
-                       
+
 set(E_scal,'pos',pE_scal)
 
 % 3. Stufe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -358,7 +358,7 @@ T_out = uicontrol(fid_opt,'Style','text',...
                           'String','out_file_name',...
                           'HorizontalAlignment','left',...
                           'BackgroundColor',cT);
-                       
+
 Th_out = get(T_out,'Extent');
 pT_out(4) = Th_out(4);
 set(T_out,'pos',pT_out)
@@ -379,10 +379,10 @@ E_out = uicontrol(fid_opt,'Style','edit',...
                           'String',out_file_name,...
                           'HorizontalAlignment','left',...
                           'BackgroundColor','w');
-                       
+
 set(E_out,'pos',pE_out)
 
-% 2. Stufe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                    
+% 2. Stufe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Textfeld 1: histout_file_name
 pT_hist(1) = x1;
@@ -395,7 +395,7 @@ T_hist = uicontrol(fid_opt,'Style','text',...
                            'BackgroundColor',cT);
 
 Th_hist = get(T_hist,'Extent');
-pT_hist(4) = Th_hist(4);                       
+pT_hist(4) = Th_hist(4);
 set(T_hist,'pos',pT_hist)
 
 % Eingabefeld fuer histout_file_name
@@ -415,7 +415,7 @@ E_hist = uicontrol(fid_opt,'Style','edit',...
                            'String',histout_file_name,...
                            'HorizontalAlignment','left',...
                            'BackgroundColor','w');
-                 
+
 set(E_hist,'pos',pE_hist)
 
 % c. Stufe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -431,7 +431,7 @@ T_oincr = uicontrol(fid_opt,'Style','text',...
                             'BackgroundColor',cT);
 
 Th_oincr = get(T_oincr,'Extent');
-pT_oincr(4) = Th_oincr(4);                       
+pT_oincr(4) = Th_oincr(4);
 set(T_oincr,'pos',pT_oincr)
 
 % Eingabefeld fuer rst_incr
@@ -449,7 +449,7 @@ global E_oincr;
 E_oincr = uicontrol(fid_opt,'Style','edit',...
                             'String',out_incr,...
                             'BackgroundColor','w');
-                 
+
 set(E_oincr,'pos',pE_oincr)
 
 % b. Stufe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -465,7 +465,7 @@ T_rst = uicontrol(fid_opt,'Style','text',...
                           'BackgroundColor',cT);
 
 Th_rst = get(T_rst,'Extent');
-pT_rst(4) = Th_rst(4);                       
+pT_rst(4) = Th_rst(4);
 set(T_rst,'pos',pT_rst)
 
 % Eingabefeld fuer rst_file_name
@@ -484,7 +484,7 @@ E_rst = uicontrol(fid_opt,'Style','edit',...
                           'String',rst_file_name,...
                           'HorizontalAlignment','left',...
                           'BackgroundColor','w');
-                 
+
 set(E_rst,'pos',pE_rst)
 
 % a. Stufe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -500,7 +500,7 @@ T_rincr = uicontrol(fid_opt,'Style','text',...
                             'BackgroundColor',cT);
 
 Th_rincr = get(T_rincr,'Extent');
-pT_rincr(4) = Th_rincr(4);                       
+pT_rincr(4) = Th_rincr(4);
 set(T_rincr,'pos',pT_rincr)
 
 % Eingabefeld fuer rst_incr
@@ -517,7 +517,7 @@ global E_rincr;
 E_rincr = uicontrol(fid_opt,'Style','edit',...
                             'String',rst_incr,...
                             'BackgroundColor','w');
-                 
+
 set(E_rincr,'pos',pE_rincr)
 
 % 1. Stufe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -545,7 +545,7 @@ B2 = uicontrol(fid_opt,'Style','pushbutton',...
                        'String','cancel',...
                        'pos',pB2,...
                        'Callback','CB_cancel');
-                   
+
 % Button 3: apply
 % Groesse deklarieren und zuweisen
 pB3(1) = pB2(1) + Bw + 0.2*Bh;

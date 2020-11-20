@@ -92,13 +92,13 @@ fid_plot = figure('NumberTitle','off',...
                   'Name','PlotControl',...
                   'MenuBar','none',...
                   'CloseRequestFcn','CRF_PlotControl');
-              
-set(fid_plot,'Resize','off')              
+
+set(fid_plot,'Resize','off')
 
 % PlotControl-Fenster: Innenmass einlesen
 pi_plot   = get(fid_plot,'Position');
 
-% Größe des PlotControl-Fensters deklarieren und zuweisen
+% Groesse des PlotControl-Fensters deklarieren und zuweisen
 pi_plot(1) = pi_plot(1);
 pi_plot(2) = pi_plot(2);
 pi_plot(3) = pi_dc(3);
@@ -276,7 +276,7 @@ B13 = uicontrol(fid_plot,'Style','pushbutton',...
                          'String','cont_sm',...
                          'pos',pB13,...
                          'Callback','CB_cont_sm');
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 14
 % Groesse deklarieren und zuweisen
@@ -289,7 +289,7 @@ B14 = uicontrol(fid_plot,'Style','pushbutton',...
                          'String','ucont_sm',...
                          'pos',pB14,...
                          'Callback','CB_ucont_sm');
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 9
 % Groesse deklarieren und zuweisen
@@ -316,6 +316,6 @@ B11 = uicontrol(fid_plot,'Style','pushbutton',...
                          'String','reac',...
                          'pos',pB11,...
                          'Callback','reac');
-                     
+
 
 
