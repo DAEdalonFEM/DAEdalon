@@ -98,11 +98,11 @@ fprintf(fid,'\n%s\n','</DataArray>');
 %Ende des PointData-Feldes
 fprintf(fid,'%s\n','</PointData>');
 
-%Innerhalb des Cell Felds stehen Informationen über Konnektivität der
+%Innerhalb des Cell Felds stehen Informationen ueber Konnektivitaet der
 %Elemente, offsets und Typ der Elemente
 fprintf(fid,'%s\n','<Cells>');
 
-%Konnektivität
+%Konnektivitaet
 fprintf(fid,'%s\n','<DataArray type="Int32" Name="connectivity" format="ascii">');
 fprintf(fid,'%i ',(el-1)');
 fprintf(fid,'\n%s\n','</DataArray>');
