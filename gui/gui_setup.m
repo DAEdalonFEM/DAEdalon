@@ -74,6 +74,7 @@ end
 
 if mat_oct_flag          % --> octave            % HBaa - 17.12.2015
     warning('off', 'Octave:GraphicsMagic-Quantum-Depth')
+    warning('off', 'Octave:abbreviated-property-match') % StBe, 20.11.2020 (Warnungen erschienen z.B. in DAEGui.m beim Setzen der Buttongroesse)
 end
 
 if ~isempty(findobj('Name','DAEControl'))
