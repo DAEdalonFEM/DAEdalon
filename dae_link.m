@@ -2,11 +2,10 @@ function dae_link
 
 sys = computer;
 if isunix
-    check = unix('rpm --query netscape');
-    if ~check
-        unix('netscape www.daedalon.org');
-    else
-        disp('Netscape nicht gefunden!')
+    try
+        unix('xdg-open http://www.daedalon.org')
+    catch
+        disp('Browser konnte nicht geoeffnet werden!')
     end
 end
 
