@@ -50,24 +50,24 @@ global sparse_flag;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob bereits ein Menu-Fenster offen, ggf. aktivieren
-if ishghandle('Name','DAEOptions')
+if not(isempty(findobj('Name','DAEOptions')))
     figure(fid_opt)
     return
 end
 
-if ishghandle('Name','PlotControl')
+if not(isempty(findobj('Name','PlotControl')))
     close(fid_plot)
 end
 
-if ishghandle('Name','PreProcess')
+if not(isempty(findobj('Name','PreProcess')))
     close(fid_pre)
 end
 
-if ishghandle('Name','ProgFlow')
+if not(isempty(findobj('Name','ProgFlow')))
     close(fid_prog)
 end
 
-if ishghandle('Name','PostProcess')
+if not(isempty(findobj('Name','PostProcess')))
     close(fid_post)
 end
 

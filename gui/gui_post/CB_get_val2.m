@@ -53,29 +53,29 @@ global ls;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein get_val2.pl-Fenster offen, ggf. aktivieren
-if ishghandle('Name','get_val2.pl')
+if not(isempty(findobj('Name','get_val2.pl')))
     figure(fid_gv2)
     return
 end
 
 % Check ob bereits ein anderes script-Fenster offen
-if ishghandle('Name','sel_nodes.pl')
+if not(isempty(findobj('Name','sel_nodes.pl')))
     delete(fid_sn)
 end
 
-if ishghandle('Name','Info: sel_nodes.pl')
+if not(isempty(findobj('Name','Info: sel_nodes.pl')))
     delete(fid_sn_info)
 end
 
-if ishghandle('Name','sig_u.pl')
+if not(isempty(findobj('Name','sig_u.pl')))
     delete(fid_su)
 end
 
-if ishghandle('Name','get_value.pl')
+if not(isempty(findobj('Name','get_value.pl')))
     delete(fid_gv)
 end
 
-if ishghandle('Name','merge.pl')
+if not(isempty(findobj('Name','merge.pl')))
     delete(fid_merge)
 end
 
@@ -100,7 +100,7 @@ fid_gv2 = figure('NumberTitle','off',...
                  'menubar','none');
 
 % Check ob Info Fenster offen
-if ishghandle('Name','Info: get_val2.pl')
+if not(isempty(findobj('Name','Info: get_val2.pl')))
     p = get(fid_gv2_info,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');

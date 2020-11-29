@@ -50,32 +50,32 @@ global contvar;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob bereits ein Menu-Fenster offen, ggf. schliessen
-if ishghandle('Name','PlotControl')
+if not(isempty(findobj('Name','PlotControl')))
     figure(fid_plot)
-    if ishghandle('Name','cont(X)')
+    if not(isempty(findobj('Name','cont(X)')))
         figure(fid_cont)
     end
-    if ishghandle('Name','cont_sm(X,Y)')
+    if not(isempty(findobj('Name','cont_sm(X,Y)')))
         figure(fid_cont_sm)
     end
-    if ishghandle('Name','ucont(X)')
+    if not(isempty(findobj('Name','ucont(X)')))
         figure(fid_ucont)
     end
-    if ishghandle('Name','ucont_sm(X,Y)')
+    if not(isempty(findobj('Name','ucont_sm(X,Y)')))
         figure(fid_ucont_sm)
     end
     return
 end
 
-if ishghandle('Name','PreProcess')
+if not(isempty(findobj('Name','PreProcess')))
     close(fid_pre)
 end
 
-if ishghandle('Name','ProgFlow')
+if not(isempty(findobj('Name','ProgFlow')))
     close(fid_prog)
 end
 
-if ishghandle('Name','DAEOptions')
+if not(isempty(findobj('Name','DAEOptions')))
     close(fid_opt)
 end
 

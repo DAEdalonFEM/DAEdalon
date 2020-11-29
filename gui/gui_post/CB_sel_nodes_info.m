@@ -50,13 +50,13 @@ global ls;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. aktivieren
-if ishghandle('Name','Info: sel_nodes.pl')
+if not(isempty(findobj('Name','Info: sel_nodes.pl')))
     figure(fid_sn_info)
     return
 end
 
 % Check ob bereits ein anderes script-Fenster offen
-if ishghandle('Name','sig_u.pl')
+if not(isempty(findobj('Name','sig_u.pl')))
     delete(fid_su)
 end
 
@@ -77,7 +77,7 @@ fid_sn_info = figure('NumberTitle','off',...
                      'CloseRequestFcn','crf_sn_info');
 
 % Check ob sel_nodes.pl Fenster offen
-if ishghandle('Name','sel_nodes.pl')
+if not(isempty(findobj('Name','sel_nodes.pl')))
     p = get(fid_sn,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');

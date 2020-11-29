@@ -33,7 +33,7 @@ function DAEGui_dummy
 %DAEGui
 %CB_GUI_close
 DAEGui
-B_pre_CB
-CB_f2f
-close(gcf)
-close(gcf)
+%B_pre_CB
+%CB_f2f
+%close(gcf)
+%close(gcf)

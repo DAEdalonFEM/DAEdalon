@@ -33,7 +33,7 @@ global fid_post;    % Figure ID PostProcess Fenster
 global fid_sn;      % Figure ID sel_nodes.pl
 global fid_sn_info; % Figure ID Info: sel_nodes.pl
 
-if ishghandle('NAME','sel_nodes.pl')
+if not(isempty(findobj('NAME','sel_nodes.pl')))
     p     = get(fid_post,'OuterPosition');
     po_sn = get(fid_sn,'OuterPosition');
     

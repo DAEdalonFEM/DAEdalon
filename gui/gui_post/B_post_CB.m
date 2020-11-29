@@ -46,9 +46,9 @@ global Bw;          % Breite Mini-Buttons
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. schliessen
-if ishghandle('Name','PostProcess')
+if not(isempty(findobj('Name','PostProcess')))
     figure(fid_post)
-    if ishghandle('Name','sel_nodes.pl')
+    if not(isempty(findobj('Name','sel_nodes.pl')))
         figure(fid_sn)
     end
 
@@ -56,19 +56,19 @@ if ishghandle('Name','PostProcess')
     return
 end
 
-if ishghandle('Name','PreProcess')
+if not(isempty(findobj('Name','PreProcess')))
     close(fid_pre)
 end
 
-if ishghandle('Name','ProgFlow')
+if not(isempty(findobj('Name','ProgFlow')))
     close(fid_prog)
 end
 
-if ishghandle('Name','PlotControl')
+if not(isempty(findobj('Name','PlotControl')))
     close(fid_plot)
 end
 
-if ishghandle('Name','DAEOptions')
+if not(isempty(findobj('Name','DAEOptions')))
     close(fid_opt)
 end
 

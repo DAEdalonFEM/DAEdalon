@@ -46,21 +46,21 @@ global Bw;          % Breite Mini-Buttons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob Fenster bereits offen
-if ishghandle('Name','cont_sm(X,Y)')
+if not(isempty(findobj('Name','cont_sm(X,Y)')))
     figure(fid_cont_sm)
     return
 end
 
 % Check ob ein anderes Eingabe-Fenster bereits offen
-if ishghandle('Name','cont(X)')
+if not(isempty(findobj('Name','cont(X)')))
     delete(fid_cont)
 end
 
-if ishghandle('Name','ucont(X)')
+if not(isempty(findobj('Name','ucont(X)')))
     delete(fid_ucont)
 end
 
-if ishghandle('Name','ucont_sm(X,Y)')
+if not(isempty(findobj('Name','ucont_sm(X,Y)')))
     delete(fid_ucont_sm)
 end
 

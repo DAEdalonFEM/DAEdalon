@@ -33,15 +33,15 @@ global fid_time
 global fid_out
 global fid_histout
 
-if ishghandle('Name','Zeitschritte')
+if not(isempty(findobj('Name','Zeitschritte')))
     delete(fid_time)
 end
 
-if ishghandle('Name','out(NAME)')
+if not(isempty(findobj('Name','out(NAME)')))
     delete(fid_out)
 end
 
-if ishghandle('Name','histout(NAME)')
+if not(isempty(findobj('Name','histout(NAME)')))
     delete(fid_histout)
 end
 
