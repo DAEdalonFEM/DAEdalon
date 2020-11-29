@@ -31,7 +31,7 @@ function CRF_PreProcess
 global fid_pre
 global fid_f2f
 
-if ishghandle('Name','FEAP-Input')
+if not(isempty(findobj('Name','FEAP-Input')))
     delete(fid_f2f)
 end
 

@@ -55,25 +55,25 @@ global X
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. aktivieren
-if ishghandle('Name','sel_nodes.pl')
+if not(isempty(findobj('Name','sel_nodes.pl')))
     figure(fid_sn)
     return
 end
 
 % Check ob bereits ein anderes script-Fenster offen
-if ishghandle('Name','sig_u.pl')
+if not(isempty(findobj('Name','sig_u.pl')))
     delete(fid_su)
 end
 
-if ishghandle('Name','get_value.pl')
+if not(isempty(findobj('Name','get_value.pl')))
     delete(fid_gv)
 end
 
-if ishghandle('Name','get_val2.pl')
+if not(isempty(findobj('Name','get_val2.pl')))
     delete(fid_gv2)
 end
 
-if ishghandle('Name','merge.pl')
+if not(isempty(findobj('Name','merge.pl')))
     delete(fid_merge)
 end
 
@@ -95,16 +95,16 @@ fid_sn = figure('NumberTitle','off',...
                 'menubar','none');
 
 % Check ob Info Fenster offen
-if ishghandle('Name','Info: sel_nodes.pl')
+if not(isempty(findobj('Name','Info: sel_nodes.pl')))
     p = get(fid_sn_info,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');
 end
-             
+
 % selnodes-Fenster: Innenmass einelsen
 pi_sn = get(fid_sn,'pos');
 
-% Groesse für Eingabe-Fenster initialisieren und zuweisen
+% Groesse fuer Eingabe-Fenster initialisieren und zuweisen
 pi_sn(1) = pi_sn(1);
 pi_sn(2) = pi_sn(2);
 pi_sn(3) = 3*Bw+1.4*Bh;
@@ -115,7 +115,7 @@ set(fid_sn,'pos',pi_sn)
 % selnodes-Fenster: Aussenmass einelsen
 po_sn = get(fid_sn,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_sn(1) = p(1);
 po_sn(2) = p(2) - po_sn(4);
 po_sn(3) = po_sn(3);
@@ -188,7 +188,7 @@ I1_sn = uicontrol(fid_sn,'Style','popupmenu',...
                          'String',dummy_names,...
                          'BackGroundColor','w',...
                          'pos',pI1);
-                  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2. Parameter: Outputfile
 pT2(1) = 0.5*Bh;
@@ -237,7 +237,7 @@ I3_sn = uicontrol(fid_sn,'Style','edit',...
                          'String','',...
                          'BackGroundColor','w',...
                          'pos',pI3);
-                  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 4. Parameter: y-Koordinate
 pT4(1) = 0.5*Bh;
@@ -325,7 +325,7 @@ pB3(4) = Bh;
 B3 = uicontrol(fid_sn,'Style','pushbutton',...
                        'String','apply',...
                        'pos',pB3);
-                   
+
 set(B3,'Callback','CB_sel_nodes_apply');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

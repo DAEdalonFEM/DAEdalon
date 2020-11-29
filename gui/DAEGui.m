@@ -61,7 +61,7 @@ po_dc(4) = dc_h;
 
 % DAEControl-Fenster initialisieren und Attribute zuweisen
 fid_dc   = figure('NumberTitle','off',...
-                  'Name','DAEControl',...                  
+                  'Name','DAEControl',...
                   'MenuBar','none',...
                   'CloseRequestFcn','CB_GUI_close');
 
@@ -71,9 +71,9 @@ set(fid_dc,'Resize','off')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DAEControl-Fenster: Innen-Masse einlesen
 pi_dc    = get(fid_dc,'pos');
- 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Buttons: Masse zur Übergabe in globale Variablen schreiben
+% Buttons: Masse zur Uebergabe in globale Variablen schreiben
 
 % Hauptmenu-Buttons: Breite Bw_dc
 Bw_dc = pi_dc(3);

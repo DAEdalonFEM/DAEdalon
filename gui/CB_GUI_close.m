@@ -43,31 +43,31 @@ global fid_opt     % Figure ID DAEOptions-Menu
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fenster schliessen
-if ishghandle('Name','PreProcess')
+if not(isempty(findobj('Name','PreProcess')))
     close(fid_pre)              % schliesst PreProcess-Menu und dessen Untermenus
     set_gui_status              % aktiviert GUI-Schalter
     return
 end
 
-if ishghandle('Name','ProgFlow')
+if not(isempty(findobj('Name','ProgFlow')))
     close(fid_prog)             % schliesst ProgFlow-Menu und dessen Untermenus
     set_gui_status              % schliesst DAEControl-Menu und aktiviert GUI-Schalter
     return
 end
 
-if ishghandle('Name','PlotControl')
+if not(isempty(findobj('Name','PlotControl')))
     close(fid_plot)             % schliesst PlotControl-Menu und dessen Untermenus
     set_gui_status              % schliesst DAEControl-Menu und aktiviert GUI-Schalter
     return
 end
 
-if ishghandle('Name','PostProcess')
+if not(isempty(findobj('Name','PostProcess')))
     close(fid_post)             % schliesst PostProcess-Menu und dessen Untermenus
     set_gui_status              % schliesst DAEControl-Menu und aktiviert GUI-Schalter
     return
 end
 
-if ishghandle('Name','DAEOptions')
+if not(isempty(findobj('Name','DAEOptions')))
     close(fid_opt)             % schliesst DAEOptions-Menu
     set_gui_status             % schliesst DAEControl-Menu und aktiviert GUI-Schalter
     return

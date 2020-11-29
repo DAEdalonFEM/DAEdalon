@@ -43,7 +43,7 @@ global fid_sn_info; % Figure ID Info: sel_nodes.pl
 global fid_su;      % Figure ID sig_u.pl
 global fid_gv;      % Figure ID get_value.pl
 global fid_gv2;     % Figure ID get_val2.pl
-global fid_merge;   % Figure ID merge.pl 
+global fid_merge;   % Figure ID merge.pl
 global Fw;          % Breite Andock-Fenster
 global Bh;          % Hoehe Mini-Buttons
 global Bw;          % Breite Mini-Buttons
@@ -53,29 +53,29 @@ global ls;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. aktivieren
-if ishghandle('Name','sig_u.pl')
+if not(isempty(findobj('Name','sig_u.pl')))
     figure(fid_su)
     return
 end
 
 % Check ob bereits ein anderes script-Fenster offen
-if ishghandle('Name','sel_nodes.pl')
+if not(isempty(findobj('Name','sel_nodes.pl')))
     delete(fid_sn)
 end
 
-if ishghandle('Name','Info: sel_nodes.pl')
+if not(isempty(findobj('Name','Info: sel_nodes.pl')))
     delete(fid_sn_info)
 end
 
-if ishghandle('Name','get_value.pl')
+if not(isempty(findobj('Name','get_value.pl')))
     delete(fid_gv)
 end
 
-if ishghandle('Name','get_val2.pl')
+if not(isempty(findobj('Name','get_val2.pl')))
     delete(fid_gv2)
 end
 
-if ishghandle('Name','merge.pl')
+if not(isempty(findobj('Name','merge.pl')))
     delete(fid_merge)
 end
 
@@ -101,16 +101,16 @@ fid_su = figure('NumberTitle','off',...
                 'menubar','none');
 
 % Check ob Info Fenster offen
-if ishghandle('Name','Info: sig_u.pl')
+if not(isempty(findobj('Name','Info: sig_u.pl')))
     p = get(fid_su_info,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');
 end
-             
+
 % selnodes-Fenster: Innenmass einelsen
 pi_su = get(fid_su,'pos');
 
-% Groesse für Eingabe-Fenster initialisieren und zuweisen
+% Groesse fuer Eingabe-Fenster initialisieren und zuweisen
 pi_su(1) = pi_su(1);
 pi_su(2) = pi_su(2);
 pi_su(3) = 3*Bw+1.4*Bh;
@@ -121,7 +121,7 @@ set(fid_su,'pos',pi_su)
 % selnodes-Fenster: Aussenmass einelsen
 po_su = get(fid_su,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_su(1) = p(1);
 po_su(2) = p(2) - po_su(4);
 po_su(3) = po_su(3);
@@ -159,7 +159,7 @@ I1_su = uicontrol(fid_su,'Style','edit',...
                          'String','',...
                          'BackGroundColor','w',...
                          'pos',pI1);
-                  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2. Parameter: Outputfile
 pT2(1) = 0.5*Bh;
@@ -225,7 +225,7 @@ pB3(4) = Bh;
 B3 = uicontrol(fid_su,'Style','pushbutton',...
                        'String','apply',...
                        'pos',pB3);
-                   
+
 set(B3,'Callback','CB_sig_u_apply');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

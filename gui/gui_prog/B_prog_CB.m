@@ -45,23 +45,23 @@ global Bw;          % Breite Mini-Buttons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob bereits ein Menu-Fenster offen, ggf. schliessen
-if ishghandle('Name','ProgFlow')
+if not(isempty(findobj('Name','ProgFlow')))
     figure(fid_prog)
-    if ishghandle('Name','Zeitschritte')
+    if not(isempty(findobj('Name','Zeitschritte')))
         figure(fid_time)
     end
     return
 end
 
-if ishghandle('Name','PreProcess')
+if not(isempty(findobj('Name','PreProcess')))
     close(fid_pre)
 end
 
-if ishghandle('Name','PlotControl')
+if not(isempty(findobj('Name','PlotControl')))
     close(fid_plot)
 end
 
-if ishghandle('Name','DAEOptions')
+if not(isempty(findobj('Name','DAEOptions')))
     close(fid_opt)
 end
 
@@ -84,7 +84,7 @@ set(fid_prog,'Resize','off');
 % ProgFlow-Fenster: Innenmass einlesen
 pi_prog   = get(fid_prog,'Position');
 
-% Größe des ProgFlow-Fensters deklarieren und zuweisen
+% Groesse des ProgFlow-Fensters deklarieren und zuweisen
 pi_prog(1) = pi_prog(1);
 pi_prog(2) = pi_prog(2);
 pi_prog(3) = pi_dc(3);

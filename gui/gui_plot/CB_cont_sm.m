@@ -46,21 +46,21 @@ global Bw;          % Breite Mini-Buttons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob Fenster bereits offen
-if ishghandle('Name','cont_sm(X,Y)')
+if not(isempty(findobj('Name','cont_sm(X,Y)')))
     figure(fid_cont_sm)
     return
 end
 
 % Check ob ein anderes Eingabe-Fenster bereits offen
-if ishghandle('Name','cont(X)')
+if not(isempty(findobj('Name','cont(X)')))
     delete(fid_cont)
 end
 
-if ishghandle('Name','ucont(X)')
+if not(isempty(findobj('Name','ucont(X)')))
     delete(fid_ucont)
 end
 
-if ishghandle('Name','ucont_sm(X,Y)')
+if not(isempty(findobj('Name','ucont_sm(X,Y)')))
     delete(fid_ucont_sm)
 end
 
@@ -75,7 +75,7 @@ Y = 0;
 fid_cont_sm = figure('NumberTitle','off',...
                      'Name','cont_sm(X,Y)',...
                      'MenuBar','none');
-              
+
 % PlotControl-Fenster: Aussenmass einlesen
 p_plot  = get(fid_plot,'OuterPosition');
 
@@ -92,8 +92,8 @@ set(fid_cont_sm,'pos',pi_cont_sm)
 
 % cont_sm(X)-Fenster: Aussenmass einlesen
 po_cont_sm = get(fid_cont_sm,'OuterPosition');
-              
-% Position für Eingabe-Fenster ableiten und zuweisen
+
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_cont_sm(1) = p_plot(1);
 po_cont_sm(2) = p_plot(2) - po_cont_sm(4);
 po_cont_sm(3) = po_cont_sm(3);
@@ -170,11 +170,11 @@ pTX(4) = Bh;
 
 cT = get(fid_cont_sm,'Color');
 TX  = uicontrol(fid_cont_sm,'Style','text',...
-                            'String','Gaußpunk-Größe (X):',...
+                            'String','Gausspunkt-Groesse (X):',...
                             'HorizontalAlignment','left',...
                             'pos',pTX,...
                             'BackgroundColor',cT);
-                    
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Vor und Zurueck Buttons
 
@@ -232,7 +232,7 @@ TY  = uicontrol(fid_cont_sm,'Style','text',...
                             'HorizontalAlignment','left',...
                             'pos',pTY,...
                             'BackgroundColor',cT);
-                    
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Vor und Zurueck Buttons
 
@@ -258,4 +258,4 @@ pBffY(4) = Bh;
 BffY = uicontrol(fid_cont_sm,'Style','pushbutton',...
                              'String','>>',...
                              'pos',pBffY,...
-                             'Callback','CB_cont_sm_ffY');                         
+                             'Callback','CB_cont_sm_ffY');

@@ -50,13 +50,13 @@ global ls;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. aktivieren
-if ishghandle('Name','Info: sel_nodes.pl')
+if not(isempty(findobj('Name','Info: sel_nodes.pl')))
     figure(fid_sn_info)
     return
 end
 
 % Check ob bereits ein anderes script-Fenster offen
-if ishghandle('Name','sig_u.pl')
+if not(isempty(findobj('Name','sig_u.pl')))
     delete(fid_su)
 end
 
@@ -77,16 +77,16 @@ fid_sn_info = figure('NumberTitle','off',...
                      'CloseRequestFcn','crf_sn_info');
 
 % Check ob sel_nodes.pl Fenster offen
-if ishghandle('Name','sel_nodes.pl')
+if not(isempty(findobj('Name','sel_nodes.pl')))
     p = get(fid_sn,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');
 end
-             
+
 % selnodes-Fenster: Innenmass einelsen
 pi_sn_info = get(fid_sn_info,'pos');
 
-% Groesse für Eingabe-Fenster initialisieren und zuweisen
+% Groesse fuer Eingabe-Fenster initialisieren und zuweisen
 pi_sn_info(1) = pi_sn_info(1);
 pi_sn_info(2) = pi_sn_info(2);
 pi_sn_info(3) = 3*Bw+1.4*Bh;
@@ -97,7 +97,7 @@ set(fid_sn_info,'pos',pi_sn_info)
 % selnodes-Fenster: Aussenmass einelsen
 po_sn_info = get(fid_sn_info,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_sn_info(1) = p(1);
 po_sn_info(2) = p(2) - po_sn_info(4);
 po_sn_info(3) = po_sn_info(3);
@@ -144,7 +144,7 @@ pB3(4) = Bh;
 B3 = uicontrol(fid_sn_info,'Style','pushbutton',...
                        'String','close',...
                        'pos',pB3);
-                   
+
 set(B3,'Callback','crf_sn_info');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

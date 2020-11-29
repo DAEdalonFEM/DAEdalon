@@ -46,21 +46,21 @@ global Bw;          % Breite Mini-Buttons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob Fenster bereits offen
-if ishghandle('Name','ucont(X)')
+if not(isempty(findobj('Name','ucont(X)')))
     figure(fid_ucont)
     return
 end
 
 % Check ob ein anderes Eingabe-Fenster bereits offen
-if ishghandle('Name','cont(X)')
+if not(isempty(findobj('Name','cont(X)')))
     delete(fid_cont)
 end
 
-if ishghandle('Name','cont_sm(X,Y)')
+if not(isempty(findobj('Name','cont_sm(X,Y)')))
     delete(fid_cont_sm)
 end
 
-if ishghandle('Name','ucont_sm(X,Y)')
+if not(isempty(findobj('Name','ucont_sm(X,Y)')))
     delete(fid_ucont_sm)
 end
 
@@ -72,7 +72,7 @@ X = 0;
 fid_ucont = figure('NumberTitle','off',...
                    'Name','ucont(X)',...
                    'MenuBar','none');
-              
+
 % PlotControl-Fenster: Aussenmass einlesen
 p_plot  = get(fid_plot,'OuterPosition');
 
@@ -89,8 +89,8 @@ set(fid_ucont,'pos',pi_ucont)
 
 % ucont(X)-Fenster: Aussenmass einlesen
 po_ucont = get(fid_ucont,'OuterPosition');
-              
-% Position für Eingabe-Fenster ableiten und zuweisen
+
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_ucont(1) = p_plot(1);
 po_ucont(2) = p_plot(2) - po_ucont(4);
 po_ucont(3) = po_ucont(3);
@@ -173,7 +173,7 @@ T  = uicontrol(fid_ucont,'Style','text',...
                          'HorizontalAlignment','left',...
                          'pos',pT,...
                          'BackgroundColor',cT);
-                    
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Vor und Zurueck Buttons
 

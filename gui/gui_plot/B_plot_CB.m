@@ -50,32 +50,32 @@ global contvar;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check ob bereits ein Menu-Fenster offen, ggf. schliessen
-if ishghandle('Name','PlotControl')
+if not(isempty(findobj('Name','PlotControl')))
     figure(fid_plot)
-    if ishghandle('Name','cont(X)')
+    if not(isempty(findobj('Name','cont(X)')))
         figure(fid_cont)
     end
-    if ishghandle('Name','cont_sm(X,Y)')
+    if not(isempty(findobj('Name','cont_sm(X,Y)')))
         figure(fid_cont_sm)
     end
-    if ishghandle('Name','ucont(X)')
+    if not(isempty(findobj('Name','ucont(X)')))
         figure(fid_ucont)
     end
-    if ishghandle('Name','ucont_sm(X,Y)')
+    if not(isempty(findobj('Name','ucont_sm(X,Y)')))
         figure(fid_ucont_sm)
     end
     return
 end
 
-if ishghandle('Name','PreProcess')
+if not(isempty(findobj('Name','PreProcess')))
     close(fid_pre)
 end
 
-if ishghandle('Name','ProgFlow')
+if not(isempty(findobj('Name','ProgFlow')))
     close(fid_prog)
 end
 
-if ishghandle('Name','DAEOptions')
+if not(isempty(findobj('Name','DAEOptions')))
     close(fid_opt)
 end
 
@@ -92,13 +92,13 @@ fid_plot = figure('NumberTitle','off',...
                   'Name','PlotControl',...
                   'MenuBar','none',...
                   'CloseRequestFcn','CRF_PlotControl');
-              
-set(fid_plot,'Resize','off')              
+
+set(fid_plot,'Resize','off')
 
 % PlotControl-Fenster: Innenmass einlesen
 pi_plot   = get(fid_plot,'Position');
 
-% Größe des PlotControl-Fensters deklarieren und zuweisen
+% Groesse des PlotControl-Fensters deklarieren und zuweisen
 pi_plot(1) = pi_plot(1);
 pi_plot(2) = pi_plot(2);
 pi_plot(3) = pi_dc(3);
@@ -276,7 +276,7 @@ B13 = uicontrol(fid_plot,'Style','pushbutton',...
                          'String','cont_sm',...
                          'pos',pB13,...
                          'Callback','CB_cont_sm');
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 14
 % Groesse deklarieren und zuweisen
@@ -289,7 +289,7 @@ B14 = uicontrol(fid_plot,'Style','pushbutton',...
                          'String','ucont_sm',...
                          'pos',pB14,...
                          'Callback','CB_ucont_sm');
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Button 9
 % Groesse deklarieren und zuweisen
@@ -316,6 +316,6 @@ B11 = uicontrol(fid_plot,'Style','pushbutton',...
                          'String','reac',...
                          'pos',pB11,...
                          'Callback','reac');
-                     
+
 
 

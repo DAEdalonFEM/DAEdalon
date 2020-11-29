@@ -46,7 +46,7 @@ global X_check;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob Fenster bereits offen
-if ishghandle('Name','out(NAME)')
+if not(isempty(findobj('Name','out(NAME)')))
     figure(fid_out)
     return
 end
@@ -54,7 +54,7 @@ end
 X_check = '';
 
 % Check ob loop Fenster bereits offen
-if ishghandle('Name','Zeitschritte')
+if not(isempty(findobj('Name','Zeitschritte')))
     close(fid_time)
 end
 
@@ -64,7 +64,7 @@ fid_out = figure('NumberTitle','off',...
                  'Name','out(NAME)',...
                  'menubar','none');
 
-% ProgFlow-Fenster: Aussenmass einlesen              
+% ProgFlow-Fenster: Aussenmass einlesen
 p_prog = get(fid_prog,'OuterPosition');
 
 % out-Fenster: Innenmass einlesen
@@ -81,10 +81,10 @@ set(fid_out,'pos',pi_out)
 % out-Fenster: Aussenmass einlesen
 po_out = get(fid_out,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
-if ishghandle('Name','histout(NAME)')
+% Position fuer Eingabe-Fenster ableiten und zuweisen
+if not(isempty(findobj('Name','histout(NAME)')))
     po_histout = get(fid_histout,'OuterPosition');
-    
+
     po_out(1) = po_histout(1);
     po_out(2) = po_histout(2) - po_out(4);
     po_out(3) = po_out(3);
@@ -93,7 +93,7 @@ else
     po_out(1) = p_prog(1);
     po_out(2) = p_prog(2) - po_out(4);
     po_out(3) = po_out(3);
-    po_out(4) = po_out(4);             
+    po_out(4) = po_out(4);
 end
 
 set(fid_out,'OuterPosition',po_out)

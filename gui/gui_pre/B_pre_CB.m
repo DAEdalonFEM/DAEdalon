@@ -44,23 +44,23 @@ global Bw;          % Breite Mini-Buttons
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein Menu-Fenster offen, ggf. schliessen
-if ishghandle('Name','PreProcess')
+if not(isempty(findobj('Name','PreProcess')))
     figure(fid_pre)
-    if ishghandle('Name','FEAP-Input')
+    if not(isempty(findobj('Name','FEAP-Input')))
         figure(fid_f2f)
     end
     return
 end
 
-if ishghandle('Name','ProgFlow')
+if not(isempty(findobj('Name','ProgFlow')))
     close(fid_prog)
 end
 
-if ishghandle('Name','PlotControl')
+if not(isempty(findobj('Name','PlotControl')))
     close(fid_plot)
 end
 
-if ishghandle('Name','DAEOptions')
+if not(isempty(findobj('Name','DAEOptions')))
     close(fid_opt)
 end
 
@@ -80,7 +80,7 @@ set(fid_pre,'Resize','off');
 % PreProcess-Fenster: Innenmass einlesen
 pi_pre   = get(fid_pre,'pos');
 
-% Größe des PreProcess-Fensters deklarieren und zuweisen
+% Groesse des PreProcess-Fensters deklarieren und zuweisen
 pi_pre(1) = pi_pre(1);
 pi_pre(2) = pi_pre(2);
 pi_pre(3) = pi_dc(3);

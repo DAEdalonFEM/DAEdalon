@@ -53,29 +53,29 @@ global ls;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check ob bereits ein get_val2.pl-Fenster offen, ggf. aktivieren
-if ishghandle('Name','get_val2.pl')
+if not(isempty(findobj('Name','get_val2.pl')))
     figure(fid_gv2)
     return
 end
 
 % Check ob bereits ein anderes script-Fenster offen
-if ishghandle('Name','sel_nodes.pl')
+if not(isempty(findobj('Name','sel_nodes.pl')))
     delete(fid_sn)
 end
 
-if ishghandle('Name','Info: sel_nodes.pl')
+if not(isempty(findobj('Name','Info: sel_nodes.pl')))
     delete(fid_sn_info)
 end
 
-if ishghandle('Name','sig_u.pl')
+if not(isempty(findobj('Name','sig_u.pl')))
     delete(fid_su)
 end
 
-if ishghandle('Name','get_value.pl')
+if not(isempty(findobj('Name','get_value.pl')))
     delete(fid_gv)
 end
 
-if ishghandle('Name','merge.pl')
+if not(isempty(findobj('Name','merge.pl')))
     delete(fid_merge)
 end
 
@@ -100,16 +100,16 @@ fid_gv2 = figure('NumberTitle','off',...
                  'menubar','none');
 
 % Check ob Info Fenster offen
-if ishghandle('Name','Info: get_val2.pl')
+if not(isempty(findobj('Name','Info: get_val2.pl')))
     p = get(fid_gv2_info,'OuterPosition');
 else
     p = get(fid_post,'OuterPosition');
 end
-             
+
 % get_val2.pl-Fenster: Innenmass einelsen
 pi_gv2 = get(fid_gv2,'pos');
 
-% Groesse für Eingabe-Fenster initialisieren und zuweisen
+% Groesse fuer Eingabe-Fenster initialisieren und zuweisen
 pi_gv2(1) = pi_gv2(1);
 pi_gv2(2) = pi_gv2(2);
 pi_gv2(3) = 3*Bw+1.4*Bh;
@@ -120,7 +120,7 @@ set(fid_gv2,'pos',pi_gv2)
 % get_val2.pl-Fenster: Aussenmass einelsen
 po_gv2 = get(fid_gv2,'OuterPosition');
 
-% Position für Eingabe-Fenster ableiten und zuweisen
+% Position fuer Eingabe-Fenster ableiten und zuweisen
 po_gv2(1) = p(1);
 po_gv2(2) = p(2) - po_gv2(4);
 po_gv2(3) = po_gv2(3);
@@ -158,7 +158,7 @@ I1_gv2 = uicontrol(fid_gv2,'Style','edit',...
                            'String','',...
                            'BackGroundColor','w',...
                            'pos',pI1);
-                  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2. Parameter: Zeilennummer
 pT2(1) = 0.5*Bh;
@@ -207,7 +207,7 @@ I3_gv2 = uicontrol(fid_gv2,'Style','edit',...
                            'HorizontalAlignment','left',...
                            'BackGroundColor','w',...
                            'pos',pI3);
-                     
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Buttons anlegen
 
@@ -248,7 +248,7 @@ pB3(4) = Bh;
 B3 = uicontrol(fid_gv2,'Style','pushbutton',...
                        'String','apply',...
                        'pos',pB3);
-                   
+
 set(B3,'Callback','CB_get_val2_apply');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
