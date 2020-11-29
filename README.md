@@ -1,4 +1,4 @@
-<p align="center"><a href="http://www.baaserweb.de/DAEdalon/index.htm"><img src="logo/logo_bunt_kl.jpg" width="400"></a></p> 
+<p align="center"><a href="http://www.baaserweb.de/DAEdalon/index.htm"><img src="logo/logo_bunt_kl.jpg" width="400"></a></p>
 
 <p align="center">
 <!--
@@ -25,5 +25,3 @@
     - `go`
     - `go`
 
-## Known restrictions
-  - May not run with GNU Octave (tested for version 5.1.0).
