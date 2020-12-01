@@ -34,6 +34,9 @@ function [F] = defgrad_x(u_elem,dshape)
 %   = d(x-u)/dx
 %   = I - du/dx
 
+dim = size(u_elem);
+dim = dim(2);             % 2- oder 3-D ?
+
 u_x = u_elem' * dshape;
-F = inv(-u_x + eye(2));
+F = inv(-u_x + eye(dim));
 
