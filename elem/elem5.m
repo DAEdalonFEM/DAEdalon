@@ -73,14 +73,17 @@ cont_nenner=zeros(nel,1);
 % Auslesen der Gausspunkte und der Gewichte
 [gpcoor, gpweight] = gp_tetra_lin;
 
+% akt. Konfig.
+x = X + u_elem;
+
 % Schleife ueber alle GP's
 for aktgp=1:length(gpweight)
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
-  [shape, dshape, detvol] = shape_tetra_lin(X,gpcoor(aktgp,:));
+  [shape, dshape, detvol] = shape_tetra_lin(x,gpcoor(aktgp,:));
  
-  % Bestimmung des Deformationsgradienten (bzgl. Referenz-Konfig. !)
-  F = defgrad_3d(u_elem,dshape);      % [3x3]
+  % Bestimmung des Deformationsgradienten (bzgl. akt. Konfig.!)
+  F = defgrad_x(u_elem,dshape);
   detF_J = det(F);
   
   % GP-History-Felder zusammenbauen:
@@ -91,13 +94,13 @@ for aktgp=1:length(gpweight)
   %  Materialaufruf
   
   % Anspringen von mat_name
-  [sigKH,vareps,D_mat,hist_new_gp,hist_user_gp] ...
+  [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...    % "CAUCHY-Spg."
          = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
  
   % Ende Materialaufruf 
   %%%%%%%%%%%%%%%%%%%%%%%
 
-  dV = gpweight(aktgp)*detvol;
+  dv = gpweight(aktgp)*detvol;
 
   % GP-History-Felder speichern
   hist_new_elem(:,aktgp) = hist_new_gp;
@@ -116,23 +119,24 @@ for aktgp=1:length(gpweight)
 
     % Zusammenbau von k_geom               .......... noch prüfen !!!!
     % HBaa - 25.11.2015
-	sig_mat = tens6_33(sigKH);
+	sig_mat = tens6_33(sig);             % --> besser "Cauchy" !
     for i=1:nel
       ii = 3*i-2;
       for j=1:nel
         jj = 3*j-2;
         % Wriggers Gleichung (4.106)
                      g_ij = dshape(i,:)*sig_mat*dshape(j,:)';
-        %k_geom(ii  ,jj  ) = k_geom(ii  ,jj  ) + g_ij;
-        %k_geom(ii+1,jj+1) = k_geom(ii+1,jj+1) + g_ij;
-        %k_geom(ii+2,jj+2) = k_geom(ii+2,jj+2) + g_ij;
+        k_geom(ii  ,jj  ) = k_geom(ii  ,jj  ) + g_ij;
+        k_geom(ii+1,jj+1) = k_geom(ii+1,jj+1) + g_ij;
+        k_geom(ii+2,jj+2) = k_geom(ii+2,jj+2) + g_ij;
       end % j
     end % i
 
     % Zusammenbau von k_elem = b^t*D_mat*b*dv + k_geom
     % und Residuumsvektor r = b^T * sigma
-    k_elem = k_elem + ( b'*D_mat*b + k_geom )*dV;
-    r_elem = r_elem + b' * sigKH * dV;
+    k_elem = k_elem + ( b'*D_mat*b + k_geom )*dv;
+    r_elem = r_elem + b' * sig * dv;           % !! \tau=J*\sigma und dv=J*dV
+	                                           % Check WRI (4.97)_3, S. 132 --> Fehler ?!
 
 %  elseif isw == 8  
     % Aufbau von zaehler und nenner für contourplot
@@ -140,10 +144,10 @@ for aktgp=1:length(gpweight)
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-6: eps_x,eps_y,eps_z,eps_xy,... ;
 	% Spalte 7-12: sig_x,sig_y,sig_z,sig_xy,...
-    cont_mat_gp(1:12) = [vareps;sigKH/detF_J]';
+    cont_mat_gp(1:12) = [vareps;sig]';                 % "CAUCHY" !
     cont_zaehler(:,1:12)=cont_zaehler(:,1:12) ...
-	                    +shape'.*shape'*cont_mat_gp*dV;
-    cont_nenner=cont_nenner+shape'.*shape'*dV;
+	                    +shape'.*shape'*cont_mat_gp*dv;
+    cont_nenner=cont_nenner+shape'.*shape'*dv;
 %  end %if
 
 end  % Schleife aktgp

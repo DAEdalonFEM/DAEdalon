@@ -29,11 +29,11 @@
 
 function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 	  hist_new_elem, hist_user_elem] = ...
-    elem11(isw, nel, ndf, contvar, mat_name, mat_par, x, u_elem, ...
+    elem11(isw, nel, ndf, contvar, mat_name, mat_par, X, u_elem, ...
 	  hist_old_elem, hist_user_elem)
 
 % 8-Knotenelement mit tri-linearen Ansatzfuntionen
-% % kleine Defos 
+% % kleine Defos ---> große Defos / Mom.konfig. // HBaa - 24.08.2017 / 20.10.2020
 %
 % rein:
 % isw = switch, if isw==8 dann Aufbau der Contourmatrix, sonst
@@ -68,6 +68,11 @@ k_elem=zeros(ndf*nel);
 r_elem=zeros(ndf*nel,1);
 cont_zaehler=zeros(nel,contvar);
 cont_nenner=zeros(nel,1);
+k_mate=zeros(ndf*nel);
+k_geom=zeros(ndf*nel);
+
+% Koordinaten in R_x
+x = X + u_elem;
 
 % Auslesen der Gausspunkte und der Gewichte
 [gpcoor, gpweight] = gp_quad3d_lin;
@@ -77,10 +82,12 @@ numgp=length(gpweight);
 for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
-  [shape, dshape, det_X_xsi] = shape_brick_lin(x,gpcoor(aktgp,:));
+  [shape, dshape, detvol] = shape_brick_lin(x,gpcoor(aktgp,:));
   
-  % Bestimmung des Deformationsgradienten
-  [F] = defgrad_3d(u_elem,dshape);
+  % Bestimmung des Deformationsgradienten  --> hier bzgl. "akt. Konfig" !!
+  %[F] = defgrad_x_3d(u_elem,dshape);
+  [F] = defgrad_x(u_elem,dshape);
+  detF_J = det(F);
 
   % GP-History-Felder zusmmenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
@@ -95,14 +102,14 @@ for aktgp=1:numgp
 
   % Anspringen von mat_name
 
-  [sig, vareps, D_mat,hist_new_gp,hist_user_gp] ...
+  [sig, vareps, D_mat,hist_new_gp,hist_user_gp] ...    % "CAUCHY-Spg."
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   %%%%%%%%%%%%%%%%%%%%%
   % Ende Materialaufruf 
   %%%%%%%%%%%%%%%%%%%%%
 
-  dv = gpweight(aktgp)*det_X_xsi;
+  dv = gpweight(aktgp)*detvol;
 
   % GP-History-Felder zurückspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
@@ -119,12 +126,34 @@ for aktgp=1:numgp
                         dshape(i,2)  dshape(i,1)  0          ;  ...
                         0            dshape(i,3)  dshape(i,2);  ...
                         dshape(i,3)  0            dshape(i,1)];
-    end % i
+    end %i
     
-    % Zusammenbau von k_elem = b^t*D_mat*b*dv
+    % Zusammenbau von k_elem = b^t*D_mat*b*dv --> neue / große Defos !
     % und Residuumsvektor r = b^T * sigma
-    k_elem = k_elem + b' * D_mat * b * dv; 
+    k_mate = k_mate + b' * D_mat * b * dv;
     r_elem = r_elem + b' * sig * dv;
+
+    % Zusammenbau von k_geom
+
+    % Positionen für GG
+    node_loc = 1:nel;
+    for i=1:ndf
+      pos_vec(i:3:nel*ndf) =  node_loc;   % geht schöner --> 'reshape' !
+    end
+    S_mat = tens6_33(sig);
+    GG = dshape(pos_vec,:)*S_mat*dshape(pos_vec,:)'*dv;    % HBaa - 24.08.2017
+    % GG nur auf den einzelnen Diagonalen belegt
+    %GG(1:2:2*nel,2:2:2*nel) = 0.0;
+    %GG(2:2:2*nel,1:2:2*nel) = 0.0;
+
+    GG(1:3:3*nel,2:3:3*nel) = 0.0;            % schöner machen !
+      GG(1:3:3*nel,3:3:3*nel) = 0.0;
+        GG(2:3:3*nel,3:3:3*nel) = 0.0;
+    GG(2:3:3*nel,1:3:3*nel) = 0.0;
+      GG(3:3:3*nel,1:3:3*nel) = 0.0;
+        GG(3:3:3*nel,2:3:3*nel) = 0.0;
+    
+    k_geom = k_geom + GG;
     
 %  elseif isw == 8  
     % Aufbau von zaehler und nenner für contourplot
@@ -141,3 +170,5 @@ for aktgp=1:numgp
   
 end  % Schleife aktgp
 
+% Zusammenbau von k_elem = k_geom + k_mate
+k_elem = k_mate + k_geom;
