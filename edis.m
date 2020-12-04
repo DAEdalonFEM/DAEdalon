@@ -19,7 +19,7 @@ function edis()
     disp=[]; % Die Variable disp, welche zum Schluss ausgegeben werden soll
              % wird als neue leere Variable deklariert
 
-    load(['input',filesep,'node.inp']); % Einlesen der Knotendatei
+    node = load(['input',filesep,'node.inp']); % Einlesen der Knotendatei
     % load() ermoeglicht das sofortige Erstellen einer gleichnamigen Variable
 
 
@@ -66,10 +66,10 @@ function edis()
 
             data=[str2double(Eingaben{1}),str2double(Eingaben{2}),str2double(Eingaben{4})];
             index=find(node(:,data(1,1))<=data(1,2)+tol & node(:,data(1,1))>=data(1,2)-tol);
-            
+
             if isempty(index)
                 uiwait(warndlg('ACHTUNG! Es wurden keine Knoten in der angegebenen Ebene gefunden!','Warnung'));
-                continue             
+                continue
             end
 
             % Gefundene Knoten werden mit der entsprechenden Verschiebung
