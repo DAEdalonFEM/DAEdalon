@@ -36,7 +36,7 @@ Parameter | Description
 Parameter | Description
 --- | ---
 0 | number of nodes (if zero, nodes will be counted from `nodes.inp`)
-0 | number of elements (if zero, nodes will be counted from `el.inp`)
+0 | number of elements (if zero, elements will be counted from `el.inp`)
 1 | total number of material sets
 2 | number of physical dimensions
 2 | number of degrees of freedom per node
