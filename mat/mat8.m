@@ -46,7 +46,7 @@ function [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
 %
 
 % Damit hist_new_gp belegt ist, auch wenn sich an den
-% hist.-Variablen nichts ändert:
+% hist.-Variablen nichts aendert:
 hist_new_gp = hist_old_gp;
 
 %nhv=mat_par(1); % Anzahl der History-Variablen pro GP
@@ -77,7 +77,7 @@ D_mat = 2*EG*detF*trbbar3*(eins4-i4*i4'/3.0) - 2/3*(i4*sig'+sig*i4')*detF ...
       + K*detF*( (2*detF-1)*(i4*i4') - 2*(detF-1)*eins4 );
 
 % neu - 30.11.'15 - siehe "solidmechanics.org" #8
-% noch "unschön" codiert !
+% noch "unschoen" codiert !
  voigt = [1 4 6; 4 2 5; 6 5 3];
 delKRO = eye(3);
  D_mat = zeros(6,6);

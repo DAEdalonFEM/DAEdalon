@@ -33,7 +33,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 	  hist_old_elem, hist_user_elem)
 
 % 8-Knotenelement mit tri-linearen Ansatzfuntionen
-% % kleine Defos ---> große Defos / Mom.konfig. // HBaa - 24.08.2017 / 20.10.2020
+% % kleine Defos ---> grosse Defos / Mom.konfig. // HBaa - 24.08.2017 / 20.10.2020
 %
 % rein:
 % isw = switch, if isw==8 dann Aufbau der Contourmatrix, sonst
@@ -43,24 +43,24 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % contvar = Anzahl der Contourvariablen -> femlab.m, projection.m
 % mat_nr = Materialnummer XX zum Aufruf von matXX.m
 % mat_par = Materialparameter (z.B. E, nu)
-% x = Elementkoordinaten (nel x ndm)
+% X = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
-% hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
+%                 durch hist_new_elem ersetzt
+% hist_user_elem = wie hist_old_elem, jedoch kein Ueberschreiben bei
 %                  neuem Zeitschritt
 %
 % raus:
 % k_elem = Elementsteifigkeitsmatrix
-% r_elem = Elementresiduumsvektor (für Newton-Iteration)
-% cont_zaehler = Matrix in der Größen für Contour-Plot drinstehen
-% cont_nenner = Vektor zum Normieren vom globalen cont_zähler
+% r_elem = Elementresiduumsvektor (fuer Newton-Iteration)
+% cont_zaehler = Matrix in der Groessen fuer Contour-Plot drinstehen
+% cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
-% hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
+% hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %Initialisierung
@@ -83,7 +83,7 @@ for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, detvol] = shape_brick_lin(x,gpcoor(aktgp,:));
-  
+
   % Bestimmung des Deformationsgradienten  --> hier bzgl. "akt. Konfig" !!
   %[F] = defgrad_x_3d(u_elem,dshape);
   [F] = defgrad_x(u_elem,dshape);
@@ -106,12 +106,12 @@ for aktgp=1:numgp
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
 
   dv = gpweight(aktgp)*detvol;
 
-  % GP-History-Felder zurückspeichern
+  % GP-History-Felder zurueckspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
@@ -119,7 +119,7 @@ for aktgp=1:numgp
 
     % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.152
     for i=1:nel
-      pos = 3*i-2;      
+      pos = (i-1)*3 + 1;
       b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
                         0            dshape(i,2)  0          ;  ...
                         0            0            dshape(i,3);  ...
@@ -127,18 +127,18 @@ for aktgp=1:numgp
                         0            dshape(i,3)  dshape(i,2);  ...
                         dshape(i,3)  0            dshape(i,1)];
     end %i
-    
-    % Zusammenbau von k_elem = b^t*D_mat*b*dv --> neue / große Defos !
+
+    % Zusammenbau von k_elem = b^t*D_mat*b*dv --> neue / grosse Defos !
     % und Residuumsvektor r = b^T * sigma
     k_mate = k_mate + b' * D_mat * b * dv;
     r_elem = r_elem + b' * sig * dv;
 
     % Zusammenbau von k_geom
 
-    % Positionen für GG
+    % Positionen fuer GG
     node_loc = 1:nel;
     for i=1:ndf
-      pos_vec(i:3:nel*ndf) =  node_loc;   % geht schöner --> 'reshape' !
+      pos_vec(i:3:nel*ndf) =  node_loc;   % geht schoener --> 'reshape' !
     end
     S_mat = tens6_33(sig);
     GG = dshape(pos_vec,:)*S_mat*dshape(pos_vec,:)'*dv;    % HBaa - 24.08.2017
@@ -146,17 +146,17 @@ for aktgp=1:numgp
     %GG(1:2:2*nel,2:2:2*nel) = 0.0;
     %GG(2:2:2*nel,1:2:2*nel) = 0.0;
 
-    GG(1:3:3*nel,2:3:3*nel) = 0.0;            % schöner machen !
+    GG(1:3:3*nel,2:3:3*nel) = 0.0;            % schoener machen !
       GG(1:3:3*nel,3:3:3*nel) = 0.0;
         GG(2:3:3*nel,3:3:3*nel) = 0.0;
     GG(2:3:3*nel,1:3:3*nel) = 0.0;
       GG(3:3:3*nel,1:3:3*nel) = 0.0;
         GG(3:3:3*nel,2:3:3*nel) = 0.0;
-    
+
     k_geom = k_geom + GG;
-    
-%  elseif isw == 8  
-    % Aufbau von zaehler und nenner für contourplot
+
+%  elseif isw == 8
+    % Aufbau von zaehler und nenner fuer contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-5: eps_x,eps_y,eps_z,eps_xy,... ; Spalte 7-12:
@@ -165,9 +165,9 @@ for aktgp=1:numgp
     cont_zaehler(:,1:12)=cont_zaehler(:,1:12) ...
 	+shape'.*shape'*cont_mat_gp*dv;
     cont_nenner=cont_nenner+shape'.*shape'*dv;
-    
+
 %  end %if
-  
+
 end  % Schleife aktgp
 
 % Zusammenbau von k_elem = k_geom + k_mate

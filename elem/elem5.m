@@ -33,7 +33,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 	  hist_old_elem, hist_user_elem)
 
 % Tetraederelement mit 4 Knoten und linearen Ansatzfuntionen
-% kleine --> große Defos
+% kleine --> grosse Defos
 % Aufruf von 3-D Materialgesetz
 %
 % rein:
@@ -47,21 +47,21 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % X = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
-% hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
+%                 durch hist_new_elem ersetzt
+% hist_user_elem = wie hist_old_elem, jedoch kein Ueberschreiben bei
 %                  neuem Zeitschritt
 %
 % raus:
 % k_elem = Elementsteifigkeitsmatrix
-% r_elem = Elementresiduumsvektor (für Newton-Iteration)
-% cont_zaehler = Matrix in der Größen für Contour-Plot drinstehen
-% cont_nenner = Vektor zum Normieren vom globalen cont_zähler
+% r_elem = Elementresiduumsvektor (fuer Newton-Iteration)
+% cont_zaehler = Matrix in der Groessen fuer Contour-Plot drinstehen
+% cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
-% hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
+% hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 %Initialisierung
 k_elem=zeros(ndf*nel);
@@ -81,23 +81,23 @@ for aktgp=1:length(gpweight)
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, detvol] = shape_tetra_lin(x,gpcoor(aktgp,:));
- 
+
   % Bestimmung des Deformationsgradienten (bzgl. akt. Konfig.!)
   F = defgrad_x(u_elem,dshape);
   detF_J = det(F);
-  
+
   % GP-History-Felder zusammenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
 
   %%%%%%%%%%%%%%%%%%%%%%%
   %  Materialaufruf
-  
+
   % Anspringen von mat_name
   [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...    % "CAUCHY-Spg."
          = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
- 
-  % Ende Materialaufruf 
+
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%%%
 
   dv = gpweight(aktgp)*detvol;
@@ -105,10 +105,10 @@ for aktgp=1:length(gpweight)
   % GP-History-Felder speichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
-      
+
   % Aufstellen von b = [b_1, ... ,b_nele] siehe Hughes p.87/152
   for i=1:nel
-      pos = 3*i-2;
+      pos = (i-1)*3 + 1;
       b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
                         0            dshape(i,2)  0          ;  ...
                         0            0            dshape(i,3);  ...
@@ -117,13 +117,13 @@ for aktgp=1:length(gpweight)
                         dshape(i,3)  0            dshape(i,1)];
   end % i
 
-    % Zusammenbau von k_geom               .......... noch prüfen !!!!
+    % Zusammenbau von k_geom               .......... noch pruefen !!!!
     % HBaa - 25.11.2015
 	sig_mat = tens6_33(sig);             % --> besser "Cauchy" !
     for i=1:nel
-      ii = 3*i-2;
+      ii = (i-1)*3 + 1;
       for j=1:nel
-        jj = 3*j-2;
+        jj = (j-1)*3 + 1;
         % Wriggers Gleichung (4.106)
                      g_ij = dshape(i,:)*sig_mat*dshape(j,:)';
         k_geom(ii  ,jj  ) = k_geom(ii  ,jj  ) + g_ij;
@@ -138,8 +138,8 @@ for aktgp=1:length(gpweight)
     r_elem = r_elem + b' * sig * dv;           % !! \tau=J*\sigma und dv=J*dV
 	                                           % Check WRI (4.97)_3, S. 132 --> Fehler ?!
 
-%  elseif isw == 8  
-    % Aufbau von zaehler und nenner für contourplot
+%  elseif isw == 8
+    % Aufbau von zaehler und nenner fuer contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-6: eps_x,eps_y,eps_z,eps_xy,... ;
