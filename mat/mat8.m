@@ -29,16 +29,18 @@
 %function [sig_cauchy,D_mat] = mat_3d_neo_hooke(mat_par,b)
 
 function [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
-         = mat8(mat_par,F,hist_old_gp,hist_user_gp)
+         = mat8(mat_par,F,hist_old_gp,hist_user_gp,vol_flag)  
 %
 % hyperelst. Materialverhalten 3D - "neo HOOKE"
 %
 % HBaa, 15./16.03.2012 ** neu **
 %       24.11.2015 @ FH Bingen
+%       01.12.2020
 %
 % rein:
 % mat_par = Materialparameter (c10 = G/2, K)
 % F --> b=F*F' -  linker CAUCHY-GREEN-Verzerr.tensor
+% vol_flag =1: mit Vol.anteile; =0: ohne Vol.anteile
 %
 % raus:
 % sig = CAUCHY-Spannung
@@ -51,11 +53,11 @@ hist_new_gp = hist_old_gp;
 
 %nhv=mat_par(1); % Anzahl der History-Variablen pro GP
 
- c10 = mat_par(2);  % = G / 2
-   K = mat_par(3);  % = 2 / D1
+   K = mat_par(2);  % = 2 / D1
+ c10 = mat_par(3);  % = G / 2
 
    b = F*F';
-detF = sqrt(det(b));
+detF = det(F);
 bbar = b * detF^(-2.0/3.0);
 trbbar3 = trace(bbar)/3.0;
 
@@ -70,39 +72,45 @@ sig(5) = EG *  bbar(2,3);            % !! anders als ABAQ. !!
 sig(6) = EG *  bbar(1,3);            %
 
 % Tangentenmodul
-% neu - 24.11.2015 - 07.05.2020 - siehe "Das gilt immer"
+
+% neu - 30.11.'15 - siehe "solidmechanics.org" #8        - % "bzgl. tau" !
+% noch "unschoen" codiert !
+% voigt = [1 4 6; ...
+%          4 2 5; ...
+%          6 5 3];
+%delKRO = eye(3);
+% D_mat = zeros(6,6);
+%
+%for i=1:3
+%    for j=1:3
+%        for k=1:3
+%            for l=1:3
+%                D_mat(voigt(i,j),voigt(k,l)) = ...  % "bzgl. tau" !
+%                    2.0*c10*( delKRO(i,k)*bbar(j,l)+bbar(i,l)*delKRO(j,k) ...
+%                             -2/3*(bbar(i,j)*delKRO(k,l)+bbar(k,l)*delKRO(i,j)) ...
+%                              +2/3*trbbar3*delKRO(i,j)*delKRO(k,l) );
+%            end
+%        end
+%    end
+%end
+
+% neu - 24.11.2015 - 07.05.2020 - 12.12.2020 - siehe "Das gilt immer"
    i4 = [1;1;1;0;0;0];
 eins4 = eye(6);
-D_mat = 2*EG*detF*trbbar3*(eins4-i4*i4'/3.0) - 2/3*(i4*sig'+sig*i4')*detF ...
-      + K*detF*( (2*detF-1)*(i4*i4') - 2*(detF-1)*eins4 );
-
-% neu - 30.11.'15 - siehe "solidmechanics.org" #8
-% noch "unschoen" codiert !
- voigt = [1 4 6; 4 2 5; 6 5 3];
-delKRO = eye(3);
- D_mat = zeros(6,6);
-
-for i=1:3
-    for j=1:3
-        for k=1:3
-            for l=1:3
-                D_mat(voigt(i,j),voigt(k,l)) = EG*( delKRO(i,k)*bbar(j,l)+bbar(i,l)*delKRO(j,k)...
-                                                    -2/3*(bbar(i,j)*delKRO(k,l)+bbar(k,l)*delKRO(i,j)) ...
-                                                    +2/3*trbbar3*delKRO(i,j)*delKRO(k,l) ) ...
-                                             + K*detF*(2*detF-1)*delKRO(i,j)*delKRO(k,l);
-            end
-        end
-    end
-end
-%D_mat
-
-%sprintf('X')
-
+D_mat = 4*c10*trbbar3*(eins4-i4*i4'/3.0) - 2/3*(i4*sig'+sig*i4')*detF; % "bzgl. tau" !
+  
 % + volumetr. Anteil
-                  EK = K*(detF-1);
-sig(1) = sig(1) + EK;
-sig(2) = sig(2) + EK;
-sig(3) = sig(3) + EK;
+if (vol_flag==1)
+	D_mat = D_mat + K*detF*( (2*detF-1)*(i4*i4') - 2*(detF-1)*eins4 ); % "bzgl. tau" !
+
+                      EK = K*(detF-1);   % = p: CAUCHY - sig !!
+	sig(1) = sig(1) + EK;
+	sig(2) = sig(2) + EK;
+	sig(3) = sig(3) + EK;
+end
+
+% 12.12.2020  -  "bzgl. 'Cauchy'" - "(.)/detF" wie ABAQ und WRI. vs. HOLZAPFEL
+D_mat = D_mat / detF;
 
 % Dehnungsausgabe
 vareps33 = ( eye(3) - inv(b) )/2;      % "ALMANSI"-Tensor

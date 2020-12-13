@@ -85,25 +85,19 @@ for aktgp=1:numgp
   [shape, dshape, detvol] = shape_brick_lin(x,gpcoor(aktgp,:));
 
   % Bestimmung des Deformationsgradienten  --> hier bzgl. "akt. Konfig" !!
-  %[F] = defgrad_x_3d(u_elem,dshape);
-  [F] = defgrad_x(u_elem,dshape);
-  detF_J = det(F);
+  F = defgrad_x(u_elem,dshape);
 
   % GP-History-Felder zusmmenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
 
   %%%%%%%%%%%%%%%%%%%%%%
-  % Begin Materialaufruf (direkt eingetragen)
+  % Begin Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%%
 
-  % Materialname zusammenbasteln
-  %mat_name=strcat('mat',num2str(mat_nr));
-
-  % Anspringen von mat_name
-
+          vol_flag = 1;    % auch Vol.anteile in Mat.routine berechnen
   [sig, vareps, D_mat,hist_new_gp,hist_user_gp] ...    % "CAUCHY-Spg."
-      = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
+      = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp,vol_flag);
 
   %%%%%%%%%%%%%%%%%%%%%
   % Ende Materialaufruf
@@ -115,58 +109,43 @@ for aktgp=1:numgp
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
-%  if isw ~= 8   % Aufbau von k_elem und r_elem
+  % Aufstellen von b = [b_1, ...  ,b_nel] siehe Hughes p.152
+  for i=1:nel
+    pos = (i-1)*3 + 1;  % 1, 4, 7, ...
+    b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
+                      0            dshape(i,2)  0          ;  ...
+                      0            0            dshape(i,3);  ...
+                      dshape(i,2)  dshape(i,1)  0          ;  ...
+                      0            dshape(i,3)  dshape(i,2);  ...
+                      dshape(i,3)  0            dshape(i,1)];
+  end %i
 
-    % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.152
-    for i=1:nel
-      pos = (i-1)*3 + 1;
-      b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
-                        0            dshape(i,2)  0          ;  ...
-                        0            0            dshape(i,3);  ...
-                        dshape(i,2)  dshape(i,1)  0          ;  ...
-                        0            dshape(i,3)  dshape(i,2);  ...
-                        dshape(i,3)  0            dshape(i,1)];
-    end %i
+  % Zusammenbau von k_elem = b^t*D_mat*b*dv --> neue / grosse Defos !
+  % und Residuumsvektor r = b^T * sigma
+  k_mate = k_mate + b' * D_mat * b * dv;
+  r_elem = r_elem + b' * sig * dv;
 
-    % Zusammenbau von k_elem = b^t*D_mat*b*dv --> neue / grosse Defos !
-    % und Residuumsvektor r = b^T * sigma
-    k_mate = k_mate + b' * D_mat * b * dv;
-    r_elem = r_elem + b' * sig * dv;
+  % Zusammenbau von k_geom
+  % HBaa - 25.11.2015 / 08.12.2020
+  S_mat = tens6_33(sig);
+  for i=1:nel
+    ii = (i-1)*3 + 1;
+    for j=1:nel
+      jj = (j-1)*3 + 1;
+      % Wriggers Gleichung (4.106)
+                         g_ij = dshape(i,:)*S_mat*dshape(j,:)';
+      k_geom(ii:ii+2,jj:jj+2) = k_geom(ii:ii+2,jj:jj+2) + g_ij*eye(3)*dv;
+    end % j
+  end % i
 
-    % Zusammenbau von k_geom
-
-    % Positionen fuer GG
-    node_loc = 1:nel;
-    for i=1:ndf
-      pos_vec(i:3:nel*ndf) =  node_loc;   % geht schoener --> 'reshape' !
-    end
-    S_mat = tens6_33(sig);
-    GG = dshape(pos_vec,:)*S_mat*dshape(pos_vec,:)'*dv;    % HBaa - 24.08.2017
-    % GG nur auf den einzelnen Diagonalen belegt
-    %GG(1:2:2*nel,2:2:2*nel) = 0.0;
-    %GG(2:2:2*nel,1:2:2*nel) = 0.0;
-
-    GG(1:3:3*nel,2:3:3*nel) = 0.0;            % schoener machen !
-      GG(1:3:3*nel,3:3:3*nel) = 0.0;
-        GG(2:3:3*nel,3:3:3*nel) = 0.0;
-    GG(2:3:3*nel,1:3:3*nel) = 0.0;
-      GG(3:3:3*nel,1:3:3*nel) = 0.0;
-        GG(3:3:3*nel,2:3:3*nel) = 0.0;
-
-    k_geom = k_geom + GG;
-
-%  elseif isw == 8
-    % Aufbau von zaehler und nenner fuer contourplot
-    % Contour-Plotausgabe
-    % Aufbau der Matrix cont_mat_gp:
-    % Spalte 1-5: eps_x,eps_y,eps_z,eps_xy,... ; Spalte 7-12:
-    % sig_x,sig_y,sig_z,sig_xy,...
-    cont_mat_gp(1:12) = [vareps;sig]';
-    cont_zaehler(:,1:12)=cont_zaehler(:,1:12) ...
-	+shape'.*shape'*cont_mat_gp*dv;
-    cont_nenner=cont_nenner+shape'.*shape'*dv;
-
-%  end %if
+  % Aufbau von zaehler und nenner fuer contourplot
+  % Contour-Plotausgabe
+  % Aufbau der Matrix cont_mat_gp:
+  % Spalte 1-5: eps_x,eps_y,eps_z,eps_xy,... ;
+  % Spalte 7-12: sig_x,sig_y,sig_z,sig_xy,...
+  cont_mat_gp(1:12) = [vareps;sig]';
+  cont_zaehler(:,1:12)=cont_zaehler(:,1:12)+shape'.*shape'*cont_mat_gp*dv;
+  cont_nenner=cont_nenner+shape'.*shape'*dv;
 
 end  % Schleife aktgp
 
