@@ -5,7 +5,7 @@
 Befehl | Beschreibung
 --- | ---
 `dae` | Starten von DAEdalon (Starten der GUI).
-`lprob` | Initialisierung einer Variablen, Einlesen der Eingabefiles, Initialierung der Historyfelder
+`lprob` | Initialisierung einiger Variablen, Einlesen der Eingabefiles, Initialierung der Historyfelder
 `stiffness` | Assemblierung der Systemmatrix **k** und des Residuumvektors **r**
 `syst` | Aufbau der globalen rechten Seite (aus Residuum und externen Lasten) sowie Einarbeitung der Verschiebungsrandbedingungen in **k** und **r**
 `solv` | Lösen des linearen Gleichungssystems **k** $\Delta$**u** = **r**
@@ -56,7 +56,7 @@ Soll nicht nach jedem Zeitschritt ein Output-File geschrieben werden, muss die V
 Befehl | Beschreibung
 --- | ---
 `rst_write("NAME")` | Schreibt das Restart-File `./rt_files/NAME_tim.mat` (History-Feld an den GPen)
-`rst_file_name="NAME"` | Wird `rst_file_name` ein Name zugewisen, so wird in `time.m` automatisch `rst_write("NAME")` aufgerufen
+`rst_file_name="NAME"` | Wird `rst_file_name` ein Name zugewiesen, so wird in `time.m` automatisch `rst_write("NAME")` aufgerufen
 `restart("NAME")` | Rechnung durch Aufruf von Restart-File `NAME` vorsetzen
 
 *Anmerkung*:
