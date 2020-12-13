@@ -28,11 +28,11 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [F] = defgrad_x(u_elem,dshape) 
+function [F] = defgrad_x(u_elem,dshape)
      %Bestimmung des Deformationsgradienten F aus grad(u) in R_x
-% F^(-1) = dX/dx
-%   = d(x-u)/dx
-%   = I - du/dx
+% F^(-1) = dX/dx     = Grad(x)
+%        = d(x-u)/dx
+%        = I - du/dx = I - grad(u)
 
 dim = size(u_elem);
 dim = dim(2);             % 2- oder 3-D ?
