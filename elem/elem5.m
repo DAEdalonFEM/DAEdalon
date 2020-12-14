@@ -4,6 +4,7 @@
 %                                                                  %
 %    Copyright 2002 Steffen Eckert/Oliver Goy                      %
 %              2015 Herbert Baaser @ FH Bingen                     %
+%              2020                                                %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
 %    This file is part of DAEdalon.                                %
@@ -63,42 +64,38 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %                 in hist_old_elem gespeichert
 % hist_user_elem = s.o.
 
+
 %Initialisierung
 k_elem=zeros(ndf*nel);
+k_mate=zeros(ndf*nel);
 k_geom=zeros(ndf*nel);
 r_elem=zeros(ndf*nel,1);
 cont_zaehler=zeros(nel,contvar);
 cont_nenner=zeros(nel,1);
 
-% Auslesen der Gausspunkte und der Gewichte
-[gpcoor, gpweight] = gp_tetra_lin;
-
 % akt. Konfig.
 x = X + u_elem;
 
-% Schleife ueber alle GP's
-for aktgp=1:length(gpweight)
+% Auslesen der Gausspunkte und der Gewichte
+[gpcoor, gpweight] = gp_tetra_lin;
+numgp=length(gpweight);
+
+% Schleife ueber alle GP
+for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, detvol] = shape_tetra_lin(x,gpcoor(aktgp,:));
 
   % Bestimmung des Deformationsgradienten (bzgl. akt. Konfig.!)
   F = defgrad_x(u_elem,dshape);
-  detF_J = det(F);
 
   % GP-History-Felder zusammenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
 
-  %%%%%%%%%%%%%%%%%%%%%%%
-  %  Materialaufruf
-
-  % Anspringen von mat_name
-  [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...    % "CAUCHY-Spg."
+  % Materialaufruf
+  [sig, vareps, D_mat,hist_new_gp,hist_user_gp] ...    % "CAUCHY-Spg."
          = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
-
-  % Ende Materialaufruf
-  %%%%%%%%%%%%%%%%%%%%%%%
 
   dv = gpweight(aktgp)*detvol;
 
@@ -106,48 +103,46 @@ for aktgp=1:length(gpweight)
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
-  % Aufstellen von b = [b_1, ... ,b_nele] siehe Hughes p.87/152
+  % Aufstellen von b = [b_1, ... ,b_nel] siehe Hughes p.87/152
   for i=1:nel
-      pos = (i-1)*3 + 1;
-      b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
-                        0            dshape(i,2)  0          ;  ...
-                        0            0            dshape(i,3);  ...
-                        dshape(i,2)  dshape(i,1)  0          ;  ...
-                        0            dshape(i,3)  dshape(i,2);  ...
-                        dshape(i,3)  0            dshape(i,1)];
+    pos = (i-1)*3 + 1;  % 1, 4, 7, ...
+    b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
+                      0            dshape(i,2)  0          ;  ...
+                      0            0            dshape(i,3);  ...
+                      dshape(i,2)  dshape(i,1)  0          ;  ...
+                      0            dshape(i,3)  dshape(i,2);  ...
+                      dshape(i,3)  0            dshape(i,1)];
   end % i
 
-    % Zusammenbau von k_geom               .......... noch pruefen !!!!
-    % HBaa - 25.11.2015
-	sig_mat = tens6_33(sig);             % --> besser "Cauchy" !
-    for i=1:nel
-      ii = (i-1)*3 + 1;
-      for j=1:nel
-        jj = (j-1)*3 + 1;
-        % Wriggers Gleichung (4.106)
-                     g_ij = dshape(i,:)*sig_mat*dshape(j,:)';
-        k_geom(ii  ,jj  ) = k_geom(ii  ,jj  ) + g_ij;
-        k_geom(ii+1,jj+1) = k_geom(ii+1,jj+1) + g_ij;
-        k_geom(ii+2,jj+2) = k_geom(ii+2,jj+2) + g_ij;
-      end % j
-    end % i
+  % Zusammenbau von k_mate = b^t*D_mat*b*dv --> neue / grosse Defos !
+  % und Residuumsvektor r_elem = b^T * sigma
+  k_mate = k_mate + b' * D_mat * b * dv;
+  r_elem = r_elem + b' * sig * dv;            % !! \tau=J*\sigma und dv=J*dV
+                                                 % Check WRI (4.97)_3, S.132 --> Fehler ?!
 
-    % Zusammenbau von k_elem = b^t*D_mat*b*dv + k_geom
-    % und Residuumsvektor r = b^T * sigma
-    k_elem = k_elem + ( b'*D_mat*b + k_geom )*dv;
-    r_elem = r_elem + b' * sig * dv;           % !! \tau=J*\sigma und dv=J*dV
-	                                           % Check WRI (4.97)_3, S. 132 --> Fehler ?!
+  % Zusammenbau von k_geom
+  % HBaa - 25.11.2015 / 08.12.2020
+  S_mat = tens6_33(sig);
+  for i=1:nel
+    ii = (i-1)*3 + 1;
+    for j=1:nel
+      jj = (j-1)*3 + 1;
+      % Wriggers Gleichung (4.106)
+                         g_ij = dshape(i,:)*S_mat*dshape(j,:)';
+      k_geom(ii:ii+2,jj:jj+2) = k_geom(ii:ii+2,jj:jj+2) + g_ij*eye(3)*dv;
+    end % j
+  end % i
 
-%  elseif isw == 8
-    % Aufbau von zaehler und nenner fuer contourplot
-    % Contour-Plotausgabe
-    % Aufbau der Matrix cont_mat_gp:
-    % Spalte 1-6: eps_x,eps_y,eps_z,eps_xy,... ;
-	% Spalte 7-12: sig_x,sig_y,sig_z,sig_xy,...
-    cont_mat_gp(1:12) = [vareps;sig]';                 % "CAUCHY" !
-    cont_zaehler(:,1:12)=cont_zaehler(:,1:12) ...
-	                    +shape'.*shape'*cont_mat_gp*dv;
-    cont_nenner=cont_nenner+shape'.*shape'*dv;
-%  end %if
+  % Aufbau von zaehler und nenner fuer contourplot
+  % Contour-Plotausgabe
+  % Aufbau der Matrix cont_mat_gp:
+  % Spalte 1-6: eps_x,eps_y,eps_z,eps_xy,... ;
+  % Spalte 7-12: sig_x,sig_y,sig_z,sig_xy,...
+  cont_mat_gp(1:12) = [vareps;sig]';                 % "CAUCHY" !
+  cont_zaehler(:,1:12)=cont_zaehler(:,1:12)+shape'.*shape'*cont_mat_gp*dv;
+  cont_nenner=cont_nenner+shape'.*shape'*dv;
 
 end  % Schleife aktgp
+
+% Zusammenbau von k_elem = k_geom + k_mate
+k_elem = k_mate + k_geom;

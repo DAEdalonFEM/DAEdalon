@@ -5,7 +5,6 @@
 %    Copyright 2002/2003 Steffen Eckert/Oliver Goy                 %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
-%                                                                  %
 %    This file is part of DAEdalon.                                %
 %                                                                  %
 %    DAEdalon is free software; you can redistribute it            %
@@ -33,7 +32,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 	  hist_old_elem, hist_user_elem)
 
 % 8-Knotenelement mit tri-linearen Ansatzfuntionen
-% % kleine Defos ---> grosse Defos / Mom.konfig. // HBaa - 24.08.2017 / 20.10.2020
+% kleine Defos ---> grosse Defos / Mom.konfig. // HBaa - 24.08.2017 / 20.10.2020
 %
 % rein:
 % isw = switch, if isw==8 dann Aufbau der Contourmatrix, sonst
@@ -65,51 +64,43 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 
 %Initialisierung
 k_elem=zeros(ndf*nel);
+k_mate=zeros(ndf*nel);
+k_geom=zeros(ndf*nel);
 r_elem=zeros(ndf*nel,1);
 cont_zaehler=zeros(nel,contvar);
 cont_nenner=zeros(nel,1);
-k_mate=zeros(ndf*nel);
-k_geom=zeros(ndf*nel);
 
-% Koordinaten in R_x
+% akt. Konfig.
 x = X + u_elem;
 
 % Auslesen der Gausspunkte und der Gewichte
 [gpcoor, gpweight] = gp_quad3d_lin;
 numgp=length(gpweight);
 
-% Schleife ueber alle GPs
+% Schleife ueber alle GP
 for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, detvol] = shape_brick_lin(x,gpcoor(aktgp,:));
 
-  % Bestimmung des Deformationsgradienten  --> hier bzgl. "akt. Konfig" !!
+  % Bestimmung des Deformationsgradienten (bzgl. akt. Konfig.!)
   F = defgrad_x(u_elem,dshape);
 
-  % GP-History-Felder zusmmenbauen:
+  % GP-History-Felder zusammenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
 
-  %%%%%%%%%%%%%%%%%%%%%%
-  % Begin Materialaufruf
-  %%%%%%%%%%%%%%%%%%%%%%
-
-          vol_flag = 1;    % auch Vol.anteile in Mat.routine berechnen
+  % Materialaufruf
   [sig, vareps, D_mat,hist_new_gp,hist_user_gp] ...    % "CAUCHY-Spg."
-      = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp,vol_flag);
-
-  %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf
-  %%%%%%%%%%%%%%%%%%%%%
+         = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   dv = gpweight(aktgp)*detvol;
 
-  % GP-History-Felder zurueckspeichern
+  % GP-History-Felder speichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
-  % Aufstellen von b = [b_1, ...  ,b_nel] siehe Hughes p.152
+  % Aufstellen von b = [b_1, ... ,b_nel] siehe Hughes p.87/152
   for i=1:nel
     pos = (i-1)*3 + 1;  % 1, 4, 7, ...
     b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
@@ -118,12 +109,13 @@ for aktgp=1:numgp
                       dshape(i,2)  dshape(i,1)  0          ;  ...
                       0            dshape(i,3)  dshape(i,2);  ...
                       dshape(i,3)  0            dshape(i,1)];
-  end %i
+  end % i
 
-  % Zusammenbau von k_elem = b^t*D_mat*b*dv --> neue / grosse Defos !
-  % und Residuumsvektor r = b^T * sigma
+  % Zusammenbau von k_mate = b^t*D_mat*b*dv --> neue / grosse Defos !
+  % und Residuumsvektor r_elem = b^T * sigma
   k_mate = k_mate + b' * D_mat * b * dv;
-  r_elem = r_elem + b' * sig * dv;
+  r_elem = r_elem + b' * sig * dv;            % !! \tau=J*\sigma und dv=J*dV
+                                                 % Check WRI (4.97)_3, S.132 --> Fehler ?!
 
   % Zusammenbau von k_geom
   % HBaa - 25.11.2015 / 08.12.2020
@@ -141,9 +133,9 @@ for aktgp=1:numgp
   % Aufbau von zaehler und nenner fuer contourplot
   % Contour-Plotausgabe
   % Aufbau der Matrix cont_mat_gp:
-  % Spalte 1-5: eps_x,eps_y,eps_z,eps_xy,... ;
+  % Spalte 1-6: eps_x,eps_y,eps_z,eps_xy,... ;
   % Spalte 7-12: sig_x,sig_y,sig_z,sig_xy,...
-  cont_mat_gp(1:12) = [vareps;sig]';
+  cont_mat_gp(1:12) = [vareps;sig]';                 % "CAUCHY" !
   cont_zaehler(:,1:12)=cont_zaehler(:,1:12)+shape'.*shape'*cont_mat_gp*dv;
   cont_nenner=cont_nenner+shape'.*shape'*dv;
 

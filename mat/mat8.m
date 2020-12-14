@@ -29,18 +29,18 @@
 %function [sig_cauchy,D_mat] = mat_3d_neo_hooke(mat_par,b)
 
 function [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
-         = mat8(mat_par,F,hist_old_gp,hist_user_gp,vol_flag)  
+         = mat8(mat_par,F,hist_old_gp,hist_user_gp)
 %
 % hyperelst. Materialverhalten 3D - "neo HOOKE"
 %
 % HBaa, 15./16.03.2012 ** neu **
 %       24.11.2015 @ FH Bingen
 %       01.12.2020
+%       >> wenn K=mat_par(2)>0: hier "iso"-Anteil+"vol"-Anteil
 %
 % rein:
-% mat_par = Materialparameter (c10 = G/2, K)
+% mat_par = Materialparameter (K = 2/D1, c10 = G/2)
 % F --> b=F*F' -  linker CAUCHY-GREEN-Verzerr.tensor
-% vol_flag =1: mit Vol.anteile; =0: ohne Vol.anteile
 %
 % raus:
 % sig = CAUCHY-Spannung
@@ -98,9 +98,9 @@ sig(6) = EG *  bbar(1,3);            %
    i4 = [1;1;1;0;0;0];
 eins4 = eye(6);
 D_mat = 4*c10*trbbar3*(eins4-i4*i4'/3.0) - 2/3*(i4*sig'+sig*i4')*detF; % "bzgl. tau" !
-  
+
 % + volumetr. Anteil
-if (vol_flag==1)
+if mat_par(2)>0
 	D_mat = D_mat + K*detF*( (2*detF-1)*(i4*i4') - 2*(detF-1)*eins4 ); % "bzgl. tau" !
 
                       EK = K*(detF-1);   % = p: CAUCHY - sig !!
