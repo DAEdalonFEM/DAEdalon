@@ -27,4 +27,4 @@ Material number | Dimensions | Description | Material parameters
 `mat1` | 2D | Linear elasticity (plane stress or plane strain) | E, nu
 `mat2` | 2D | St. Venant - Kirchhoff | E, nu
 `mat4` | 3D | Linear elasticity | E, nu
-`mat8` | 3D | Neo-Hooke | c10 = G/2, K = 2/D1
+`mat8` | 3D | Neo-Hooke | K = 2/D1, c10 = G/2
