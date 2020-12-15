@@ -30,7 +30,7 @@ Parameter | Description
 1 | material number, here: `mat1.m`
 0 | material parameter 1, reserved for inelasticity
 2.1e5 | material parameter 2, here: Young's modulus for `mat1.m`
-0.3 | material parameter 3, here: Poisson ration for `mat1.m`
+0.3 | material parameter 3, here: Poisson ratio for `mat1.m`
 
 ### Geometric properties: `geom.inp`
 Parameter | Description
