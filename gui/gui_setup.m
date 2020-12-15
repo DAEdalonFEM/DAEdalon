@@ -44,7 +44,7 @@ vers_nr = sscanf(version,'%f');
 % Infos ausgeben und Logo im Grafikfenster plotten
 
 % Aktuelle Versionsnummer
-versnum = '3.4';
+versnum = '3.5';
 
 disp(sprintf('\nDAEdalon Finite-Element-Project'))
 disp(sprintf(['Version ',versnum]))

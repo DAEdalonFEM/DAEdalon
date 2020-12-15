@@ -23,3 +23,10 @@
     - `go`
     - `go`
 
+## Documentation
+See the following links for more information about
+  - [available commands in DAEdalon](docu/commands_eng.md)
+  - [available commands in DAEdalon (german)](docu/commands.md)
+  - [available elements and materials](docu/elements_and_materials.md)
+  - [input file structure](docu/input_files.md)
+
