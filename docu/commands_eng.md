@@ -25,8 +25,8 @@ Command | Description
 `disvec` | plot all displacements as vectors
 `defo_scal=VALUE` | scale displatements by `VALUE` &rarr; `meshx`, `disvec`
 `nodenum` | print node numbers
-`elmnum` | print element numbers
-`clearplot`, `cp` | clear the plot
+`elnum` | print element numbers
+`clearplot`, `clp` | clear the plot
 `reac` | plot reaction forces at nodes with prescribed boundary displacements
 `boun` | plot displacement boundary conditions:<br>green: zero displacements <br>pink (as vector): non-zero displacements
 `forc` | plot boundary loads (blue vectors)

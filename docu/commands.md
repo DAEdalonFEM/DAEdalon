@@ -26,8 +26,8 @@ Befehl | Beschreibung
 `disvec` | Ausgabe aller Verschiebungen als Vektoren
 `defo_scal=VALUE` | Verschiebungen werden mit `VALUE` skaliert dargestellt &rarr; `meshx`, `disvec`
 `nodenum` | Knotennummern darstellen
-`elmnum` | Elementnummern darstellen
-`clearplot`, `cp` | Löschen des Plotfensters
+`elnum` | Elementnummern darstellen
+`clearplot`, `clp` | Löschen des Plotfensters
 `reac` | Reaktionskräfte an Knoten mit vorgegebenen Randverschiebungen einzeichnen
 `boun` | Verschiebungsrandbedingungen einzeichnen:<br>grün: Null-Verschiebungen <br>pink (als Pfeil): Nicht-Null-Verschiebungen
 `forc` | Vorgegebene Randlasten in blauen Pfeilen einzeichnen
