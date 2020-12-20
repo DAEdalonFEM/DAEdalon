@@ -50,7 +50,7 @@ for i=1:numel
      xpos=xpos/nel;
      ypos=ypos/nel;
      text(xpos,ypos,[num2str(i)]);
-   
+
    case{3}
      xpos=0;
      ypos=0;
@@ -63,9 +63,9 @@ for i=1:numel
      end
      xpos=xpos/nel;
      ypos=ypos/nel;
-     ypos=ypos/nel;
+     zpos=zpos/nel;
      text(xpos,ypos,zpos,[num2str(i)]);
-  
+
   end %switch
 end %i
 
