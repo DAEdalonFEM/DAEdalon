@@ -30,7 +30,7 @@
 
 % stiffness_func.m
 
-% Achtung, 'u' wird transponiert zurückgegeben
+% Achtung, 'u' wird transponiert zurueckgegeben
 function [k,r,u,hist_new,hist_user,cont_mat_node] = ...
     stiffness_func(nel,ndf,u,displ_u,displ_df,displ_node,...
 		   displ_len,elem_name,mat_name,el,el2mat,mat2el,mat_set,...
@@ -58,7 +58,7 @@ r=zeros(gesdof,1);      %Spaltenvektor
 isw=1;
 
 %Initialisierung Contourmatrix
-% geändert, StE 20.03.03
+% geaendert, StE 20.03.03
 %numnpel = max(numnp,numel);
 %cont_mat_node=zeros(numnpel,contvar);
 %cont_norm=zeros(numnpel,1);
@@ -87,30 +87,30 @@ u(pos) = loadfactor*displ_u;
 % unode in gleicher Form wie x
 unode=reshape(u,ndf,numnp)';
 
-% Schleife über alle Elemente
+% Schleife ueber alle Elemente
 %if (sparse_flag~=0)
-  % nur bei großen Problemen ausgeben
+  % nur bei grossen Problemen ausgeben
   disp(sprintf('Assemblierung der Steifigkeitsmatrix:      '))
 %end
 
 elem_count = 0;
 
-% Schleife über alle Elemente für globale Iteration
-% dabei wird erst über alle Elemente des gleichen
+% Schleife ueber alle Elemente fuer globale Iteration
+% dabei wird erst ueber alle Elemente des gleichen
 % Materialdatensatzes assembliert, dann naechster Datensatz,
-% sinnvoll für Plots, Eckert 04/2003
+% sinnvoll fuer Plots, Eckert 04/2003
 % mat_set wird in dae und cont_sm gesetzt
 for aktmat = mat_set
   listlength = mat2el(1,aktmat);
   elements = mat2el( 2:listlength+1,aktmat);
   for aktele = elements' % transponiert, damit die Elemente einzeln
                          % bei jedem Schleifendurchgang an aktele
-                         % übergeben werden und nicht auf einmal
+                         % uebergeben werden und nicht auf einmal
                          % als Vektor
 
   elem_count = elem_count + 1;
 
-  % Knoten und Verschiebungen für aktuelles Element in x speichern
+  % Knoten und Verschiebungen fuer aktuelles Element in x speichern
   %x(1:nel,1:ndf)=node(el(aktele,1:nel),1:ndf);
   x(:,:)=node(el(aktele,:),:);
   u_elem(:,:)=unode(el(aktele,:),:);
@@ -123,19 +123,19 @@ for aktmat = mat_set
   % Begin Elementaufruf
   %%%%%%%%%%%%%%%%%%%%%
 
-   % Zusammenbauen der Element- und Materialnamen nicht mehr nötig, das dies
-   % schon in dae.m geschieht und für jedes Element in den Vektoren
+   % Zusammenbauen der Element- und Materialnamen nicht mehr noetig, das dies
+   % schon in dae.m geschieht und fuer jedes Element in den Vektoren
    % elem_name und mat_name abgelegt ist
    % -> sehr viel schneller
    % Goy, Eckert 09.02
 
-  % zum aktuellen Element gehörende Größen (Elementnummer, Materialnummer,
+  % zum aktuellen Element gehoerende Groessen (Elementnummer, Materialnummer,
   % Materialparameter) aus Material-Matrizen rausholen
   mat_par=mat_par_matr(:,el2mat(aktele));
 
   % Element anspringen
   % Hier wird jetzt elem_name zum Aufruf des Elements verwendet und
-  % mat_name übergeben
+  % mat_name uebergeben
    [k_elem, r_elem, cont_zaehler, cont_nenner, ...
    hist_new_elem, hist_user_elem] = ...
       feval(deblank(elem_name(aktele,:)),isw, nel, ndf, contvar,...
@@ -147,7 +147,7 @@ for aktmat = mat_set
   % Ende Elementaufruf
   %%%%%%%%%%%%%%%%%%%%
 
-  % Element-History-Felder zurückspeichern
+  % Element-History-Felder zurueckspeichern
   hist_new(:,aktele) = reshape(hist_new_elem,gphist_max*numgp_max,1);
   hist_user(:,aktele) = reshape(hist_user_elem,gphist_max*numgp_max,1);
 
@@ -173,7 +173,7 @@ for aktmat = mat_set
   % alternatives Einsortieren mit weniger for-Schleifen
   % -> viel schneller
 
-  % lokale und globale Knotennummern für aktuelles Element
+  % lokale und globale Knotennummern fuer aktuelles Element
   node_loc = 1:nel;
   node_ges = (el(aktele,node_loc)-1)*ndf+1;
 
@@ -185,11 +185,11 @@ for aktmat = mat_set
   % Einsortieren in k und r
 
   % Sparse-Speichertechnik zeigt, dass das Einsortieren in k immer
-  % langsamer dauert, je mehr Einträge schon drin sind
+  % langsamer dauert, je mehr Eintraege schon drin sind
   % ->
   % es wird eine Sparse-Matrix zum Zwischenspeichern (k_temp)
-  % eingeführt, die nach k_temp_size (z.B. 200 Elementen) in k
-  % abgelegt wird und anschließend wieder neu initialisiert wird
+  % eingefuehrt, die nach k_temp_size (z.B. 200 Elementen) in k
+  % abgelegt wird und anschliessend wieder neu initialisiert wird
 
   if  (sparse_flag~=0)
     k_temp(pos_vec,pos_vec) = k_temp(pos_vec,pos_vec) + k_elem;
@@ -210,7 +210,7 @@ for aktmat = mat_set
 
 
   % Einsortieren von zaehler und nenner in cont_mat_node und cont_norm
-  % Ausnahme für Stabelement ( elem10)
+  % Ausnahme fuer Stabelement ( elem10)
   if (strcmp(elem_name(aktele,:),'elem10'))
      cont_mat_node(aktele,:) = cont_zaehler;
      cont_norm(aktele) = cont_nenner;
@@ -235,12 +235,12 @@ if  (sparse_flag~=0);
   k = k + k_temp;
 end
 
-% Die an das Element zurückgegebene SteMa ist wird auf jeden Fall
+% Die an das Element zurueckgegebene SteMa ist wird auf jeden Fall
 % als Sparse-Matrix gespeichert, da dann Matlab auch Sparse-Solver
 % verwendet, die sehr viel schneller sind, StE 02.03
 k = sparse(k);
 
-% Normierung der Contour-Größen
+% Normierung der Contour-Groessen
 for i = 1:contvar
   cont_mat_node(:,i)=cont_mat_node(:,i)./cont_norm(:);
 end

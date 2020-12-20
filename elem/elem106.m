@@ -51,19 +51,19 @@ function [k_elem, M_elem, C_elem, r_elem, ...
 %                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
 %                 durch hist_new_elem ersetzt
-% hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
+% hist_user_elem = wie hist_old_elem, jedoch kein Ueberschreiben bei
 %                  neuem Zeitschritt
 %
 % raus:
 % k_elem = Elementsteifigkeitsmatrix
 % M_elem = Elementmassenmatrix
-% C_elem = Elementdämpfungsmatrix
+% C_elem = Elementdaempfungsmatrix
 
-% r_elem = Elementresiduumsvektor (für Newton-Iteration)
-% cont_zaehler = Matrix in der Größen für Contour-Plot drinstehen
-% cont_nenner = Vektor zum Normieren vom globalen cont_zähler
+% r_elem = Elementresiduumsvektor (fuer Newton-Iteration)
+% cont_zaehler = Matrix in der Groessen fuer Contour-Plot drinstehen
+% cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
-% hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
+% hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
 %                 in hist_old_elem gespeichert
 % hist_user_elem = s.o.
 
@@ -81,7 +81,7 @@ cont_nenner=zeros(nel,1);
 numgp=length(gpweight);
 
 % Rausholen von rho_mass sowie damp1 und damp2 (Rayleigh-Damping)
-% aus mat_par, die Werte müssen an den letzten drei Stellen von
+% aus mat_par, die Werte muessen an den letzten drei Stellen von
 % mat_par eingetragen werden
 rho_mass = mat_par(end-2);
 damp1 = mat_par(end-1);
@@ -114,7 +114,7 @@ for aktgp=1:numgp
   [sig, vareps, D_mat, hist_new_gp, hist_user_gp] ...
       = feval(mat_name, mat_par, F, hist_old_gp, hist_user_gp);
 
-  % Zurücktransformieren von sig, vareps, D_mat in EVZ
+  % Zuruecktransformieren von sig, vareps, D_mat in EVZ
 
   sig(5:6)=[];
   sig(3) = [];
@@ -135,7 +135,7 @@ for aktgp=1:numgp
 
   dv = gpweight(aktgp)*detvol;
 
-  % GP-History-Felder zurückspeichern
+  % GP-History-Felder zurueckspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
@@ -167,7 +167,7 @@ for aktgp=1:numgp
   end % i
 
 
-  % Aufbau von zaehler und nenner für contourplot
+  % Aufbau von zaehler und nenner fuer contourplot
   % Contour-Plotausgabe
   % Aufbau der Matrix cont_mat_gp:
   % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6: sig_x,sig_y,sig_xy

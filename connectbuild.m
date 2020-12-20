@@ -41,8 +41,8 @@ for i=1:length(rows)
 end
 
 
-force=[];  %Gleichflächenlast mit 10 N/mm2
-%Aufbau der Vektoren eines Dreiecks und Berechnung der Fläche dieses Dreiecks
+force=[];  %Gleichflaechenlast mit 10 N/mm2
+%Aufbau der Vektoren eines Dreiecks und Berechnung der Flaeche dieses Dreiecks
 for i=1:size(connectvty,1)
     v1=node(connectvty(i,1),:)-node(connectvty(i,3),:);
     v2=node(connectvty(i,2),:)-node(connectvty(i,3),:);
@@ -54,7 +54,7 @@ temp=size(connectvty,1)*size(connectvty,2);
 connectvty=[connectvty,force/3];
 nodeforce=[1:nodenr(end);coord_plane*ones(1,nodenr(end));zeros(1,nodenr(end))]';
 
-%Verteilen der Kräfte auf die entsprechenden Knoten
+%Verteilen der Kraefte auf die entsprechenden Knoten
 for i=1:temp
     modul=mod(i,size(connectvty,1));
     if modul==0

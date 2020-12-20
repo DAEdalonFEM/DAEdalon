@@ -43,7 +43,7 @@ cont_value = arg;
 evalin('base','surf_data=u(cont_value:ndf:numnp*ndf);');
 
 
-% Schleife über alle Elemente
+% Schleife ueber alle Elemente
 for aktele=1:numel
 
   % zeichnen der Elemente, ab jetzt durch Aufruf von cont_draw.m

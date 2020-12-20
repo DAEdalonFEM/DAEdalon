@@ -29,7 +29,7 @@
 
 % forc.m
 
-% Kraftgrössen anzeigen, Farbe schwarz
+% Kraftgroessen anzeigen, Farbe schwarz
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gui

@@ -40,15 +40,15 @@ function [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
 % hist_user_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 %
 % raus:
-% sig = Spannungsgröße
-% vareps = zu sig konjugierte Verzerrungsgröße
+% sig = Spannungsgroesse
+% vareps = zu sig konjugierte Verzerrungsgroesse
 % D_mat = linearisierte Materialtangente am GP
 % hist_new_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 % hist_user_gp = s.o.
 
 
 % Damit hist_new_gp belegt ist, auch wenn sich an den
-% hist.-Variablen nichts ändert:
+% hist.-Variablen nichts aendert:
 hist_new_gp=hist_old_gp;
 
 nhv=mat_par(1); % Anzahl der History-Variablen pro GP

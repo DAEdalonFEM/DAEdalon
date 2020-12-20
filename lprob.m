@@ -58,23 +58,23 @@ cont_flag = 0;
 contvar = 16;    % Anzahl der Contourvariablen
 cpu_total = 0.0;
 flops_total = 0;
-steps_total = 0; % Anzahl der insgesamt durchgeführten Zeitschritte
-sparse_flag = 0; % Bei großen Gleichungssystemen sollte man Sparse-
+steps_total = 0; % Anzahl der insgesamt durchgefuehrten Zeitschritte
+sparse_flag = 0; % Bei grossen Gleichungssystemen sollte man Sparse-
 	             % Speichertenchnik verwenden -> sparse_flag=1
 load_flag = 1;   % wenn load_flag=1, werden Randlasten und
                  % Randverschiebungen mit der in loadfunc(tim)
                  % vorgegebenen Funktion skaliert, sonst nicht
 lam = 1;         % sollte immer auf 1 stehen, wird nur beim
-                 % Bogenlaengenverfahren benötigt
+                 % Bogenlaengenverfahren benoetigt
 bounDisp_treat=0;% Art der Einarbeitung der Verschiebungsrandbed.
                  % in GlSyst, siehe syst.m
 movie_flag = 0;  % wenn =1, wird nach jeden Zeitschritt ein Bild in
                  % movie_array gespeichert, siehe loop.
 
 isw = 0;         % zur eingenen Verwendung
-out_file_name = '';     % Defaultmäßig keine Ausgabefiles schreiben
-histout_file_name = ''; % Defaultmäßig keine Ausgabefiles schreiben
-rst_file_name = '';     % Defaultmäßig keine Restartfiles schreiben
+out_file_name = '';     % Defaultmaessig keine Ausgabefiles schreiben
+histout_file_name = ''; % Defaultmaessig keine Ausgabefiles schreiben
+rst_file_name = '';     % Defaultmaessig keine Restartfiles schreiben
 out_incr = 1;    % alle wieviel Zeitschritte Ausgabe-file ...
 rst_incr = 20;   % alle wieviel Zeitschritte Restart-file ...
                  % geschrieben wird
@@ -91,14 +91,14 @@ end
 
 % Eingabefile Geometriedaten:
 % Format: [numnp; numel; nummat; ndm; ndf; nel]
-% Ausser den Werten für nummat und ndf werden alle beim Einlesen
-% von node.inp und el.inp überschrieben
+% Ausser den Werten fuer nummat und ndf werden alle beim Einlesen
+% von node.inp und el.inp ueberschrieben
 load geom.inp
 nummat=geom(3);
 ndf=geom(5);
 mat_set=1:nummat; % Anzahl an Materialdatensaetzen
 
-% Schleife über alle Materialdateien
+% Schleife ueber alle Materialdateien
 for i=1:nummat
   % Eingabefile Materialparameter: matX.inp
   % Format: [elem_nr; mat_nr; ...mat_par...]
@@ -106,17 +106,17 @@ for i=1:nummat
   load(mat_file);
   mat_par_length = length(eval(['mat',num2str(i)])) - 3;
 
-  % in elem_nr_matr wird für jeden Materialdatensatz die Elementnr. abgelegt
+  % in elem_nr_matr wird fuer jeden Materialdatensatz die Elementnr. abgelegt
   elem_nr_matr(i)=eval(['mat',num2str(i),'(1)']);
 
-  % in elem_gp_matr wird für jeden Materialdatensatz die Anzahl der
+  % in elem_gp_matr wird fuer jeden Materialdatensatz die Anzahl der
   % Gausspunkte pro Element abgelegt
   elem_gp_matr(i)=eval(['mat',num2str(i),'(2)']);
 
-  % in mat_nr_matr wird für jeden Materialdatensatz die Materialnr. abgelegt
+  % in mat_nr_matr wird fuer jeden Materialdatensatz die Materialnr. abgelegt
   mat_nr_matr(i)=eval(['mat',num2str(i),'(3)']);
 
-  % in mat_par_matr werden spaltenweise für jeden Materialdatensatz
+  % in mat_par_matr werden spaltenweise fuer jeden Materialdatensatz
   % die Materialparameter abgelegt
   % 1. Eintrag in mat_par_matr ist Anzahl der hist-Variablen pro GP
   mat_par_matr(1:mat_par_length,i)=eval(['mat',num2str(i),'(4:end)']);
@@ -131,7 +131,7 @@ numnp = dummy(1);   %Anzahl der Gesamtknoten
 ndm = dummy(2);     %Anzahl der Dimensionen
 
 % Falls bei 2D-Problem 3D-Koordinaten angegeben sind, die "Null-Richtung"
-% rausschmeißen
+% rausschmeissen
 if ndm==3                     % HBaa, 16.04.2009, wg. "Stab-Bsp. in Vorl.
   maxcoor = max(node);
   mincoor = min(node);
@@ -156,7 +156,7 @@ el2mat = el(:,1);    %in der ersten Spalte steht die Materialnummer
 el(:,1)=[];          %Rausschmeissen der Materialnummer aus el
 
 % mat2el: pro Spalte stehen alle Elemente drin, die zu einem
-% Materialdatensatz gehören, in der ersten Zeile steht wie viele
+% Materialdatensatz gehoeren, in der ersten Zeile steht wie viele
 % Elemente es sind, Eckert 04.2003
 mat2el = zeros(1,nummat);
 for i=1:numel
@@ -197,7 +197,7 @@ p=zeros(gesdof,1);      %Spaltenvektor
 % Format:
 % force(Anzahl belasteter Knoten x (Knotennr.,Freiheitsgr.,Knotenkraft))
 
-% HBaa - 14.10.2016 für 'octave', wenn Datei leer
+% HBaa - 14.10.2016 fuer 'octave', wenn Datei leer
 try
 	load force.inp
 catch err

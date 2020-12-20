@@ -41,8 +41,8 @@ figure(fid_dae);
 cont_value = arg1;
 mat_set = arg2;
 
-% evalin ruft mfiles auf, wobei alle Variablen gültig sind, die auch
-% im workspace verfügbar sind
+% evalin ruft mfiles auf, wobei alle Variablen gueltig sind, die auch
+% im workspace verfuegbar sind
 
 % Aufruf von stiffness, durch setzen von mat_set = arg2 werden aber
 % nur die Elemente mit Materialdatensatz mat_set assembliert
@@ -56,7 +56,7 @@ evalin('base','stiffness;');
 
 evalin('base','surf_data=cont_mat_node(:,[cont_value]);');
 
-% Schleife über alle Elemente EINES Datensatzes
+% Schleife ueber alle Elemente EINES Datensatzes
 listlength = mat2el(1,arg2);
 elements = mat2el( 2:listlength+1,arg2);
 for aktele = elements'
@@ -86,7 +86,7 @@ if (ndm==3)
   zlabel('z');
 end
 
-% nochmal aufrufen mit Schleife über alle Materialdatensätze, damit
+% nochmal aufrufen mit Schleife ueber alle Materialdatensaetze, damit
 % alles wieder beim alten ist.
 mat_set=1:nummat;
 evalin('base','stiffness;');

@@ -27,7 +27,7 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Rückgabe der nötigen GP an denen das Integral ausgewertet wird
+%Rueckgabe der noetigen GP an denen das Integral ausgewertet wird
 
 function [gpcoor, gpweight]= gp_quad_lin
 

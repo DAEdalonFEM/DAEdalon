@@ -33,7 +33,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 	  hist_old_elem, hist_user_elem)
 
 % Dreieckselement mit 6 Knoten und quadratischen Ansatzfuntionen
-% große Defos, Refenzkonfiguration
+% grosse Defos, Refenzkonfiguration
 % numerische Bestimmung der Tangente
 %
 % rein:
@@ -50,16 +50,16 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
 %                 durch hist_new_elem ersetzt
-% hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
+% hist_user_elem = wie hist_old_elem, jedoch kein Ueberschreiben bei
 %                  neuem Zeitschritt
 %
 % raus:
 % k_elem = Elementsteifigkeitsmatrix
-% r_elem = Elementresiduumsvektor (für Newton-Iteration)
-% cont_zaehler = Matrix in der Größen für Contour-Plot drinstehen
-% cont_nenner = Vektor zum Normieren vom globalen cont_zähler
+% r_elem = Elementresiduumsvektor (fuer Newton-Iteration)
+% cont_zaehler = Matrix in der Groessen fuer Contour-Plot drinstehen
+% cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
-% hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
+% hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
 %                 in hist_old_elem gespeichert
 % hist_user_elem = s.o.
 
@@ -110,7 +110,7 @@ for aktgp=1:numgp
 
   dv = gpweight(aktgp)*det_X_xsi;
 
-  % GP-History-Felder zurückspeichern
+  % GP-History-Felder zurueckspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
@@ -174,7 +174,7 @@ k_elem_ana = k_mate+k_geom;
 % Inkrement festlegen
 delta_u = 1.E-8;
 
-% Schleifen über alle Freiheitsgrade und Knoten
+% Schleifen ueber alle Freiheitsgrade und Knoten
 for ii=1:nel*ndf
 
   % Schleife ueber alle GP's
@@ -207,7 +207,7 @@ for ii=1:nel*ndf
     % Ende Materialaufruf
     %%%%%%%%%%%%%%%%%%%%%
 
-    % GP-History-Felder nicht zurückspeichern
+    % GP-History-Felder nicht zurueckspeichern
 
     dv = gpweight(aktgp)*det_X_xsi;
 

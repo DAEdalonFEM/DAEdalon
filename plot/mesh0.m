@@ -41,7 +41,7 @@ initplot;
 hold on;
 
 
-% Schleife über alle Elemente
+% Schleife ueber alle Elemente
 for aktele=1:numel
 elem_nr=elem_nr_matr(el2mat(aktele));
 meshnodes;

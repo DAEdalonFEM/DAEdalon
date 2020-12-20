@@ -41,7 +41,7 @@ hold on;
 
 unode=reshape(u,ndf,numnp)';
 
-% Schleife über alle Knoten
+% Schleife ueber alle Knoten
 for aktnode = 1:numnp
   xn = node(aktnode,1);
   yn = node(aktnode,2);

@@ -28,10 +28,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % dyn_init.m
-% Initialisierung aller benötigten Größen zur Berechnug dynamischer
+% Initialisierung aller benoetigten Groessen zur Berechnug dynamischer
 % Probleme
 
-% Parameter für Newmark-Algorithmus
+% Parameter fuer Newmark-Algorithmus
 % folgender Parametersatz ist unbedingt stabil:
 %n_beta = 0.25;
 %n_gamma = 0.5;
@@ -47,12 +47,12 @@ alpha_4 = n_gamma/(n_beta*dt);
 alpha_5 = 1-n_gamma/n_beta;
 alpha_6 = (1.0 - n_gamma/(2.0*n_beta))*dt;
 
-% History-Felder für Zeitintegration
+% History-Felder fuer Zeitintegration
 u_n = zeros(gesdof,1);
 v_n = zeros(gesdof,1);
 a_n = zeros(gesdof,1);
 
-% Skalierung der Randlasten, -verschiebungen defaultmäßig ausschalten
+% Skalierung der Randlasten, -verschiebungen defaultmaessig ausschalten
 lf
 
 % Eingabefile  disp0.inp mit Anfangsverschiebungen lesen
@@ -97,7 +97,7 @@ if (veloc0_len>0)
   end  % i
 end % if
 
-% Schleife über alle Elemente muss zum Initialisieren einmal mit u_0
+% Schleife ueber alle Elemente muss zum Initialisieren einmal mit u_0
 % durchlaufen werden um a_0 zu bestimmen
 u = u_n;
 
@@ -110,7 +110,7 @@ syst;
 a_n = M_mass\(rhs - C_damp*v_n);
 
 % aktuelle Werte mit den Startwerten initialisieren, da beim
-% Aufruf von time die Größen umgespeichert werden.
+% Aufruf von time die Groessen umgespeichert werden.
 u = u_n;
 v_akt = v_n;
 a_akt = a_n;

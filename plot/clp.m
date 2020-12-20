@@ -1,2 +1,2 @@
-%Abkürzung für:
+%Abkuerzung fuer:
 clearplot

@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % dis.m
-% Ausgabe aller Freiheitsgrade für Knoten node_number
+% Ausgabe aller Freiheitsgrade fuer Knoten node_number
 
 function dis(node_number)
 global ndf numnp u node;

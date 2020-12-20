@@ -30,8 +30,8 @@
 function [trafo_mat] = hatrafomat(a)
 
 % Aufbau der Transformationsmatrix trafo_mat, mit der man einen Tensor
-% 2-ter Stufe in Voigt-Notation im HA-System a zurück ins
-% ursprüngliche System transformiert:
+% 2-ter Stufe in Voigt-Notation im HA-System a zurueck ins
+% urspruengliche System transformiert:
 % Tensornotation:  A_neu = a * A_alt * a^T
 % Vektornotation:  A_neu_voigt = trafo_mat * A_alt_voigt
 % Trafo eines Tensors vierter Stufe D (6x6 Matrix in Voigt-Notation):

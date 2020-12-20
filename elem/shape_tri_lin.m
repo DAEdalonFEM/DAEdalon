@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ shape, dshape, j ] = shape_tri_lin( x, coor )
-% shape-funktion für 3-Knoten-Dreieckselemente mit linearen Ansaetzen
+% shape-funktion fuer 3-Knoten-Dreieckselemente mit linearen Ansaetzen
 % Knotenbezeichung wie in Hughes p.167 und Integration mit 3 GPs
 
 % shapefunctions ausgewertet an der Stelle (xsi,eta)

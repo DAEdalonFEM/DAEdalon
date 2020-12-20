@@ -42,7 +42,7 @@ if (bounDisp_treat == 0)
   du=k\rhs;
   %du=k_cond\rhs_cond;
 else
-  % aT: reduziertes system lösen
+  % aT: reduziertes system loesen
   du(poU) = k(poU,poU) \ rhs(poU);
 end
 

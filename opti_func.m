@@ -66,18 +66,18 @@ kk = kk + kk_temp;
 
 subplot(1,2,1)
 spy(kk);
-title(['Knotenkonektivität'])
+title(['Knotenkonektivitaet'])
 xlabel('Elemente');
 ylabel('Elemente');
 
-% symrcm gibt einen Permutationsvektor zurück, dabei ist der Wert
+% symrcm gibt einen Permutationsvektor zurueck, dabei ist der Wert
 % die alte Knotennummer und der Index die neue Knotennummer.
 % Bsp.: permt_vec(4)=12 -> alte Knotennr:12, neue Knotennr:4
 permut_vec = symrcm(kk);
 
 subplot(1,2,2)
 spy(kk(permut_vec,permut_vec));
-title(['Optimierte Knotenkonektivität'])
+title(['Optimierte Knotenkonektivitaet'])
 xlabel('Elemente');
 ylabel('Elemente');
 
@@ -101,7 +101,7 @@ for i=1:length(displ_node_in)
   displ_node_out(i) =  find(permut_vec==displ_node_in(i));
 end
 
-% neuen Lastvektor erzeugen (wenn nötig)
+% neuen Lastvektor erzeugen (wenn noetig)
 if (length(force_node_in)>0)
   for i=1:length(force_node_in)
     force_node_out(i) =  find(permut_vec==force_node_in(i));

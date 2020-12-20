@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % reac.m
-% Reaktionskräfte mit Pfeilen anzeigen
+% Reaktionskraefte mit Pfeilen anzeigen
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gui
@@ -58,5 +58,5 @@ end %i
 % nicht richtig, sondern von Hand
 max_abs = max([max(abs(rnode)) 1.0E-6]);
 rnode_plt = rnode/max_abs*rand*0.8;               % HBaa - 11.01.2016
-title(['Reaktionskräfte']);
+title(['Reaktionskraefte']);
 quiver3(xcoor,ycoor,zcoor,rnode_plt(:,1),rnode_plt(:,2),rnode_plt(:,3),0,'r')

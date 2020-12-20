@@ -31,7 +31,7 @@ function [loadfactor] = loadfunc(tim)
 
 % loadfunc.m
 % Funktion, die vorgibt, wie sich die Randlasten/Randverschiebugen
-% in Abhängigkeit von der Zeit verändern
+% in Abhaengigkeit von der Zeit veraendern
 
 % Linear (Standardeinstellung)
 loadfactor = tim;

@@ -39,15 +39,15 @@ function [S,E,D_mat,hist_new_gp,hist_user_gp] ...
 % hist_user_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 %
 % raus:
-% S = Spannungsgröße
-% E = zu S konjugierte Verzerrungsgröße
+% S = Spannungsgroesse
+% E = zu S konjugierte Verzerrungsgroesse
 % D_mat = linearisierte Materialtangente am GP
 % hist_new_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 % hist_user_gp = s.o.
 
 
 % Damit hist_new_gp belegt ist, auch wenn sich an den
-% hist.-Variablen nichts ändert:
+% hist.-Variablen nichts aendert:
 hist_new_gp=hist_old_gp;
 
 E=zeros(3,1);

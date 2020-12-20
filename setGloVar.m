@@ -44,7 +44,7 @@ global node el u;
 global mat_nr mat_par;
 
 % zur komunikation zwischen einer funktion und einem skript (bspw. elem4)
-% daten von/zu funktion zu/von skript (fnc<->scr) ; speziell für skripts
+% daten von/zu funktion zu/von skript (fnc<->scr) ; speziell fuer skripts
 % von elemente
 global x u_elem unode shapeGp;
 

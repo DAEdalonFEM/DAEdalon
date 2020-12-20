@@ -43,7 +43,7 @@ mat_set = arg2;
 
 evalin('base','surf_data=u(cont_value:ndf:numnp*ndf);');
 
-% Schleife über alle Elemente EINES Datensatzes
+% Schleife ueber alle Elemente EINES Datensatzes
 listlength = mat2el(1,arg2);
 elements = mat2el( 2:listlength+1,arg2);
 for aktele = elements'

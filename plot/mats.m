@@ -37,14 +37,14 @@ figure(fid_dae);
 
 surf_data = spalloc(numnp,1,1);
 
-% Schleife über alle Elemente
+% Schleife ueber alle Elemente
 for aktele=1:numel
 
-  % Materialnummer für aktuelles Element raussuchen
+  % Materialnummer fuer aktuelles Element raussuchen
   %mat_nr= mat_nr_matr(el2mat(aktele));
   mat_nr= el2mat(aktele);
 
-  % aufbereiten der Daten fürs Element
+  % aufbereiten der Daten fuers Element
   evalin('base','surfnodes');
 
   len = size(x_surf);
@@ -60,7 +60,7 @@ for aktele=1:numel
     evalin('base','patch(x_surf,y_surf,surf_value)');
 
   case {10}   % Stabelement
-      % surf_value auf max. Strichstärke von 8 normieren
+      % surf_value auf max. Strichstaerke von 8 normieren
       %surf_value = surf_value/max(abs(surf_data))*8.0;
 
       %if surf_value >= 0.0
@@ -97,7 +97,7 @@ set(findobj('Type','patch'),'EdgeColor','none')
 colorbar;
 colormap(jet); % jet,bone,hsv
 
-title('Materialdatensätze');
+title('Materialdatensaetze');
 
 % Achsenbeschriftung
 xlabel('x');

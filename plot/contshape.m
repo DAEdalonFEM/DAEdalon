@@ -29,7 +29,7 @@
 
 function [cshape] = contshape(aktgp)
 % Shape-Funktion zum Projezieren der GP's auf Knoten, aanstelle von
-% shape für 6-Knoten-Dreickselement
+% shape fuer 6-Knoten-Dreickselement
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gui

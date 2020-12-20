@@ -28,8 +28,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_tetra_lin(x,coor)
-%Formfunktion für 4Knoten-Tetraederelemente mit linearen Ansaetzen
-%x = globale Koordinaten, coor = isoparam. Koor für akt. GP
+%Formfunktion fuer 4Knoten-Tetraederelemente mit linearen Ansaetzen
+%x = globale Koordinaten, coor = isoparam. Koor fuer akt. GP
 
 % Knotenbezeichung siehe  und Integration mit 1 GP
 r=coor(1);

@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % go.m
-% Nacheinander ausführen der Befehle:
+% Nacheinander ausfuehren der Befehle:
 % stiffness
 % syst
 % solv

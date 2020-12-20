@@ -31,11 +31,11 @@ function u2f2f(arg)
 
 % Rausschreiben des aktuellen Verschiebungsvektors in dem Format,
 % in dem die Verschiebungen in FEAP-Eingabefiles unter disp
-% gespeichert sind. arg ist der Name, der als Schlüsselword
+% gespeichert sind. arg ist der Name, der als Schluesselword
 % anstelle von disp rausgeschrieben wird.
 % Sinn:
-% Verschiebung des aktuellen GG-Zustandes können als
-% Anfangsverschiebung für dynamische Rechnungen verwendet werden.
+% Verschiebung des aktuellen GG-Zustandes koennen als
+% Anfangsverschiebung fuer dynamische Rechnungen verwendet werden.
 
 global u numnp ndf
 

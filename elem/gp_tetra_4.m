@@ -27,7 +27,7 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Rückgabe der nötigen GP an denen das Integral ausgewertet wird
+%Rueckgabe der noetigen GP an denen das Integral ausgewertet wird
 % nach Hughes p. 174
 
 function [gpcoor, gpweight]= gp_tetra_4

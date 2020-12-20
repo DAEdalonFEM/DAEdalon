@@ -37,7 +37,7 @@
 %figure(fid_dae);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Knoten für aktuelles Element in x_plot, y_plot speichern
+% Knoten fuer aktuelles Element in x_plot, y_plot speichern
 
      switch elem_nr
       case {2,102,333} % Dreieckelement 3. Kn.

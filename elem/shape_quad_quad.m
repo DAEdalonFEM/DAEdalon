@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_quad_quad(x,coor)
-%shape-funktion für Vierknotenelemente mit lin. Ansaetzen
+%shape-funktion fuer Vierknotenelemente mit lin. Ansaetzen
 
 xsi=coor(1);
 eta=coor(2);

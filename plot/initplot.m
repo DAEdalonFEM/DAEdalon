@@ -34,12 +34,12 @@
 % 'mesh0': Undeformiertes Netz
 % 'meshx': Deformiertes Netz, skaliert mit defo_scal (default = 100)
 % 'nodenum': Knotennummern dranschreiben
-% 'clearplot': Plotfenster löschen
+% 'clearplot': Plotfenster loeschen
 % 'dispx': x-Verschiebungen als Kontourplot ausgeben
 % 'dispy': y-Verschiebungen als Kontourplot ausgeben
-% 'boun': Lager einzeichnen: grün festgehaltene Verschiebungen
+% 'boun': Lager einzeichnen: gruen festgehaltene Verschiebungen
 %         gelb vorgebene Randverschiebungen
-% 'cont(x)': Contourplot der Größe x, die auf Elementebene in
+% 'cont(x)': Contourplot der Groesse x, die auf Elementebene in
 %            cont_mat_gp in Spalte x abgelegt ist
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

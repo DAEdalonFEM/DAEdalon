@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % dyn_go.m
-% Nacheinander ausführen der Befehle:
+% Nacheinander ausfuehren der Befehle:
 % dyn_stiff
 % syst
 % solv

@@ -28,8 +28,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_tetra_quadr(x,coor)
-%shape-funktion für 10Knoten-Tetraederelemente mit quadratischen Ansaetzen
-%x = globale Koordinaten, coor = isoparam. Koor für akt. GP
+%shape-funktion fuer 10Knoten-Tetraederelemente mit quadratischen Ansaetzen
+%x = globale Koordinaten, coor = isoparam. Koor fuer akt. GP
 
 % Knotenbezeichung siehe Wriggers p. 117 und Integration mit 5 GPen
 r=coor(1);

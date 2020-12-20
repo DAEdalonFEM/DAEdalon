@@ -50,16 +50,16 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
 %                 durch hist_new_elem ersetzt
-% hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
+% hist_user_elem = wie hist_old_elem, jedoch kein Ueberschreiben bei
 %                  neuem Zeitschritt
 %
 % raus:
 % k_elem = Elementsteifigkeitsmatrix
-% r_elem = Elementresiduumsvektor (für Newton-Iteration)
-% cont_zaehler = Matrix in der Größen für Contour-Plot drinstehen
-% cont_nenner = Vektor zum Normieren vom globalen cont_zähler
+% r_elem = Elementresiduumsvektor (fuer Newton-Iteration)
+% cont_zaehler = Matrix in der Groessen fuer Contour-Plot drinstehen
+% cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
-% hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
+% hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
 %                 in hist_old_elem gespeichert
 % hist_user_elem = s.o.
 
@@ -107,7 +107,7 @@ for aktgp=1:numgp
 
   dv = gpweight(aktgp)*det_X_xsi;
 
-  % GP-History-Felder zurückspeichern
+  % GP-History-Felder zurueckspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
@@ -128,7 +128,7 @@ for aktgp=1:numgp
     r_elem = r_elem + b' * sig * dv;
 
 %  elseif isw == 8
-    % Aufbau von zaehler und nenner für contourplot
+    % Aufbau von zaehler und nenner fuer contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6: sig_x,sig_y,sig_xy

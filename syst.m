@@ -31,7 +31,7 @@
 % Einbau der Verschiebungsrandbedingungen in k
 % und Aufbau der rechten Seite aus Lastvektor und Residuum
 
-% Schleife über alle vorgegebenen Randverschiebungen (in displ abgelegt)
+% Schleife ueber alle vorgegebenen Randverschiebungen (in displ abgelegt)
 % Zeile komplett ausnullen nur an der Stelle pos eine 1
 
 

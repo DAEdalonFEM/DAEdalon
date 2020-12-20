@@ -90,7 +90,7 @@ if (isfile([outOrdner,filesep,'node.inp']) ==1 )
 
 end
 
-%ABFRAGE Emodul & nu : Solange bis Werte für Emodul & Poissonszahl i.O.
+%ABFRAGE Emodul & nu : Solange bis Werte fuer Emodul & Poissonszahl i.O.
 while Emod<=Emodmin || nu>numax || nu<numin
 
   prompttxt1 = 'E-Modul E > 0 (Einheiten beachten! Bsp.: mm -> MPa, m -> Pa)';
@@ -190,9 +190,9 @@ while ischar(tline)
         %bis Pause-Zeile (eline)
         if((length(a)>=sline)&&(length(a)<=(eline)))
             count=count+1;
-            %Umschreiben in gekuertztes Array und Kommata löschen
+            %Umschreiben in gekuertztes Array und Kommata loeschen
             m_node{count,1}=strrep(a{length(a),1},',','');
-            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array löschen (z.B 45,46,47,48...)
+            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array loeschen (z.B 45,46,47,48...)
             empt=strfind(m_node{count,1},' ');
             %Engueltige Nodes rausschreiben in Cell-Array
             node{count,1}=m_node{count,1}((empt(1)+1):end) ;
@@ -221,7 +221,7 @@ while ischar(tline)
             count=count+1;
             %Kuerzen des Cell-Arrays a und Kommata loeschen
             m_el{count,1}=strrep(a{length(a),1},',','');
-            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array löschen (z.B 45,46,47,48...)
+            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array loeschen (z.B 45,46,47,48...)
             empt=strfind( m_el{count,1},' ');
             %Engueltige Nodes rausschreiben in Cell-Array
             el{count,1}=[num2str(material),' ',m_el{count,1}((empt(1)+1):end)];
@@ -270,7 +270,7 @@ fprintf(fid_mat, '%g\t', [se1]); %Zeile 2: Anzahl an Integrationspunkten (Zeile 
 fprintf(fid_mat, '\n');
 fprintf(fid_mat, '%g\t', [4]); %Zeile 3: Fester Wert (Materialanzahl)
 fprintf(fid_mat, '\n');
-fprintf(fid_mat, '%g\t', [0]); %Zeile 4: Fester Wert (Inelastizität)
+fprintf(fid_mat, '%g\t', [0]); %Zeile 4: Fester Wert (Inelastizitaet)
 fprintf(fid_mat, '\n');
 fprintf(fid_mat, '%g\t', [Emod]); %Zeile 5: E-Modul in MPa
 fprintf(fid_mat, '\n');

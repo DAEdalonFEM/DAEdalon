@@ -31,7 +31,7 @@
 % cont_draw.m
 % neue Struktur, cont_draw wird von cont.m, cont_sm.m und ucont.m
 % aufgerufen und zeichnet die Elemente, Eckert 05.03
-% die ganzen elvalin-Aufrufe sind jetzt nicht nötig, da cont_draw.m
+% die ganzen elvalin-Aufrufe sind jetzt nicht noetig, da cont_draw.m
 % keine Funktion ist, sollten aber auch nicht schaden
 
 
@@ -44,7 +44,7 @@
 global numel aktele cont_value elem_nr cont_flag ndm;
 global  surf_value surf_data elem_nr_matr el2mat;
 
-% aufbereiten der Daten fürs Element
+% aufbereiten der Daten fuers Element
 evalin('base','surfnodes');
 
 % Elementnummer bestimmen
@@ -56,7 +56,7 @@ switch elem_nr
   evalin('base','patch(x_surf,y_surf,surf_value)');
 
  case {10}   % Stabelement
-	     % surf_value auf max. Strichstärke von 8 normieren
+	     % surf_value auf max. Strichstaerke von 8 normieren
 	     surf_value = surf_value/max(abs(surf_data))*8.0;
 
 	     if surf_value >= 0.0

@@ -71,7 +71,7 @@ disp( sprintf( '\nP''*dUp (csp) : %f (%i)', tmp, csp ) );
 lamK = lam;
 uK = u;
 
-% praediktorschritt: bestimmung des skalierungsfaktors für lastniveau
+% praediktorschritt: bestimmung des skalierungsfaktors fuer lastniveau
 dLam = csp * ds / chk0( norm( dUp(:,1), 2 ) );
 lam = lam + dLam;
 lam0 = lam;

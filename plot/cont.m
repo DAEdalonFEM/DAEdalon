@@ -40,10 +40,10 @@ figure(fid_dae);
 cont_value = arg;
 % Aufbau von cont_mat_node durch aufruf von projection
 
-% evalin ruft mfiles auf, wobei alle Variablen gültig sind, die auch
-% im workspace verfügbar sind
+% evalin ruft mfiles auf, wobei alle Variablen gueltig sind, die auch
+% im workspace verfuegbar sind
 
-% nicht mehr nötig, da alles in stiffness aufgebaut wird, StE
+% nicht mehr noetig, da alles in stiffness aufgebaut wird, StE
 % 14.03.03
 %if cont_flag ~=1
 %  evalin('base','projection');
@@ -58,7 +58,7 @@ cont_value = arg;
 
 evalin('base','surf_data=cont_mat_node(:,[cont_value]);');
 
-% Schleife über alle Elemente
+% Schleife ueber alle Elemente
 for aktele=1:numel
   % zeichnen der Elemente, ab jetzt durch Aufruf von cont_draw.m
   evalin('base','cont_draw');

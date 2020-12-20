@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_brick_lin(x,coor)
-%shape-funktion für 3d-8-Knotenelemente mit lin. Ansaetzen
+%shape-funktion fuer 3d-8-Knotenelemente mit lin. Ansaetzen
 
 xsi =coor(1);
 eta =coor(2);

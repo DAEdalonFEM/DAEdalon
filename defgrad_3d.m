@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [F] = defgrad_3d(u_elem,dshape)
-%Bestimmung des Deformationsgradienten F und der Volumenänderung J
+%Bestimmung des Deformationsgradienten F und der Volumenaenderung J
 
 % F = dx/dX
 %   = d(X+u)/dX

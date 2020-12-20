@@ -45,7 +45,7 @@ file_name=strcat('./output/',arg,'_',num2str(ti),'.out');
 % Zusammenbau der Ausgabematrix:
 % (numel x history-variablen*GPs)
 
-% Größe der Matrix out_mat
+% Groesse der Matrix out_mat
 num_zeilen = numel;
 num_spalten = numgp_max*gphist_max + 1;
 
