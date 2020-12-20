@@ -40,19 +40,16 @@ defo_flag=0.0;
 initplot;
 hold on;
 
-
 % Schleife ueber alle Elemente
 for aktele=1:numel
-elem_nr=elem_nr_matr(el2mat(aktele));
-meshnodes;
-switch ndm
- case {2}                      % 2-D Elemente
-  plot(x_plot,y_plot,'b-');
-
- case {3}                    % 3-D Elemente
-  plot3(x_plot,y_plot,z_plot,'b-');
-
- end %switch
+  elem_nr = elem_nr_matr(el2mat(aktele));
+  meshnodes;
+  switch ndm
+    case {2}  % 2-D Elemente
+      plot(x_plot,y_plot,'b-');
+    case {3}  % 3-D Elemente
+      plot3(x_plot,y_plot,z_plot,'b-');
+  end % switch
 end % aktele
 
 title(['Undeformiertes Netz']);
@@ -63,5 +60,3 @@ ylabel('y');
 if (ndm==3)
   zlabel('z');
 end
-
-
