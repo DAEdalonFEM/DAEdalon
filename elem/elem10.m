@@ -32,7 +32,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
     elem10(isw, nel, ndf, contvar, mat_name, mat_par, x, u_elem, ...
 	  hist_old_elem, hist_user_elem)
 
-% Stabelement 
+% Stabelement
 % kleine Defos
 %
 % rein:
@@ -46,9 +46,9 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
+%                 durch hist_new_elem ersetzt
 % hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
 %                  neuem Zeitschritt
 %
@@ -60,7 +60,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %Initialisierung
@@ -73,44 +73,44 @@ cont_nenner=zeros(nel,1);
   % Einlesen der Materialwerte
   E_mod = mat_par(2);
   A = mat_par(3);
-  
-  % Berechnung des Einheitsvektors in Axialrichtung 
+
+  % Berechnung des Einheitsvektors in Axialrichtung
   % der Elementlänge
   t = x(2,:)' - x(1,:)';
   L = norm(t);
   t = t/L;
-  
+
   % Berechnung der lokalen Verschiebung
   u_axial = (u_elem(2,:) - u_elem(1,:))*t;
-  
+
   % Berechnung der Dehnung
   epsilon = u_axial/L;
-  
+
   % Berechnung der Spannung
   sig = E_mod*epsilon;
-  
-   
+
+
   % GP-History-Felder zurückspeichern
   hist_new_elem = hist_old_elem;
   hist_user_elem = hist_user_elem;
-  
+
 %  if isw ~= 8   % Aufbau von k_elem und r_elem
-    
+
     % Aufstellen von B
     B = [-t',t']/L;
 
-    % Zusammenbau von k_elem 
-    k_elem = B' * E_mod*A * B * L; 
-    
-    % und Residuumsvektor r 
+    % Zusammenbau von k_elem
+    k_elem = B' * E_mod*A * B * L;
+
+    % und Residuumsvektor r
     r_elem = B' * sig*A*L;
 
-%  elseif isw == 8  
+%  elseif isw == 8
     % Aufbau von zaehler und nenner für contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % cont_mat_gp(1): eps_xx; cont_mat_gp(2): sig_xx
-   
+
     cont_mat_gp(1:2) = [epsilon;sig]';
     cont_zaehler(1:2)= cont_mat_gp;
     cont_nenner=1.0;

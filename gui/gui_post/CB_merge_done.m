@@ -105,7 +105,7 @@ end
 % Script ausfuehren falls check=1
 if check == 1
     cd post
-    
+
     sys = computer;
     if isunix
         unix(['perl merge.pl ',f_in,' ',f_k,' ',f_s,' ',s]);
@@ -114,7 +114,7 @@ if check == 1
     if strncmp(sys, 'PC', 2)
 %        f2f = perl('f2f.pl ',filename)
     end
-    
+
     cd ..
 else
     disp('Script nicht ausgefuehrt!')

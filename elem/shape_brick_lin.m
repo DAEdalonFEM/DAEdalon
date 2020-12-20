@@ -47,7 +47,7 @@ shape(6)= 0.125*(1.0+xsi)*(1.0-eta)*(1.0+zeta);
 shape(7)= 0.125*(1.0+xsi)*(1.0+eta)*(1.0+zeta);
 shape(8)= 0.125*(1.0-xsi)*(1.0+eta)*(1.0+zeta);
 
-% Ableitungen der Formfunktionen 
+% Ableitungen der Formfunktionen
 % nach xsi (:,1), eta (:,2) und zeta (:,3):
 
 nshape(1,1)=-0.125*(1.0-eta)*(1.0-zeta);  %1

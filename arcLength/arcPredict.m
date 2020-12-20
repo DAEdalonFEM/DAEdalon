@@ -46,9 +46,9 @@
 if (tim ==0)
 
   sDs = 0;
-  bounDisp_treat = 1; 
+  bounDisp_treat = 1;
   load_flag = 0;
-  
+
   stiffness;
   syst;
   dUp = repmat( du, [1,2] );            % init. fuer blockelimination

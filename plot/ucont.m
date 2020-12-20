@@ -45,7 +45,7 @@ evalin('base','surf_data=u(cont_value:ndf:numnp*ndf);');
 
 % Schleife über alle Elemente
 for aktele=1:numel
-  
+
   % zeichnen der Elemente, ab jetzt durch Aufruf von cont_draw.m
   evalin('base','cont_draw');
 
@@ -69,4 +69,3 @@ ylabel('y');
 if (ndm==3)
   zlabel('z');
 end
-  

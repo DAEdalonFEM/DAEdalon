@@ -68,7 +68,7 @@ for i=1:displ_len
      case 2
       plot3([xn(i),xn(i)],[yn(i)-bl,yn(i)+bl],[zn(i),zn(i)],'g-')
      case 3
-      plot3([xn(i),xn(i)],[yn(i),yn(i)],[zn(i)-bl,zn(i)+bl],'g-') 
+      plot3([xn(i),xn(i)],[yn(i),yn(i)],[zn(i)-bl,zn(i)+bl],'g-')
     end %switch
 
   else
@@ -78,16 +78,16 @@ for i=1:displ_len
       uu(i)=displ_u(i);
 
      case 2
-      vv(i)=displ_u(i); 
- 
+      vv(i)=displ_u(i);
+
      case 3
       ww(i)=displ_u(i);
     end %switch
-    
+
     if (displ_max < abs(displ_u(i)))
       displ_max=abs(displ_u(i));
     end
-    
+
   end %if
 
 end %i

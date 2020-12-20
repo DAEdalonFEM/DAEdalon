@@ -34,7 +34,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 
 % Achtknotenelement mit quadratischen Ansatzfuntionen
 % bei reduzierter Integration
-% kleine Defos 
+% kleine Defos
 %
 % rein:
 % isw = switch, if isw==8 dann Aufbau der Contourmatrix, sonst
@@ -47,9 +47,9 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
+%                 durch hist_new_elem ersetzt
 % hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
 %                  neuem Zeitschritt
 %
@@ -61,7 +61,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %sprintf('elem4')
@@ -81,7 +81,7 @@ for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, det_X_xsi] = shape_quad_quad(x,gpcoor(aktgp,:));
-  
+
   % Bestimmung des Deformationsgradienten
   [F] = defgrad(u_elem,dshape);
 
@@ -102,7 +102,7 @@ for aktgp=1:numgp
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
 
   dv = gpweight(aktgp)*det_X_xsi;
@@ -120,26 +120,26 @@ for aktgp=1:numgp
 			0      dshape(i,2);      ...
 			dshape(i,2) dshape(i,1)];
     end % i
-    
+
     % Zusammenbau von k_elem = b^t*D_mat*b*dv
     % und Residuumsvektor r = b^T * sigma
-    
-    k_elem = k_elem + b' * D_mat * b * dv; 
+
+    k_elem = k_elem + b' * D_mat * b * dv;
     r_elem = r_elem + b' * sig * dv;
-    
-%  elseif isw == 8  
+
+%  elseif isw == 8
     % Aufbau von zaehler und nenner für contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6: sig_x,sig_y,sig_xy
 
     cont_mat_gp(1:6+mat_par(1)) = [vareps;sig;hist_new_gp]';
-    
+
     cont_zaehler(:,1:6+mat_par(1))=cont_zaehler(:,1:6+mat_par(1)) ...
-	+shape'.*shape'*cont_mat_gp*dv;	
+	+shape'.*shape'*cont_mat_gp*dv;
     cont_nenner=cont_nenner+shape'.*shape'*dv;
-  
+
 %  end %if
-  
+
 end  % Schleife aktgp
 

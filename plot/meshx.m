@@ -52,7 +52,7 @@ switch ndm
   plot(x_plot,y_plot,'r-');
 
  case {3}                     % 3-D Elemente
-  plot3(x_plot,y_plot,z_plot,'r-');  
+  plot3(x_plot,y_plot,z_plot,'r-');
  end %switch
 end % aktele
 

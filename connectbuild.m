@@ -57,7 +57,7 @@ nodeforce=[1:nodenr(end);coord_plane*ones(1,nodenr(end));zeros(1,nodenr(end))]';
 %Verteilen der Kräfte auf die entsprechenden Knoten
 for i=1:temp
     modul=mod(i,size(connectvty,1));
-    if modul==0 
+    if modul==0
         modul=modul+size(connectvty,1);
     end
     nodeforce(connectvty(i),3)=nodeforce(connectvty(i),3)+connectvty(modul,4);

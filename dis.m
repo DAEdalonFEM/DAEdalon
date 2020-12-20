@@ -33,7 +33,7 @@
 function dis(node_number)
 global ndf numnp u node;
 
-unode = reshape(u,ndf,numnp)'; 
+unode = reshape(u,ndf,numnp)';
 
 disp(sprintf('Knoten %.0f:  ',node_number))
 disp(sprintf('Koordinaten: '))

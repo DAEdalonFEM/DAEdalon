@@ -66,7 +66,7 @@ cont_size = size(cont_mat_node);
 
 % Größe der Matrix out_mat
 num_zeilen = u_size(1,1);
-num_spalten =1 + ndm + u_size(1,2) + r_size(1,2) + cont_size(1,2); 
+num_spalten =1 + ndm + u_size(1,2) + r_size(1,2) + cont_size(1,2);
 
 out_mat(:,1) =[1:num_zeilen]';
 out_mat(:,2:num_spalten)=[node unode rnode cont_mat_node];
@@ -89,13 +89,13 @@ fprintf(fid,'reac (Spalte %1.0f-%1.0f),  ' ...
 	, hhh,hhh+r_size(1,2)-1);
 hhh = hhh + r_size(1,2);
 fprintf(fid,'epsilon,  sigma,  int.Var (Spalte %1.0f-%1.0f)\n' ...
-	, hhh,hhh+cont_size(1,2)-1); 
+	, hhh,hhh+cont_size(1,2)-1);
 
 % Werte schreiben
 for i=1:num_zeilen
   fprintf(fid,'%d  ',out_mat(i,1));
   for j=2:num_spalten
-    fprintf(fid,'%0.6e  ',out_mat(i,j));  
+    fprintf(fid,'%0.6e  ',out_mat(i,j));
   end
   fprintf(fid,'\n');
 end

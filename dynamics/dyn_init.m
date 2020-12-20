@@ -48,7 +48,7 @@ alpha_5 = 1-n_gamma/n_beta;
 alpha_6 = (1.0 - n_gamma/(2.0*n_beta))*dt;
 
 % History-Felder für Zeitintegration
-u_n = zeros(gesdof,1); 
+u_n = zeros(gesdof,1);
 v_n = zeros(gesdof,1);
 a_n = zeros(gesdof,1);
 
@@ -68,8 +68,8 @@ if (disp0_len>0)
   disp0_node=disp0(:,1);
   disp0_df=disp0(:,2);
   disp0_u=disp0(:,3);
-  
-  % Einbau in u_n: 
+
+  % Einbau in u_n:
   for i=1:disp0_len
     pos=ndf*(disp0_node(i)-1)+disp0_df(i);
     u_n(pos)=disp0_u(i);
@@ -90,7 +90,7 @@ if (veloc0_len>0)
   veloc0_df=veloc0(:,2);
   veloc0_v=veloc0(:,3);
 
-  % Einbau in v_n: 
+  % Einbau in v_n:
   for i=1:veloc0_len
     pos=ndf*(veloc0_node(i)-1)+veloc0_df(i);
     v_n(pos)=veloc0_v(i);

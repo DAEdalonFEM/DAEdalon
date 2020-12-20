@@ -39,9 +39,9 @@ if strcmp(get(fid_f2f,'SelectionType'),'open')
     X = i;
     filename = handles.file_names(i);
     filename = filename{1,1};
- 
+
     cd parser
- 
+
     sys = computer;
     if isunix
         unix(['perl f2f.pl ',filename]);
@@ -50,6 +50,6 @@ if strcmp(get(fid_f2f,'SelectionType'),'open')
     if strncmp(sys, 'PC', 2)
         f2f = perl('f2f.pl ',filename)
     end
- 
+
     cd ..
 end

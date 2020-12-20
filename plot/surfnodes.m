@@ -37,25 +37,25 @@
 
 
 elem_nr=elem_nr_matr(el2mat(aktele));
-     
+
 switch elem_nr
  case {2,102,333} % Dreieckelement 3 Knoten
-  
+
   x_surf=node(el(aktele,1:nel),1)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel),1);
-  
+
   y_surf=node(el(aktele,1:nel),2)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-  
+
   surf_value = surf_data(el(aktele,1:nel));
-  
- % Dreieckelement / 8-Kn.-Viereckselem.           
- case {3,6,8,13,23,26,33,34,36,39,86,87,88,89,106} 
- 
-  % Knotennummerierung: nur Eckknoten      
+
+ % Dreieckelement / 8-Kn.-Viereckselem.
+ case {3,6,8,13,23,26,33,34,36,39,86,87,88,89,106}
+
+  % Knotennummerierung: nur Eckknoten
   x_surf=node(el(aktele,1:nel/2),1)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel/2),1);
-  
+
   y_surf=node(el(aktele,1:nel/2),2)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel/2),2);
 
@@ -68,61 +68,61 @@ switch elem_nr
 
   y_surf(1:nel)=node(el(aktele,1:nel),2)+ ...
       defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-   
+
   surf_value = surf_data(el(aktele,1:nel));
 
  case {5,7}      % Tetraederelemente
-     
+
   nr_vert = 4;
-  
+
   x_surf=node(el(aktele,1:nr_vert),1)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nr_vert),1);
 
   y_surf=node(el(aktele,1:nr_vert),2)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nr_vert),2);
-     
+
   z_surf=node(el(aktele,1:nr_vert),3)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nr_vert),3);
-     
+
   surf_value = surf_data(el(aktele,1:nr_vert));
-         
+
   face_surf=[1 2 3; 2 1 4; 3 4 1; 4 3 2];
-     
-     
+
+
  case {11}      % Quaderelemente
-        
+
   x_surf=node(el(aktele,1:nel),1)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel),1);
 
   y_surf=node(el(aktele,1:nel),2)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-     
+
   z_surf=node(el(aktele,1:nel),3)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel),3);
-     
+
   surf_value = surf_data(el(aktele,1:nel));
-         
+
   face_surf=[4 3 2 1; 2 3 7 6; 5 6 7 8; 1 5 8 4; 1 2 6 5; 3 4 8 7];
-     
-     
+
+
  case {10}     % 2-Knoten-Stabelemente
-     
+
   x_surf=node(el(aktele,1:nel),1)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel),1);
 
   y_surf=node(el(aktele,1:nel),2)+ ...
 	 defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-     
+
   if (ndm == 3)
     z_surf=node(el(aktele,1:nel),3)+ ...
 	   defo_flag*defo_scal*unode(el(aktele,1:nel),3);
   else
     z_surf(1:nel)=0.0;
   end %if
-    
+
   surf_value = surf_data(aktele);
-  
-     
+
+
  otherwise
   error('Element existiert nicht')
 end  % switch

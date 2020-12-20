@@ -27,7 +27,7 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [kugel, deviator] = hydro_dev(tensor)  
+function [kugel, deviator] = hydro_dev(tensor)
 
 % Bestimmung des hydrostischen Anteils und des Deviators von
 % tensor,dabei ist tensor in Vektornotation geschieben:

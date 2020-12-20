@@ -26,12 +26,12 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Umkopieren: [6x1]/VOIGT-Notation nach Matrix/Tensor [3x3] 
+% Umkopieren: [6x1]/VOIGT-Notation nach Matrix/Tensor [3x3]
 
 function [tens33] = tens6_33(tens6)
 
 % voigt = [1 4 6; 4 2 5; 6 5 3];
- 
+
 tens33(1,1) = tens6(1);
 tens33(2,2) = tens6(2);
 tens33(3,3) = tens6(3);

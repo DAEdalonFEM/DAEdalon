@@ -38,7 +38,7 @@
 % numel   Anzahl der Elemente im Problem
 % nel     Anzahl der Knoten pro Element
 % ndf     Freiheitsgrade pro Knoten (nicht immer gleich ndm)
-% gesdof  Anzahl der Gesamtfreiheitsgrade 
+% gesdof  Anzahl der Gesamtfreiheitsgrade
 % numgp_max   Max. Anzahl der verwendeten Gausspunkte pro Element
 % nummat  Anzahl der unterschiedlichen verwendeten Materialgesetze
 

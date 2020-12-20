@@ -34,7 +34,7 @@
 % numel   Anzahl der Elemente im Problem
 % nel     Anzahl der Knoten pro Element
 % ndf     Freiheitsgrade pro Knoten (nicht immer gleich ndm)
-% gesdof  Anzahl der Gesamtfreiheitsgrade 
+% gesdof  Anzahl der Gesamtfreiheitsgrade
 % numgp_max   Max. Anzahl der verwendeten Gausspunkte pro Element
 % nummat  Anzahl der unterschiedlichen verwendeten Materialgesetze
 
@@ -48,7 +48,7 @@
 
 % einige (globale) Groessen initialisieren
 dt = 1.0;        % Zeitinkrement
-% tim  = dt;     % jetzt in loop.m durch Aufruf von time, sonst von Hand 
+% tim  = dt;     % jetzt in loop.m durch Aufruf von time, sonst von Hand
 tim = 0.0;       % aktuelle Zeit
 defo_scal = 1;   % Faktor mit dem die Verschiebungen beim Plot
                  % skaliert werden
@@ -58,7 +58,7 @@ cont_flag = 0;
 contvar = 16;    % Anzahl der Contourvariablen
 cpu_total = 0.0;
 flops_total = 0;
-steps_total = 0; % Anzahl der insgesamt durchgeführten Zeitschritte 
+steps_total = 0; % Anzahl der insgesamt durchgeführten Zeitschritte
 sparse_flag = 0; % Bei großen Gleichungssystemen sollte man Sparse-
 	             % Speichertenchnik verwenden -> sparse_flag=1
 load_flag = 1;   % wenn load_flag=1, werden Randlasten und
@@ -70,7 +70,7 @@ bounDisp_treat=0;% Art der Einarbeitung der Verschiebungsrandbed.
                  % in GlSyst, siehe syst.m
 movie_flag = 0;  % wenn =1, wird nach jeden Zeitschritt ein Bild in
                  % movie_array gespeichert, siehe loop.
-			    
+
 isw = 0;         % zur eingenen Verwendung
 out_file_name = '';     % Defaultmäßig keine Ausgabefiles schreiben
 histout_file_name = ''; % Defaultmäßig keine Ausgabefiles schreiben
@@ -78,7 +78,7 @@ rst_file_name = '';     % Defaultmäßig keine Restartfiles schreiben
 out_incr = 1;    % alle wieviel Zeitschritte Ausgabe-file ...
 rst_incr = 20;   % alle wieviel Zeitschritte Restart-file ...
                  % geschrieben wird
-userSkript = ''; % mfile welches automatisch in time gestartet wird		 
+userSkript = ''; % mfile welches automatisch in time gestartet wird
 
 %%%%%%%%%%%%%%%%%%%%
 % Beginn
@@ -104,23 +104,23 @@ for i=1:nummat
   % Format: [elem_nr; mat_nr; ...mat_par...]
   mat_file=strcat('mat',num2str(i),'.inp');
   load(mat_file);
-  mat_par_length = length(eval(['mat',num2str(i)])) - 3; 
-  
+  mat_par_length = length(eval(['mat',num2str(i)])) - 3;
+
   % in elem_nr_matr wird für jeden Materialdatensatz die Elementnr. abgelegt
   elem_nr_matr(i)=eval(['mat',num2str(i),'(1)']);
-  
+
   % in elem_gp_matr wird für jeden Materialdatensatz die Anzahl der
   % Gausspunkte pro Element abgelegt
   elem_gp_matr(i)=eval(['mat',num2str(i),'(2)']);
-  
-  % in mat_nr_matr wird für jeden Materialdatensatz die Materialnr. abgelegt 
+
+  % in mat_nr_matr wird für jeden Materialdatensatz die Materialnr. abgelegt
   mat_nr_matr(i)=eval(['mat',num2str(i),'(3)']);
-  
+
   % in mat_par_matr werden spaltenweise für jeden Materialdatensatz
   % die Materialparameter abgelegt
   % 1. Eintrag in mat_par_matr ist Anzahl der hist-Variablen pro GP
   mat_par_matr(1:mat_par_length,i)=eval(['mat',num2str(i),'(4:end)']);
-  
+
 end
 
 % Eingabefile Knotenkoordinaten: node.inp
@@ -145,12 +145,12 @@ if ndm==3                     % HBaa, 16.04.2009, wg. "Stab-Bsp. in Vorl.
     ndm=ndm-1;
   end
 end
-  
+
 % Eingabefile Elemente: el.inp
 % Format: el(Anzahl Elemente x Materialnummer,Knotennummern)
-load el.inp 
+load el.inp
 dummy = size(el);
-numel = dummy(1);    %Anzahl der Elemente im Problem 
+numel = dummy(1);    %Anzahl der Elemente im Problem
 nel = dummy(2)-1;    %Anzahl der Knoten pro Element
 el2mat = el(:,1);    %in der ersten Spalte steht die Materialnummer
 el(:,1)=[];          %Rausschmeissen der Materialnummer aus el
@@ -160,7 +160,7 @@ el(:,1)=[];          %Rausschmeissen der Materialnummer aus el
 % Elemente es sind, Eckert 04.2003
 mat2el = zeros(1,nummat);
 for i=1:numel
-  matsatz = el2mat(i); 
+  matsatz = el2mat(i);
   listlength = mat2el(1,matsatz) + 1;
   mat2el(1+listlength,matsatz) = i;
   mat2el(1,matsatz) = listlength;
@@ -172,9 +172,9 @@ elem_name = [repmat('elem',numel,1), ...
 	     strjust(num2str(elem_nr_matr(el2mat')'),'left')]; %string-Vektor
 mat_name  = [repmat('mat',numel,1), ...
 	     strjust(num2str(mat_nr_matr(el2mat')'),'left')];  %string-Vektor
-	     
-% Intitialisierung von u und du: 
-gesdof = ndf*numnp; %Anzahl der Gesamtfreiheitsgrade 
+
+% Intitialisierung von u und du:
+gesdof = ndf*numnp; %Anzahl der Gesamtfreiheitsgrade
 u=zeros(gesdof,1);    %Spaltenvektor
 du=zeros(gesdof,1);    %Spaltenvektor
 
@@ -211,7 +211,7 @@ if (force_len > 0)
   force_node=force(:,1);
   force_df=force(:,2);
   force_val=force(:,3);
-  
+
   % Einsortieren in Spaltenvektor p:
   for i=1:force_len
     %  p(ndf*(force(i,1)-1)+force(i,2))=force(i,3);

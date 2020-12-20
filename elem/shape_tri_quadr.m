@@ -29,7 +29,7 @@
 
 function [shape,dshape,j] = shape_tri_quadr(x,coor)
 %shape-funktion für 6Knoten-Dreieckselemente mit quadratischen Ansaetzen
-%x = globale Koordinaten, coor = isoparam. Koor für akt. GP 
+%x = globale Koordinaten, coor = isoparam. Koor für akt. GP
 
 % Knotenbezeichung wie in Hughes p.166-169 und Integration mit 3 GPs
 r=coor(1);

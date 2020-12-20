@@ -48,10 +48,10 @@ meshnodes;
 switch ndm
  case {2}                      % 2-D Elemente
   plot(x_plot,y_plot,'b-');
- 
+
  case {3}                    % 3-D Elemente
-  plot3(x_plot,y_plot,z_plot,'b-');   
-  
+  plot3(x_plot,y_plot,z_plot,'b-');
+
  end %switch
 end % aktele
 

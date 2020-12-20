@@ -33,7 +33,7 @@ function [S,E,D_mat,hist_new_gp,hist_user_gp] ...
 % St. Venant - Material (2D) Wriggers p.127
 %
 % rein:
-% mat_par = Materialparameter (z.B. E, nu) 
+% mat_par = Materialparameter (z.B. E, nu)
 % F = Deformationsgradient dx/dX
 % hist_old_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 % hist_user_gp = GP-Historyfeld, wie im Element (gphist_max x 1)

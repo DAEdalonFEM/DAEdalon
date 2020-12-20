@@ -57,7 +57,7 @@ end
 
 if vers_nr < 6 %&& mat_oct=0    % gilt fuer MATLAB - HBaa - 17.12.2015
   disp(sprintf(['Flops (gesamt/letzte Iteration):' ...
-	       '  %.6e    %.6e'],flops_total,flops_delta))  
+	       '  %.6e    %.6e'],flops_total,flops_delta))
 end
   disp(sprintf(['CPU-Zeit (gesamt/letzte Iteration):' ...
 		'   %8.2f        %8.2f'],cpu_total,cpu_delta))

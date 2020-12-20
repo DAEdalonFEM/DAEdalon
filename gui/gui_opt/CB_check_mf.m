@@ -39,4 +39,3 @@ if (movie_flag == 1)
 else
     set(C_mf,'String','off')
 end
-    

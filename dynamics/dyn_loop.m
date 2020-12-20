@@ -52,16 +52,16 @@ for j = 1:arg
 
   % Outputfiles schreiben
   if (~isempty(out_file_name))
-    out(out_file_name);     
+    out(out_file_name);
   end
-   
+
   if (~isempty(histout_file_name))
-    histout(histout_file_name);     
+    histout(histout_file_name);
   end
 
   % movie files speichern
 %  cla;
 %  evalin('base','meshx;');
-%  evalin('base','movie_array(round(tim/dt)) = getframe;'); 
-  
+%  evalin('base','movie_array(round(tim/dt)) = getframe;');
+
 end

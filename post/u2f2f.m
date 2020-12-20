@@ -35,7 +35,7 @@ function u2f2f(arg)
 % anstelle von disp rausgeschrieben wird.
 % Sinn:
 % Verschiebung des aktuellen GG-Zustandes können als
-% Anfangsverschiebung für dynamische Rechnungen verwendet werden. 
+% Anfangsverschiebung für dynamische Rechnungen verwendet werden.
 
 global u numnp ndf
 
@@ -64,7 +64,7 @@ fprintf(fid,'\n%s\n',keyword);
 for i=1:num_zeilen
   fprintf(fid,'%d,%d',u_0(i,1),u_0(i,2));
   for j=3:num_spalten
-    fprintf(fid,',%0.6e',u_0(i,j));  
+    fprintf(fid,',%0.6e',u_0(i,j));
   end
   fprintf(fid,'\n');
 end

@@ -67,14 +67,14 @@ for iii = 1:numgp_max
 	  ,iii,hhh,hhh+gphist_max-1);
   hhh = hhh + gphist_max;
 end
- 
-fprintf(fid,'\n'); 
+
+fprintf(fid,'\n');
 
 % Werte schreiben
 for i=1:num_zeilen
   fprintf(fid,'%d  ',out_mat(i,1));
   for j=2:num_spalten
-    fprintf(fid,'%0.6e  ',out_mat(i,j));  
+    fprintf(fid,'%0.6e  ',out_mat(i,j));
   end
   fprintf(fid,'\n');
 end

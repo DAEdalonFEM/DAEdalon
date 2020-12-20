@@ -107,7 +107,7 @@ end
 % Script ausfuehren falls check=1
 if check == 1
     cd post
-    
+
     sys = computer;
     if isunix
         unix(['perl sel_nodes.pl ',f_in,' ',f_out,' ',x,' ',y,' ',tol]);
@@ -117,7 +117,7 @@ if check == 1
         arg = ['perl sel_nodes.pl ',f_in,' ',f_out,' ',x,' ',y,' ',tol];
         sel_nodes = system(arg);
     end
-    
+
     cd ..
 else
     disp('Script nicht ausgefuehrt!')

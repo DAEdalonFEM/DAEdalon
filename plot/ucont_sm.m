@@ -47,8 +47,8 @@ evalin('base','surf_data=u(cont_value:ndf:numnp*ndf);');
 listlength = mat2el(1,arg2);
 elements = mat2el( 2:listlength+1,arg2);
 for aktele = elements'
-  
-  
+
+
   % zeichnen der Elemente, ab jetzt durch Aufruf von cont_draw.m
   evalin('base','cont_draw');
 
@@ -73,4 +73,3 @@ ylabel('y');
 if (ndm==3)
   zlabel('z');
 end
-  

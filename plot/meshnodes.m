@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % meshnodes.m
-% Speichern der Koordinaten in richtiger Reihenfolge zum Plotten 
+% Speichern der Koordinaten in richtiger Reihenfolge zum Plotten
 % eines Elements
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,14 +44,14 @@
        x_plot(1:nel)=node(el(aktele,1:nel),1)+ ...
 	   defo_flag*defo_scal*unode(el(aktele,1:nel),1);
        x_plot(nel+1)=x_plot(1);
-       
+
        y_plot(1:nel)=node(el(aktele,1:nel),2)+ ...
 	   defo_flag*defo_scal*unode(el(aktele,1:nel),2);
        y_plot(nel+1)=y_plot(1);
-       
+
       case {3,6,13,23,26,33,34,36,39,86,87,88,89,106}  % Dreieckelement 6 Kn.
-% Knotennummerierung im Dreieck nicht in Zeichenreihenfolge   
-    
+% Knotennummerierung im Dreieck nicht in Zeichenreihenfolge
+
      x_plot(1:2:nel)=node(el(aktele,1:nel/2),1)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:nel/2),1);
      x_plot(2:2:nel)=node(el(aktele,nel/2+1:nel),1)+ ...
@@ -62,7 +62,7 @@
      defo_flag*defo_scal*unode(el(aktele,1:nel/2),2);
      y_plot(2:2:nel)=node(el(aktele,nel/2+1:nel),2)+ ...
      defo_flag*defo_scal*unode(el(aktele,nel/2+1:nel),2);
-     y_plot(nel +1)=y_plot(1);    
+     y_plot(nel +1)=y_plot(1);
 
      case {4,14,24,104,444}  % Vierknotenelement
      x_plot(1:nel)=node(el(aktele,1:nel),1)+ ...
@@ -72,7 +72,7 @@
      y_plot(1:nel)=node(el(aktele,1:nel),2)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:nel),2);
      y_plot(nel +1)=y_plot(1);
-   
+
       case {8}  % Achtknoten-Viereckelement
        % geauso wie Sechsknoten-Dreieckselement
      x_plot(1:2:nel)=node(el(aktele,1:nel/2),1)+ ...
@@ -86,8 +86,8 @@
      y_plot(2:2:nel)=node(el(aktele,nel/2+1:nel),2)+ ...
      defo_flag*defo_scal*unode(el(aktele,nel/2+1:nel),2);
      y_plot(nel +1)=y_plot(1);
-                  
-      case {5}  % 4-Knoten Tetraederelement 
+
+      case {5}  % 4-Knoten Tetraederelement
      x_plot(1:3)=node(el(aktele,1:3),1)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:3),1);
      x_plot(4)=node(el(aktele,1),1)+ ...
@@ -100,7 +100,7 @@
      defo_flag*defo_scal*unode(el(aktele,2),1);
      x_plot(8)=node(el(aktele,4),1)+ ...
      defo_flag*defo_scal*unode(el(aktele,4),1);
-     
+
      y_plot(1:3)=node(el(aktele,1:3),2)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:3),2);
      y_plot(4)=node(el(aktele,1),2)+ ...
@@ -113,7 +113,7 @@
      defo_flag*defo_scal*unode(el(aktele,2),2);
      y_plot(8)=node(el(aktele,4),2)+ ...
      defo_flag*defo_scal*unode(el(aktele,4),2);
-     
+
      z_plot(1:3)=node(el(aktele,1:3),3)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:3),3);
      z_plot(4)=node(el(aktele,1),3)+ ...
@@ -126,8 +126,8 @@
      defo_flag*defo_scal*unode(el(aktele,2),3);
      z_plot(8)=node(el(aktele,4),3)+ ...
      defo_flag*defo_scal*unode(el(aktele,4),3);
-     
-      case {7}  % 10-Knoten Tetraederelement     
+
+      case {7}  % 10-Knoten Tetraederelement
      x_plot(1:2:5)=node(el(aktele,1:3),1)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:3),1);
      x_plot(2:2:10)=node(el(aktele,5:9),1)+ ...
@@ -140,7 +140,7 @@
      defo_flag*defo_scal*unode(el(aktele,6),1);
      x_plot(13:2:15)=node(el(aktele,3:4),1)+ ...
      defo_flag*defo_scal*unode(el(aktele,3:4),1);
-     
+
      y_plot(1:2:5)=node(el(aktele,1:3),2)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:3),2);
      y_plot(2:2:10)=node(el(aktele,5:9),2)+ ...
@@ -153,7 +153,7 @@
      defo_flag*defo_scal*unode(el(aktele,6),2);
      y_plot(13:2:15)=node(el(aktele,3:4),2)+ ...
      defo_flag*defo_scal*unode(el(aktele,3:4),2);
-     
+
      z_plot(1:2:5)=node(el(aktele,1:3),3)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:3),3);
      z_plot(2:2:10)=node(el(aktele,5:9),3)+ ...
@@ -166,17 +166,17 @@
      defo_flag*defo_scal*unode(el(aktele,6),3);
      z_plot(13:2:15)=node(el(aktele,3:4),3)+ ...
      defo_flag*defo_scal*unode(el(aktele,3:4),3);
-     
+
       case {10} % 2-Knoten Stabelement
        x_plot(1:2)=node(el(aktele,1:2),1)+ ...
 	   defo_flag*defo_scal*unode(el(aktele,1:2),1);
        y_plot(1:2)=node(el(aktele,1:2),2)+ ...
 	   defo_flag*defo_scal*unode(el(aktele,1:2),2);
-       if (ndm ==3) 
+       if (ndm ==3)
 	 z_plot(1:2)=node(el(aktele,1:2),3)+ ...
 	     defo_flag*defo_scal*unode(el(aktele,1:2),3);
        end %if
-       
+
          case {11} % 8-Knoten Quaderelement
      x_plot(1:4)=node(el(aktele,1:4),1)+ ...
      defo_flag*defo_scal*unode(el(aktele,1:4),1);
@@ -222,10 +222,10 @@
      defo_flag*defo_scal*unode(el(aktele,7:8),3);
      z_plot(16)=node(el(aktele,4),3)+ ...
      defo_flag*defo_scal*unode(el(aktele,4),3);
-       
+
       otherwise
        error('Element existiert nicht')
      end  % switch
 
 
-     
+

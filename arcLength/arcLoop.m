@@ -38,7 +38,7 @@ function [] = arcLoop( lEnd, nMax )
 % input-parameter:
 % ================
 % lEnd ... maximal zugelassener lastparameter l=p/p*; abbruch wenn l >= lEnd
-% nMax ... maximalanzahl der zu berechnenden gleichgewichtsszustaende 
+% nMax ... maximalanzahl der zu berechnenden gleichgewichtsszustaende
 
 co = 1;                      % indikator zur schleifenfortsetzung
 iterMax = 17;                % max. iterationen zur auffindung von gleichgewicht
@@ -52,9 +52,9 @@ rep = 1;                     % ignoriere lastfaktorabfrage beim 1. durchlauf !!!
 
 vorzeich = sign(lEnd);
 if (vorzeich<0)
-  rel = [ 'evalin( ''base'', ''lam'' ) >  lEnd']; 
+  rel = [ 'evalin( ''base'', ''lam'' ) >  lEnd'];
 else
- rel = [ 'evalin( ''base'', ''lam'' ) <  lEnd']; 
+ rel = [ 'evalin( ''base'', ''lam'' ) <  lEnd'];
 end
 
 % schleife ueber aufzufindende gleichgewichtszustaende
@@ -63,9 +63,9 @@ while rep & i <= nMax & co
   % fuehre praediktor- und 'zeitschritt' aus
   evalin( 'base', 'arcPredict' );
   evalin( 'base', 'time' );
-  
+
   j = 0;                 % iterationszaehler zur auffindung von gleichgewicht
- 
+
   %while evalin( 'base', 'resid' ) >= errMax & j < iterMax
   while evalin( 'base', 'resid*res_norm' ) >= errMax & j < iterMax
 

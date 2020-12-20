@@ -57,7 +57,7 @@ end
 % Script ausfuehren falls check=1
 if check == 1
     cd post
-    
+
     sys = computer;
     if isunix
         unix(['perl sig_u.pl ',f_in,' ',f_out]);
@@ -67,7 +67,7 @@ if check == 1
         arg = ['perl sig_u.pl ',f_in,' ',f_out];
         sig_u = system(arg);
     end
-    
+
     cd ..
 else
     disp('Script nicht ausgefuehrt!')

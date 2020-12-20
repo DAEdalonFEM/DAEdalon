@@ -29,7 +29,7 @@
 
 function [shape,dshape,j] = shape_tetra_lin(x,coor)
 %Formfunktion für 4Knoten-Tetraederelemente mit linearen Ansaetzen
-%x = globale Koordinaten, coor = isoparam. Koor für akt. GP 
+%x = globale Koordinaten, coor = isoparam. Koor für akt. GP
 
 % Knotenbezeichung siehe  und Integration mit 1 GP
 r=coor(1);
@@ -62,7 +62,7 @@ nshape(4,3)= 1.0;
 
 % Berechnung dx/dr = sum(dN/dr*x)
 x_r=x'*nshape;
-r_x = inv(x_r); 
+r_x = inv(x_r);
 
 % Ableitungen der shapefunctions:
 %dN/dx = dN/dr * dr/dx

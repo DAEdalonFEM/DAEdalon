@@ -62,11 +62,11 @@ elements = mat2el( 2:listlength+1,arg2);
 for aktele = elements'
 
   % zeichnen der Elemente, ab jetzt durch Aufruf von cont_draw.m
-  evalin('base','cont_draw'); 
-  
+  evalin('base','cont_draw');
+
 end
-  
-  
+
+
 cont_max = max(surf_data);
 cont_min = min(surf_data);
 

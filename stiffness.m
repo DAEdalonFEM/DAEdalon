@@ -30,7 +30,7 @@
 % stiffness.m
 % Ab Version 1.5 kann stiffness.m als Funktion durch
 % stiffness_func.m aufgerufen werden, damit stiffness auch
-% kompiliert werden kann. 
+% kompiliert werden kann.
 
 [k,r,u,hist_new,hist_user,cont_mat_node] = ...
     stiffness_func(nel,ndf,u,displ_u,displ_df,displ_node,displ_len, ...

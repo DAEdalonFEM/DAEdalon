@@ -55,18 +55,18 @@ for i=1:force_len
     zn(i)=node(force_node(i),3)+ ...
 	  defo_flag*defo_scal*unode(force_node(i),3);
   end
-  
+
   switch force_df(i)
    case 1
     uu(i)=force_val(i);
-    
+
    case 2
-    vv(i)=force_val(i); 
-    
+    vv(i)=force_val(i);
+
    case 3
     ww(i)=force_val(i);
   end %switch
-  
+
 end %i
 
 % vorgegebene Verschiebung in magenta malen

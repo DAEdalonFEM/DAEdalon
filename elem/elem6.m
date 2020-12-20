@@ -47,9 +47,9 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
+%                 durch hist_new_elem ersetzt
 % hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
 %                  neuem Zeitschritt
 %
@@ -61,7 +61,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %Initialisierung
@@ -85,7 +85,7 @@ for aktgp=1:numgp
   F(3,3) = 1.0;
   [F(1:2,1:2)] = defgrad(u_elem,dshape);
 
-  
+
   % GP-History-Felder zusmmenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
@@ -94,7 +94,7 @@ for aktgp=1:numgp
   %%%%%%%%%%%%%%%%%%%%%%
   % Begin Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%%
-  
+
   % Materialname zusammenbasteln
   %mat_name=strcat('mat',num2str(mat_nr));
 
@@ -103,33 +103,33 @@ for aktgp=1:numgp
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   % Zurücktransformieren von sig, vareps, D_mat in EVZ
-   
+
   sig(5:6)=[];
   sig(3) = [];
-  
+
   vareps(5:6)=[];
   vareps(3)=[];
-  
+
   D_mat(5:6,:)=[];
-  D_mat(3,:)=[]; 
-  
+  D_mat(3,:)=[];
+
   D_mat(:,5:6)=[];
   D_mat(:,3)=[];
-  
-  
+
+
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
-  
+
   dv = gpweight(aktgp)*detvol;
-  
+
   % GP-History-Felder zurückspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
-  
 
-    
-  % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.152 
+
+
+  % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.152
   for i=1:nel
     pos = 2*i-1;
     b(1:3,pos:pos+1)=[dshape(i,1)     0      ;      ...
@@ -140,21 +140,21 @@ for aktgp=1:numgp
   % Zusammenbau von k_elem = b^t*D_mat*b*dv
   % und Residuumsvektor r = b^T * sigma
 
-  k_elem = k_elem + b' * D_mat * b * dv; 
-  r_elem = r_elem + b' * sig * dv; 
-    
-    
+  k_elem = k_elem + b' * D_mat * b * dv;
+  r_elem = r_elem + b' * sig * dv;
+
+
   % Aufbau von zaehler und nenner für contourplot
   % Contour-Plotausgabe
   % Aufbau der Matrix cont_mat_gp:
   % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6:
   % sig_x,sig_y,sig_xy; alpha
-    
+
   % StE-Konstruktion, alle internen Variablen (falls vorhanden)
   % im Bereich hist_new_gp(7-9) werden in cont(7-9) geschrieben,
   % ansonsten = 0
   ll = length(hist_new_gp)- 6;
-  if (ll > 0) 
+  if (ll > 0)
     for ii=1:ll
       intvar(ii)=hist_new_gp(6+ii);
     end
@@ -167,8 +167,8 @@ for aktgp=1:numgp
 
   cont_zaehler(:,1:6+ll)=cont_zaehler(:,1:6+ll) ...
       +shape'.*shape'*cont_mat_gp*dv;
-  cont_nenner=cont_nenner+shape'.*shape'*dv;    
-  
-  
+  cont_nenner=cont_nenner+shape'.*shape'*dv;
+
+
 
 end  % Schleife aktgp

@@ -33,5 +33,5 @@ function [gpcoor, gpweight]= gp_tri_lin
 
 eins_3=1.0/3.0;
 gpcoor=[eins_3 eins_3];
-gpweight=[0.5]; 
+gpweight=[0.5];
 

@@ -44,17 +44,17 @@ unode=reshape(u,ndf,numnp)';
 % Schleife über alle Knoten
 for aktnode = 1:numnp
   xn = node(aktnode,1);
-  yn = node(aktnode,2);  
+  yn = node(aktnode,2);
   zn = 0.0;
 
   xu = defo_scal*unode(aktnode,1);
-  yu =  defo_scal*unode(aktnode,2);  
+  yu =  defo_scal*unode(aktnode,2);
   zu = 0.0;
   if (ndm==3)
   zu =  defo_scal*unode(aktnode,3);
   end
 
-quiver3(xn,yn,zn,xu,yu,zu,0,'r-')  
+quiver3(xn,yn,zn,xu,yu,zu,0,'r-')
 
 end
 

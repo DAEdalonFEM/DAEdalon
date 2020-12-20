@@ -46,9 +46,9 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
+%                 durch hist_new_elem ersetzt
 % hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
 %                  neuem Zeitschritt
 %
@@ -60,7 +60,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %Initialisierung
@@ -100,17 +100,17 @@ for aktgp=1:numgp
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
-  
+
   dv = gpweight(aktgp)*detvol;
-  
+
   % GP-History-Felder zurückspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
-  
+
 %  if isw ~= 8   % Aufbau von k_elem und r_elem
-    
+
     % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.152
     for i=1:nel
       pos = 2*i-1;
@@ -122,15 +122,15 @@ for aktgp=1:numgp
     % Zusammenbau von k_elem = b^t*D_mat*b*dv
     % und Residuumsvektor r = b^T * sigma
 
-    k_elem = k_elem + b' * D_mat * b * dv; 
+    k_elem = k_elem + b' * D_mat * b * dv;
     r_elem = r_elem + b' * sig * dv;
- 
-%  elseif isw == 8  
+
+%  elseif isw == 8
     % Aufbau von zaehler und nenner für contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6: sig_x,sig_y,sig_xy
-   
+
     cont_mat_gp(1:6) = [vareps;sig]';
     cont_zaehler(:,1:6)=cont_zaehler(:,1:6) ...
 	+shape'.*shape'*cont_mat_gp*dv;

@@ -56,8 +56,8 @@ global dt dt_new
 global r
 global vers_nr
 global out_file_name histout_file_name
-global elem_nr_matr el2mat surf_value surf_data 
-global numgp_max gphist_max hist_old hist_new % fuer histout 
+global elem_nr_matr el2mat surf_value surf_data
+global numgp_max gphist_max hist_old hist_new % fuer histout
 global mat_set
 global contvar
 global sparse_flag;

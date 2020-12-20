@@ -48,9 +48,9 @@ function [k_elem, M_elem, C_elem, r_elem, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
+%                 durch hist_new_elem ersetzt
 % hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
 %                  neuem Zeitschritt
 %
@@ -65,7 +65,7 @@ function [k_elem, M_elem, C_elem, r_elem, ...
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %Initialisierung
@@ -80,7 +80,7 @@ cont_nenner=zeros(nel,1);
 [gpcoor, gpweight] = gp_tri_quadr;
 numgp=length(gpweight);
 
-% Rausholen von rho_mass sowie damp1 und damp2 (Rayleigh-Damping) 
+% Rausholen von rho_mass sowie damp1 und damp2 (Rayleigh-Damping)
 % aus mat_par, die Werte müssen an den letzten drei Stellen von
 % mat_par eingetragen werden
 rho_mass = mat_par(end-2);
@@ -93,12 +93,12 @@ for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, detvol] = shape_tri_quadr(x,gpcoor(aktgp,:));
-  
+
   % Bestimmung des Deformationsgradienten
   F = zeros(3,3);
   F(3,3) = 1.0;
   [F(1:2,1:2)] = defgrad(u_elem,dshape);
-  
+
   % GP-History-Felder zusmmenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
@@ -130,7 +130,7 @@ for aktgp=1:numgp
 
 
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
 
   dv = gpweight(aktgp)*detvol;
@@ -150,13 +150,13 @@ for aktgp=1:numgp
 
   % Zusammenbau von k_elem = b^t*D_mat*b*dv
   % und Residuumsvektor r = b^T * sigma
-  k_elem = k_elem + b' * D_mat * b * dv; 
+  k_elem = k_elem + b' * D_mat * b * dv;
   r_elem = r_elem + b' * sig * dv;
-     
+
   % Aufbau von
   % M_elem = rho*G*dv
   % G = (N_i*N_k)*eins
-    
+
   for i=1:nel
     for j=1:nel
       ii = 2*i-1;
@@ -164,9 +164,9 @@ for aktgp=1:numgp
       G_ij = (shape(i)*shape(j)*dv)*eye(2);
       M_elem(ii:ii+1,jj:jj+1) = M_elem(ii:ii+1,jj:jj+1) + rho_mass*G_ij*dv;
     end % j
-  end % i     
- 
-  
+  end % i
+
+
   % Aufbau von zaehler und nenner für contourplot
   % Contour-Plotausgabe
   % Aufbau der Matrix cont_mat_gp:
@@ -175,7 +175,7 @@ for aktgp=1:numgp
   % StE-Konstruktion, alle internen Variablen (falls vorhanden)
   % im Bereich hist_new_gp(7-9) werden in cont(7-9) geschrieben,
   % ansonsten = 0
- 
+
   ll = length(hist_new_gp)- 6;
   if (ll > 0)
     for ii=1:ll
@@ -189,8 +189,8 @@ for aktgp=1:numgp
 
   cont_zaehler(:,1:6+ll)=cont_zaehler(:,1:6+ll) ...
       +shape'.*shape'*cont_mat_gp*dv;
-  cont_nenner=cont_nenner+shape'.*shape'*dv;    
-  
+  cont_nenner=cont_nenner+shape'.*shape'*dv;
+
 end  % Schleife aktgp
 
 % Massen zeilenweise zusammenfassen und auf Diagonale setzen (Lumped masses):
@@ -200,7 +200,7 @@ for i=1:nel*ndf
   M_elem(i,:)=zeros(1,nel*ndf);
   M_elem(i,i)=lump_i;
 end
- 
- 
-% Einbau von Rayleigh-Damping 
+
+
+% Einbau von Rayleigh-Damping
 C_elem = damp1*M_elem + damp2*k_elem;

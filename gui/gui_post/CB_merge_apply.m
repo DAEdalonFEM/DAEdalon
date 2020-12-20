@@ -83,7 +83,7 @@ end
 
 if check == 1
     cd post
-    
+
     sys = computer;
     if isunix
         unix(['perl merge.pl ',f_in,' ',f_k,' ',f_s,' ',s]);
@@ -93,7 +93,7 @@ if check == 1
         arg = ['perl merge.pl ',f_in,' ',f_k,' ',f_s,' ',s];
         merge = system(arg);
     end
-    
+
     cd ..
 else
     disp('Script nicht ausgefuehrt!')

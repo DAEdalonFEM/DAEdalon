@@ -37,5 +37,5 @@ gpcoor=[eins_6 eins_6; ...
         zwei_3 eins_6; ...
         eins_6 zwei_3];
 
-gpweight=[eins_6;eins_6;eins_6]; 
+gpweight=[eins_6;eins_6;eins_6];
 

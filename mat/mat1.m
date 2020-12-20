@@ -28,13 +28,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
-    = mat1(mat_par,F,hist_old_gp,hist_user_gp)  
+    = mat1(mat_par,F,hist_old_gp,hist_user_gp)
 
 % lin. elast Matarialverhalten EVZ 2D
 % Berechnung des E-tensors (elast. Anteil der Materialtangente)
 %
 % rein:
-% mat_par = Materialparameter (z.B. E, nu) 
+% mat_par = Materialparameter (z.B. E, nu)
 % F = Deformationsgradient dx/dX
 % hist_old_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 % hist_user_gp = GP-Historyfeld, wie im Element (gphist_max x 1)

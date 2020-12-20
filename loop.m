@@ -59,6 +59,6 @@ for j = 1:arg
   end
 
   % Outputfiles schreiben
-  % seit 7.7.03 in time.m, Eckert 
-  
+  % seit 7.7.03 in time.m, Eckert
+
 end

@@ -49,7 +49,7 @@ evalin('base','surfnodes');
 
 % Elementnummer bestimmen
 elem_nr = elem_nr_matr(el2mat(aktele));
-  
+
 % Element zeichnen
 switch elem_nr
  case {2,3,4,6,8,13,14,23,24,26,33,34,36,39,86,87,102,104,106,444}
@@ -58,24 +58,24 @@ switch elem_nr
  case {10}   % Stabelement
 	     % surf_value auf max. Strichstärke von 8 normieren
 	     surf_value = surf_value/max(abs(surf_data))*8.0;
-	     
-	     if surf_value >= 0.0 
+
+	     if surf_value >= 0.0
 	       pl_col = 'r';
 	     else
 	       pl_col = 'b';
 	     end %if
-	     
+
 	     string = ['plot3(x_surf,y_surf,z_surf,''',pl_col, ...
 		       ''',''LineWidth'',',num2str(abs(surf_value)),')'];
-	     evalin('base', string);    
- 
+	     evalin('base', string);
+
  case {5,7,9,11}                       % Volumenelemente
   if elem_nr == 5 | elem_nr == 7       % Tetraeder - 4 oder 10 Knoten
     anz_f = 4;
   elseif elem_nr == 9 | elem_nr == 11  % Brick-Element
     anz_f = 6;
   end
-  
+
   for k=1:anz_f
     plotstring = ['patch(''Vertices'',[x_surf,y_surf,z_surf],',...
 		  '''Faces'',face_surf(',num2str(k),',:),'...
@@ -83,5 +83,5 @@ switch elem_nr
 		  '''FaceColor'',''interp'')'];
     evalin('base',plotstring);
   end %for
-  
+
 end %switch elem_nr

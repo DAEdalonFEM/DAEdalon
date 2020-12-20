@@ -43,7 +43,7 @@ if (bounDisp_treat == 0)
   %du=k_cond\rhs_cond;
 else
   % aT: reduziertes system lösen
-  du(poU) = k(poU,poU) \ rhs(poU);      
+  du(poU) = k(poU,poU) \ rhs(poU);
 end
 
 % Update des Verschiebungsvektors
@@ -51,7 +51,7 @@ end
 u=u+du;
 
 
-				       
+
 cont_flag=0;
 
 % Ende solv.m

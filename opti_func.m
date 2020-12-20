@@ -39,7 +39,7 @@ delta_el = 1;
 kk_temp_size = 200; % Elemente
 kk = spalloc(numnp,numnp,round(numnp*numnp/100));
 kk_temp = spalloc(numnp,numnp,round(numnp*numnp/100));
-  
+
 node_out = zeros(numnp,ndm);
 displ_node_out = zeros(length(displ_node_in),1);
 force_node_out = zeros(length(force_node_in),1);
@@ -52,18 +52,18 @@ for i=1:numel
   kk_temp(elem_in(i,:),elem_in(i,:)) = 1;
     if (delta_el==kk_temp_size)
       kk = kk + kk_temp;
-      kk_temp = spalloc(numnp,numnp,round(numnp*numnp/100));     
+      kk_temp = spalloc(numnp,numnp,round(numnp*numnp/100));
       delta_el = 0;
     end
     delta_el = delta_el + 1;
-    
+
     percent=floor(50*i/numel);
 %    disp(sprintf('\b\b\b\b\b%2.0f %%',percent))
 end
 
 kk = kk + kk_temp;
- 
- 
+
+
 subplot(1,2,1)
 spy(kk);
 title(['Knotenkonektivität'])
@@ -105,5 +105,5 @@ end
 if (length(force_node_in)>0)
   for i=1:length(force_node_in)
     force_node_out(i) =  find(permut_vec==force_node_in(i));
-  end  
+  end
 end

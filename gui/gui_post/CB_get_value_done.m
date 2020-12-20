@@ -97,7 +97,7 @@ end
 % Script ausfuehren falls check=1
 if check == 1
     cd post
-    
+
     sys = computer;
     if isunix
         unix(['perl get_value.pl ',f_in,' ',z_num,' ',s_num]);
@@ -107,7 +107,7 @@ if check == 1
         arg = ['perl get_value.pl ',f_in,' ',z_num,' ',s_num];
         get_value = system(arg);
     end
-    
+
     cd ..
 else
     disp('Script nicht ausgefuehrt!')

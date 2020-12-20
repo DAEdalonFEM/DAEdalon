@@ -36,10 +36,10 @@ global fid_sn_info; % Figure ID Info: sel_nodes.pl
 if not(isempty(findobj('NAME','sel_nodes.pl')))
     p     = get(fid_post,'OuterPosition');
     po_sn = get(fid_sn,'OuterPosition');
-    
+
     po_sn(1) = p(1);
     po_sn(2) = p(2) - po_sn(4);
-    
+
     set(fid_sn,'OuterPosition',po_sn)
 end
 

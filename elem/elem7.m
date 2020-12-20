@@ -47,9 +47,9 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
+%                 durch hist_new_elem ersetzt
 % hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
 %                  neuem Zeitschritt
 %
@@ -61,7 +61,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %Initialisierung
@@ -86,7 +86,7 @@ for aktgp=1:numgp
   F = zeros(3);
   F = defgrad_3d(u_elem,dshape);
 
-  
+
   % GP-History-Felder zusmmenbauen:
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
@@ -95,7 +95,7 @@ for aktgp=1:numgp
   %%%%%%%%%%%%%%%%%%%%%%
   % Begin Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%%
-  
+
   % Materialname zusammenbasteln
   %mat_name=strcat('mat',num2str(mat_nr));
 
@@ -103,20 +103,20 @@ for aktgp=1:numgp
   [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
-    
-  
+
+
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
-  
+
   dv = gpweight(aktgp)*detvol;
-  
+
   % GP-History-Felder zurückspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
-  
+
 %  if isw ~= 8   % Aufbau von k_elem und r_elem
-    
+
     % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.87/152
   for i=1:nel
       pos = 3*i-2;
@@ -127,14 +127,14 @@ for aktgp=1:numgp
                         0            dshape(i,3)  dshape(i,2);  ...
                         dshape(i,3)  0            dshape(i,1)];
   end % i
-    
+
     % Zusammenbau von k_elem = b^t*D_mat*b*dv
     % und Residuumsvektor r = b^T * sigma
 
-    k_elem = k_elem + b' * D_mat * b * dv; 
+    k_elem = k_elem + b' * D_mat * b * dv;
     r_elem = r_elem + b' * sig * dv;
 
-%  elseif isw == 8  
+%  elseif isw == 8
     % Aufbau von zaehler und nenner für contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:

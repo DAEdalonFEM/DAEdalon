@@ -52,4 +52,4 @@ z_min=1.0e9;
 set(gcf,'NumberTitle','off');                  % HBaa - 2015/11/17
 set(gcf,'Name','DAEdalon Plot-Fenster')
 
-initplot; 
+initplot;
