@@ -44,44 +44,59 @@
 global numel aktele cont_value elem_nr cont_flag ndm;
 global  surf_value surf_data elem_nr_matr el2mat;
 
-% aufbereiten der Daten fuers Element
-evalin('base','surfnodes');
+% Zuordnung der Elementnummern (elemXY.m) zum jew. Elementtyp
+truss_2 = {10};
+
+triangle_3 = {2,102,333};
+triangle_6 = {3,6,13,23,26,33,34,36,39,86,87,88,89,106};
+quad_4 = {4,14,24,104,444};
+quad_8 = {8};
+
+tet_4 = {5};
+tet_10 = {7};
+brick_8 = {9, 11};  % HIER KAM 9 hinzu ?!
+
+surf_elem = [triangle_3, triangle_6, quad_4, quad_8];
+vol_elem = [tet_4, tet_10, brick_8];
 
 % Elementnummer bestimmen
 elem_nr = elem_nr_matr(el2mat(aktele));
 
+% Aufbereiten der Daten fuers Element
+evalin('base','surfnodes');
+
 % Element zeichnen
 switch elem_nr
- case {2,3,4,6,8,13,14,23,24,26,33,34,36,39,86,87,102,104,106,444}
-  evalin('base','patch(x_surf,y_surf,surf_value)');
+    case surf_elem  % Surface-Elemente
+        evalin('base','patch(x_surf,y_surf,surf_value)');
 
- case {10}   % Stabelement
-	     % surf_value auf max. Strichstaerke von 8 normieren
-	     surf_value = surf_value/max(abs(surf_data))*8.0;
+    case truss_2  % Stabelement
+        % surf_value auf max. Strichstaerke von 8 normieren
+        surf_value = surf_value/max(abs(surf_data))*8.0;
 
-	     if surf_value >= 0.0
-	       pl_col = 'r';
-	     else
-	       pl_col = 'b';
-	     end %if
+        if surf_value >= 0.0
+          pl_col = 'r';
+        else
+          pl_col = 'b';
+        end %if
 
-	     string = ['plot3(x_surf,y_surf,z_surf,''',pl_col, ...
-		       ''',''LineWidth'',',num2str(abs(surf_value)),')'];
-	     evalin('base', string);
+        string = ['plot3(x_surf,y_surf,z_surf,''',pl_col, ...
+               ''',''LineWidth'',',num2str(abs(surf_value)),')'];
+        evalin('base', string);
 
- case {5,7,9,11}                       % Volumenelemente
-  if elem_nr == 5 | elem_nr == 7       % Tetraeder - 4 oder 10 Knoten
-    anz_f = 4;
-  elseif elem_nr == 9 | elem_nr == 11  % Brick-Element
-    anz_f = 6;
-  end
+    case vol_elem  % Volumenelemente
+        if not(isempty(find([[tet_4, tet_10]{:}] == elem_nr)))  % Tetraederelement (4 oder 10 Knoten)
+            anz_f = 4;
+        elseif not(isempty(find([brick_8{:}] == elem_nr)))  % Quaderelement
+            anz_f = 6;
+        end %if
 
-  for k=1:anz_f
-    plotstring = ['patch(''Vertices'',[x_surf,y_surf,z_surf],',...
-		  '''Faces'',face_surf(',num2str(k),',:),'...
-		  '''FaceVertexCData'',surf_value,'...
-		  '''FaceColor'',''interp'')'];
-    evalin('base',plotstring);
-  end %for
+        for k=1:anz_f
+            plotstring = ['patch(''Vertices'',[x_surf,y_surf,z_surf],',...
+              	          '''Faces'',face_surf(',num2str(k),',:),'...
+              	          '''FaceVertexCData'',surf_value,'...
+              	          '''FaceColor'',''interp'')'];
+            evalin('base',plotstring);
+        end %for
 
 end %switch elem_nr
