@@ -35,18 +35,6 @@
 %figure(fid_dae);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Zuordnung der Elementnummern (elemXY.m) zum jew. Elementtyp
-truss_2 = {10};
-
-triangle_3 = {2,102,333};
-triangle_6 = {3,6,13,23,26,33,34,36,39,86,87,88,89,106};
-quad_4 = {4,14,24,104,444};
-quad_8 = {8};
-
-tet_4 = {5};
-tet_10 = {7};
-brick_8 = {11};
-
 switch elem_nr
     case triangle_3  % Dreieckselement (3 Knoten)
         x_surf=node(el(aktele,1:nel),1)+ ...

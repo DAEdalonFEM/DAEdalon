@@ -2,7 +2,7 @@
 %                                                                  %
 %    DAEdalon Finite-Element-Project                               %
 %                                                                  %
-%    Copyright 2002/2003 Steffen Eckert                            %
+%    Copyright 2020 Steven Becker                                  %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
 %                                                                  %
@@ -27,56 +27,19 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% setGloVar.m
-% wird von verschiedenen funtionen benutzt, die auf unten stehende
-% variablen aus der aktuellen matlab-sitzung zugreifen muessen
 
-% gesamtproblembezogene skalare groessen
-global elem_nr ndf ndm nel numnp numel nummat mat2el;
+% Assign element numbers to element types
 
-% elementbezogene felder
-global shape dshape detvol gpcoor gpweight k_elem r_elem cont_mat_gp aktele;
+truss_2 = {10};
 
-% gesamtproblembezogene felder und vektoren
-global node el u;
+triangle_3 = {2,102,333};
+triangle_6 = {3,6,13,23,26,33,34,36,39,86,87,88,89,106};
+quad_4 = {4,14,24,104,444};
+quad_8 = {8};
 
-% gesamtproblembezogene parameter zur beschreibung des materialverhaltens
-global mat_nr mat_par;
+tet_4 = {5};
+tet_10 = {7};
+brick_8 = {9, 11};  % 9 kam aus plot/cont_draw.m ?!
 
-% zur komunikation zwischen einer funktion und einem skript (bspw. elem4)
-% daten von/zu funktion zu/von skript (fnc<->scr) ; speziell fuer skripts
-% von elemente
-global x u_elem unode shapeGp;
-
-global cont_mat_node cont_value
-global cont_flag
-global resid res_norm tim
-global cont_mat_node
-global dt dt_new
-global r
-global vers_nr
-global out_file_name histout_file_name
-global elem_nr_matr el2mat surf_value surf_data
-global numgp_max gphist_max hist_old hist_new % fuer histout
-global mat_set
-global contvar
-global sparse_flag;
-global load_flag;
-global movie_flag
-global defo_scal;
-global steps_total
-global rst_file_name
-global out_incr rst_incr;
-global userSkript;
-global lam;
-global bounDisp_treat;
-global mat_oct_flag;                      % Projekt WiSe2015 - HBaa
-global pc_environ;                        % HBaa - 14.10.2016
-global dir_trenn;
-
-% variables for assigning element numbers to element types
-global truss_2
-global triangle_3 triangle_6 quad_4 quad_8
-global tet_4 tet_10 brick_8
-global surf_elem vol_elem
-
+surf_elem = [triangle_3, triangle_6, quad_4, quad_8];
+vol_elem  = [tet_4, tet_10, brick_8];

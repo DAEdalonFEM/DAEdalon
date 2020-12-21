@@ -44,21 +44,6 @@
 global numel aktele cont_value elem_nr cont_flag ndm;
 global  surf_value surf_data elem_nr_matr el2mat;
 
-% Zuordnung der Elementnummern (elemXY.m) zum jew. Elementtyp
-truss_2 = {10};
-
-triangle_3 = {2,102,333};
-triangle_6 = {3,6,13,23,26,33,34,36,39,86,87,88,89,106};
-quad_4 = {4,14,24,104,444};
-quad_8 = {8};
-
-tet_4 = {5};
-tet_10 = {7};
-brick_8 = {9, 11};  % HIER KAM 9 hinzu ?!
-
-surf_elem = [triangle_3, triangle_6, quad_4, quad_8];
-vol_elem = [tet_4, tet_10, brick_8];
-
 % Elementnummer bestimmen
 elem_nr = elem_nr_matr(el2mat(aktele));
 

@@ -106,5 +106,8 @@ paraview_check_func
 crf
 gui_setup
 
+% assign element numbers to element types
+assign_elems;
+
 %
 % *** END ***
