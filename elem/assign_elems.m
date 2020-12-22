@@ -30,16 +30,21 @@
 
 % Assign element numbers to element types
 
+% Element type <--> Element numbers (elemXY.m)
+
+% Truss elements
 truss_2 = {10};
 
+% Surface elements
 triangle_3 = {2,102,333};
 triangle_6 = {3,6,13,23,26,33,34,36,39,86,87,88,89,106};
 quad_4 = {4,14,24,104,444};
 quad_8 = {8};
 
+% Volume elements
 tet_4 = {5};
 tet_10 = {7};
-brick_8 = {9, 11};  % 9 kam aus plot/cont_draw.m ?!
+brick_8 = {9, 11};
 
 surf_elem = [triangle_3, triangle_6, quad_4, quad_8];
 vol_elem  = [tet_4, tet_10, brick_8];
