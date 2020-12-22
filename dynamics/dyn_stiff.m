@@ -55,7 +55,8 @@ end
 r=zeros(gesdof,1);      %Spaltenvektor
 
 cont_mat_node=zeros(numnp,contvar);
-cont_norm=zeros(numnp,1);
+% nicht mit Null initialisieren, da sonst u. U. division by zero
+cont_norm=1.0E-12*ones(numnp,1);
 
 % Schleife ueber alle Elemente
 
@@ -68,10 +69,12 @@ end
 
 
 % vorgegebene Verschiebungsrandbed. in u einbauen
-for i=1:displ_len                     % Schleife ueber alle Randverschiebungen
-  pos=ndf*(displ_node(i)-1)+displ_df(i);% globale Position im GlSyst
-  u(pos)=loadfactor*displ_u(i);           % vorgeg. Verschiebung eintragen
-end  % i
+%for i=1:displ_len                     % Schleife ueber alle Randverschiebungen
+%  pos=ndf*(displ_node(i)-1)+displ_df(i);% globale Position im GlSyst
+%  u(pos)=loadfactor*displ_u(i);           % vorgeg. Verschiebung eintragen
+%end  % i
+pos = ndf * ( displ_node - 1 ) + displ_df;
+u(pos) = loadfactor*displ_u;
 
 
 % Berechung der rechten Seite:
@@ -89,7 +92,7 @@ elem_count = 0;
 % dabei wird erst ueber alle Elemente des gleichen
 % Materialdatensatzes assembliert, dann naechster Datensatz,
 % sinnvoll fuer Plots, Eckert 04/2003
-% mat_set wird in dae und cont_sm gesetzt
+% mat_set wird in lprob und cont_sm gesetzt
 for aktmat = mat_set
   listlength = mat2el(1,aktmat);
   elements = mat2el( 2:listlength+1,aktmat);
@@ -98,102 +101,101 @@ for aktmat = mat_set
                          % uebergeben werden und nicht auf einmal
                          % als Vektor
 
-  elem_count = elem_count + 1;
+    elem_count = elem_count + 1;
 
-  % Knoten und Verschiebungen fuer aktuelles Element in x speichern
-  %x(1:nel,1:ndf)=node(el(aktele,1:nel),1:ndf);
-  x(:,:)=node(el(aktele,:),:);
-  u_elem(:,:)=unode(el(aktele,:),:);
+    % Knoten und Verschiebungen fuer aktuelles Element in x speichern
+    %x(1:nel,1:ndf)=node(el(aktele,1:nel),1:ndf);
+    x(:,:)=node(el(aktele,:),:);
+    u_elem(:,:)=unode(el(aktele,:),:);
 
-  % Element-History-Variablen aufbauen:
-  hist_old_elem = reshape(hist_old(:,aktele),gphist_max,numgp_max);
-  hist_user_elem = reshape(hist_user(:,aktele),gphist_max,numgp_max);
+    % Element-History-Variablen aufbauen:
+    hist_old_elem = reshape(hist_old(:,aktele),gphist_max,numgp_max);
+    hist_user_elem = reshape(hist_user(:,aktele),gphist_max,numgp_max);
 
-  %%%%%%%%%%%%%%%%%%%%%
-  % Begin Elementaufruf
-  %%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%
+    % Begin Elementaufruf
+    %%%%%%%%%%%%%%%%%%%%%
 
-  % zum aktuellen Element gehoerende Groessen (Elementnummer, Materialnummer,
-  % Materialparameter) aus Material-Matrizen rausholen
-  mat_par=mat_par_matr(:,el2mat(aktele));
+    % zum aktuellen Element gehoerende Groessen (Elementnummer, Materialnummer,
+    % Materialparameter) aus Material-Matrizen rausholen
+    mat_par=mat_par_matr(:,el2mat(aktele));
 
-  % Element anspringen
-  % Hier wird jetzt elem_name zum Aufruf des Elements verwendet und
-  % mat_name uebergeben
-    [k_elem, M_elem, C_elem, r_elem, ...
-	  cont_zaehler, cont_nenner, hist_new_elem, hist_user_elem] = ...
-      feval(deblank(elem_name(aktele,:)),isw, nel, ndf, contvar,...
-	    deblank(mat_name(aktele,:)), mat_par, x, u_elem,...
-	    hist_old_elem, hist_user_elem);
+    % Element anspringen
+    % Hier wird jetzt elem_name zum Aufruf des Elements verwendet und
+    % mat_name uebergeben
+      [k_elem, M_elem, C_elem, r_elem, ...
+            cont_zaehler, cont_nenner, hist_new_elem, hist_user_elem] = ...
+        feval(deblank(elem_name(aktele,:)),isw, nel, ndf, contvar,...
+              deblank(mat_name(aktele,:)), mat_par, x, u_elem,...
+              hist_old_elem, hist_user_elem);
 
 
-  %%%%%%%%%%%%%%%%%%%%
-  % Ende Elementaufruf
-  %%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%
+    % Ende Elementaufruf
+    %%%%%%%%%%%%%%%%%%%%
 
-  % lokale und globale Knotennummern fuer aktuelles Element
-  node_loc = 1:nel;
-  node_ges = (el(aktele,node_loc)-1)*ndf+1;
+    % lokale und globale Knotennummern fuer aktuelles Element
+    node_loc = 1:nel;
+    node_ges = (el(aktele,node_loc)-1)*ndf+1;
 
-  % Positionen an denen in die Gesamt-STMA einsortiert wird
-  for i=1:ndf
-    pos_vec(i:ndf:nel*ndf) =  node_ges+i-1;
-  end
-
-  % Einsortieren in k und r
-
-  % Sparse-Speichertechnik zeigt, dass das Einsortieren in k immer
-  % langsamer dauert, je mehr Eintraege schon drin sind
-  % ->
-  % es wird eine Sparse-Matrix zum Zwischenspeichern (k_temp)
-  % eingefuehrt, die nach k_temp_size (z.B. 200 Elementen) in k
-  % abgelegt wird und anschliessend wieder neu initialisiert wird
-
-  if  (sparse_flag~=0)
-    k_temp(pos_vec,pos_vec) = k_temp(pos_vec,pos_vec) + k_elem;
-    M_temp(pos_vec,pos_vec) = M_temp(pos_vec,pos_vec) + M_elem;
-    C_temp(pos_vec,pos_vec) = C_temp(pos_vec,pos_vec) + C_elem;
-    if (delta_el==k_temp_size)
-      k = k + k_temp;
-      M_mass = M_mass + M_temp;
-      C_damp = C_damp + C_temp;
-
-      k_temp = spalloc(gesdof,gesdof,round(gesdof*gesdof/100));
-      M_temp = spalloc(gesdof,gesdof,round(gesdof*gesdof/100));
-      C_temp = spalloc(gesdof,gesdof,round(gesdof*gesdof/100));
-      delta_el = 0;
+    % Positionen an denen in die Gesamt-STMA einsortiert wird
+    for i=1:ndf
+      pos_vec(i:ndf:nel*ndf) =  node_ges+i-1;
     end
-    delta_el = delta_el + 1;
 
-  else
-    k(pos_vec,pos_vec) = k(pos_vec,pos_vec) + k_elem;
-    M_mass(pos_vec,pos_vec) = M_mass(pos_vec,pos_vec) + M_elem;
-    C_damp(pos_vec,pos_vec) = C_damp(pos_vec,pos_vec) + C_elem;
-  end
+    % Einsortieren in k und r
 
-  r(pos_vec) =  r(pos_vec) + r_elem;
+    % Sparse-Speichertechnik zeigt, dass das Einsortieren in k immer
+    % langsamer dauert, je mehr Eintraege schon drin sind
+    % ->
+    % es wird eine Sparse-Matrix zum Zwischenspeichern (k_temp)
+    % eingefuehrt, die nach k_temp_size (z.B. 200 Elementen) in k
+    % abgelegt wird und anschliessend wieder neu initialisiert wird
 
-  % Einsortieren von zaehler und nenner in cont_mat_node und cont_norm
-  % Ausnahme fuer Stabelement ( elem10)
-  if (strcmp(elem_name(aktele,:),'elem10'))
-     cont_mat_node(aktele,:) = cont_zaehler;
-     cont_norm(aktele) = cont_nenner;
-  else
-     for i=1:nel
-       cont_mat_node(el(aktele,i),:) = ...
-	   cont_mat_node(el(aktele,i),:)+cont_zaehler(i,:);
-       cont_norm(el(aktele,i))=cont_norm(el(aktele,i))+cont_nenner(i);
-     end %i
-  end %if
+    if  (sparse_flag~=0)
+      k_temp(pos_vec,pos_vec) = k_temp(pos_vec,pos_vec) + k_elem;
+      M_temp(pos_vec,pos_vec) = M_temp(pos_vec,pos_vec) + M_elem;
+      C_temp(pos_vec,pos_vec) = C_temp(pos_vec,pos_vec) + C_elem;
+      if (delta_el==k_temp_size)
+        k = k + k_temp;
+        M_mass = M_mass + M_temp;
+        C_damp = C_damp + C_temp;
+
+        k_temp = spalloc(gesdof,gesdof,round(gesdof*gesdof/100));
+        M_temp = spalloc(gesdof,gesdof,round(gesdof*gesdof/100));
+        C_temp = spalloc(gesdof,gesdof,round(gesdof*gesdof/100));
+        delta_el = 0;
+      end
+      delta_el = delta_el + 1;
+
+    else
+      k(pos_vec,pos_vec) = k(pos_vec,pos_vec) + k_elem;
+      M_mass(pos_vec,pos_vec) = M_mass(pos_vec,pos_vec) + M_elem;
+      C_damp(pos_vec,pos_vec) = C_damp(pos_vec,pos_vec) + C_elem;
+    end
+
+    r(pos_vec) = r(pos_vec) + r_elem;
+
+    % Einsortieren von zaehler und nenner in cont_mat_node und cont_norm
+    % Ausnahme fuer Stabelement ( elem10)
+    if (strcmp(elem_name(aktele,:),'elem10'))
+      cont_mat_node(aktele,:) = cont_zaehler;
+      cont_norm(aktele) = cont_nenner;
+    else
+      for i=1:nel
+        cont_mat_node(el(aktele,i),:) = ...
+             cont_mat_node(el(aktele,i),:)+cont_zaehler(i,:);
+        cont_norm(el(aktele,i))=cont_norm(el(aktele,i))+cont_nenner(i);
+      end %i
+    end %if
 
 
-% Fortschrittsanzeige auf Display
-  percent=floor(100*elem_count/numel);
-  disp(sprintf('\b\b\b\b\b%2.0f %%',percent))
+    % Fortschrittsanzeige auf Display
+    percent=floor(100*elem_count/numel);
+    disp(sprintf('\b\b\b\b\b%2.0f %%',percent))
 
-end %aktele
-
-end %nummat
+  end %aktele
+end %aktmat
 
 % Normierung der Contour-Groessen
 for i = 1:contvar
@@ -201,7 +203,7 @@ for i = 1:contvar
 end
 
 
-if  (sparse_flag~=0);
+if (sparse_flag~=0);
   k = k + k_temp;
   M_mass = M_mass + M_temp;
   C_damp = C_damp + C_temp;
