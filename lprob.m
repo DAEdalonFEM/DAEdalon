@@ -38,14 +38,6 @@
 % numgp_max   Max. Anzahl der verwendeten Gausspunkte pro Element
 % nummat  Anzahl der unterschiedlichen verwendeten Materialgesetze
 
-%clear all;
-
-% datenschnittstelle zu bestimmten funktionen ueber globale variablen
-%setGloVar;
-
-% % Matlab Versionsnummer              // siehe "gui_setup.m"
-%vers_nr = sscanf(version,'%f');
-
 % einige (globale) Groessen initialisieren
 dt = 1.0;        % Zeitinkrement
 % tim  = dt;     % jetzt in loop.m durch Aufruf von time, sonst von Hand
@@ -71,7 +63,7 @@ bounDisp_treat=0;% Art der Einarbeitung der Verschiebungsrandbed.
 movie_flag = 0;  % wenn =1, wird nach jeden Zeitschritt ein Bild in
                  % movie_array gespeichert, siehe loop.
 
-isw = 0;         % zur eingenen Verwendung
+isw = 0;         % zur eigenen Verwendung
 out_file_name = '';     % Defaultmaessig keine Ausgabefiles schreiben
 histout_file_name = ''; % Defaultmaessig keine Ausgabefiles schreiben
 rst_file_name = '';     % Defaultmaessig keine Restartfiles schreiben
@@ -89,46 +81,65 @@ if mat_oct_flag           % true --> octave         % HBaa - 17.12.2015
     warning('off', 'Octave:data-file-in-path')
 end
 
-% Eingabefile Geometriedaten:
+
+%                              _
+%  __ _  ___  ___  _ __ ___   (_)_ __  _ __
+% / _` |/ _ \/ _ \| '_ ` _ \  | | '_ \| '_ \
+%| (_| |  __/ (_) | | | | | |_| | | | | |_) |
+% \__, |\___|\___/|_| |_| |_(_)_|_| |_| .__/
+% |___/                               |_|
+% Eingabefile Geometriedaten: geom.inp
 % Format: [numnp; numel; nummat; ndm; ndf; nel]
 % Ausser den Werten fuer nummat und ndf werden alle beim Einlesen
 % von node.inp und el.inp ueberschrieben
 load geom.inp
-nummat=geom(3);
-ndf=geom(5);
-mat_set=1:nummat; % Anzahl an Materialdatensaetzen
+nummat = geom(3);  % Anzahl an Materialdatensaetzen
+ndf    = geom(5);
+mat_set = 1:nummat;  % spez. Platzhalter, um in cont_sm.m einzelne Mat.-Saetze aufrufen zu koennen
 
+
+%                 _  __  __  _
+% _ __ ___   __ _| |_\ \/ / (_)_ __  _ __
+%| '_ ` _ \ / _` | __|\  /  | | '_ \| '_ \
+%| | | | | | (_| | |_ /  \ _| | | | | |_) |
+%|_| |_| |_|\__,_|\__/_/\_(_)_|_| |_| .__/
+%                                   |_|
 % Schleife ueber alle Materialdateien
 for i=1:nummat
   % Eingabefile Materialparameter: matX.inp
   % Format: [elem_nr; mat_nr; ...mat_par...]
-  mat_file=strcat('mat',num2str(i),'.inp');
+  mat_file = strcat('mat',num2str(i),'.inp');
   load(mat_file);
   mat_par_length = length(eval(['mat',num2str(i)])) - 3;
 
   % in elem_nr_matr wird fuer jeden Materialdatensatz die Elementnr. abgelegt
-  elem_nr_matr(i)=eval(['mat',num2str(i),'(1)']);
+  elem_nr_matr(i) = eval(['mat',num2str(i),'(1)']);
 
   % in elem_gp_matr wird fuer jeden Materialdatensatz die Anzahl der
   % Gausspunkte pro Element abgelegt
-  elem_gp_matr(i)=eval(['mat',num2str(i),'(2)']);
+  elem_gp_matr(i) = eval(['mat',num2str(i),'(2)']);
 
   % in mat_nr_matr wird fuer jeden Materialdatensatz die Materialnr. abgelegt
-  mat_nr_matr(i)=eval(['mat',num2str(i),'(3)']);
+  mat_nr_matr(i) = eval(['mat',num2str(i),'(3)']);
 
   % in mat_par_matr werden spaltenweise fuer jeden Materialdatensatz
   % die Materialparameter abgelegt
   % 1. Eintrag in mat_par_matr ist Anzahl der hist-Variablen pro GP
-  mat_par_matr(1:mat_par_length,i)=eval(['mat',num2str(i),'(4:end)']);
-
+  mat_par_matr(1:mat_par_length,i) = eval(['mat',num2str(i),'(4:end)']);
 end
 
+
+%                 _        _
+% _ __   ___   __| | ___  (_)_ __  _ __
+%| '_ \ / _ \ / _` |/ _ \ | | '_ \| '_ \
+%| | | | (_) | (_| |  __/_| | | | | |_) |
+%|_| |_|\___/ \__,_|\___(_)_|_| |_| .__/
+%                                 |_|
 % Eingabefile Knotenkoordinaten: node.inp
 % Format: node(Knotennummer x Koordinate)
 load node.inp
-dummy = size(node);
-numnp = dummy(1);   %Anzahl der Gesamtknoten
-ndm = dummy(2);     %Anzahl der Dimensionen
+numnp = size(node, 1);  % Anzahl der Gesamtknoten
+ndm   = size(node, 2);  % Anzahl der Dimensionen
 
 % Falls bei 2D-Problem 3D-Koordinaten angegeben sind, die "Null-Richtung"
 % rausschmeissen
@@ -146,14 +157,20 @@ if ndm==3                     % HBaa, 16.04.2009, wg. "Stab-Bsp. in Vorl.
   end
 end
 
+
+%      _   _
+%  ___| | (_)_ __  _ __
+% / _ \ | | | '_ \| '_ \
+%|  __/ |_| | | | | |_) |
+% \___|_(_)_|_| |_| .__/
+%                 |_|
 % Eingabefile Elemente: el.inp
 % Format: el(Anzahl Elemente x Materialnummer,Knotennummern)
 load el.inp
-dummy = size(el);
-numel = dummy(1);    %Anzahl der Elemente im Problem
-nel = dummy(2)-1;    %Anzahl der Knoten pro Element
-el2mat = el(:,1);    %in der ersten Spalte steht die Materialnummer
-el(:,1)=[];          %Rausschmeissen der Materialnummer aus el
+numel = size(el, 1);      % Anzahl der Elemente im Problem
+nel   = size(el, 2) - 1;  % Anzahl der Knoten pro Element
+el2mat = el(:, 1);        % In der ersten Spalte steht die Materialnummer
+el(:,1)=[];               % Rausschmeissen der Materialnummer aus el
 
 % mat2el: pro Spalte stehen alle Elemente drin, die zu einem
 % Materialdatensatz gehoeren, in der ersten Zeile steht wie viele
@@ -174,43 +191,53 @@ mat_name  = [repmat('mat',numel,1), ...
 	     strjust(num2str(mat_nr_matr(el2mat')'),'left')];  %string-Vektor
 
 % Intitialisierung von u und du:
-gesdof = ndf*numnp; %Anzahl der Gesamtfreiheitsgrade
-u=zeros(gesdof,1);    %Spaltenvektor
-du=zeros(gesdof,1);    %Spaltenvektor
+gesdof = ndf*numnp;   % Anzahl der Gesamtfreiheitsgrade
+u  = zeros(gesdof,1); % Spaltenvektor
+du = zeros(gesdof,1); % Spaltenvektor
 
+
+%     _ _           _   _
+%  __| (_)___ _ __ | | (_)_ __  _ __
+% / _` | / __| '_ \| | | | '_ \| '_ \
+%| (_| | \__ \ |_) | |_| | | | | |_) |
+% \__,_|_|___/ .__/|_(_)_|_| |_| .__/
+%            |_|               |_|
 % Eingabefile Verschiebungen: displ.inp
-% Format:
-% displ((Anzahl Knoten mit vorgeg. u) x (Knotennr.,Freiheitsgr.,Versch.))
+% Format displ((Anzahl Knoten mit vorgeg. u) x (Knotennr.,Freiheitsgr.,Versch.))
 load displ.inp
-dummy=size(displ);
-displ_len=dummy(1);
+displ_len = size(displ, 1);
 % Aufspalten von displ in 3 Vektoren damit int- und double-Variablen
 % nicht im gleichen Feld
-displ_node=displ(:,1);
-displ_df=displ(:,2);
-displ_u=displ(:,3);
+displ_node = displ(:, 1);
+displ_df   = displ(:, 2);
+displ_u    = displ(:, 3);
 
-% Initialisierung Lastvektor
-p=zeros(gesdof,1);      %Spaltenvektor
 
+%  __                      _
+% / _| ___  _ __ ___ ___  (_)_ __  _ __
+%| |_ / _ \| '__/ __/ _ \ | | '_ \| '_ \
+%|  _| (_) | | | (_|  __/_| | | | | |_) |
+%|_|  \___/|_|  \___\___(_)_|_| |_| .__/
+%                                 |_|
 % Eingabefile Knotenkraefte: force.inp
-% Format:
-% force(Anzahl belasteter Knoten x (Knotennr.,Freiheitsgr.,Knotenkraft))
+% Format: force(Anzahl belasteter Knoten x (Knotennr.,Freiheitsgr.,Knotenkraft))
 
 % HBaa - 14.10.2016 fuer 'octave', wenn Datei leer
 try
-	load force.inp
+  load force.inp
 catch err
-	force = [];
+  force = [];
 end
 
-dummy=size(force);
-force_len=dummy(1);
+% Initialisierung Lastvektor
+p = zeros(gesdof,1);  % Spaltenvektor
+
+force_len = size(force, 1);
 if (force_len > 0)
   % Aufspalten von force in 3 Vektoren neu von Goy, 10.02
-  force_node=force(:,1);
-  force_df=force(:,2);
-  force_val=force(:,3);
+  force_node = force(:, 1);
+  force_df   = force(:, 2);
+  force_val  = force(:, 3);
 
   % Einsortieren in Spaltenvektor p:
   for i=1:force_len
@@ -226,18 +253,18 @@ end
 
 % History-Felder initialisieren
 
-numgp_max=max(elem_gp_matr); % Max. Anzahl an GP's pro Element
-gphist_max=max(mat_par_matr(1,:)); % Max. Anzahl an History-Variablen pro GP
+numgp_max  = max(elem_gp_matr);       % Max. Anzahl an GP's pro Element
+gphist_max = max(mat_par_matr(1,:));  % Max. Anzahl an History-Variablen pro GP
 
 % History-Matrizen:
 % (Element-History-Variablen x Elementnummern)
 % d.h. in jeder Spalte ist ein Satz Element-History-Variablen abgelegt
-hist_old=zeros(numgp_max*gphist_max,numel);
-hist_new=zeros(numgp_max*gphist_max,numel);
-hist_user=zeros(numgp_max*gphist_max,numel);
+hist_old  = zeros(numgp_max*gphist_max,numel);
+hist_new  = zeros(numgp_max*gphist_max,numel);
+hist_user = zeros(numgp_max*gphist_max,numel);
 
 % Initialisierung rechte Seite
-rhs=zeros(gesdof,1);      %Spaltenvektor
+rhs = zeros(gesdof,1);  % Spaltenvektor
 
 disp(sprintf('\nInputfiles eingelesen'))
 disp(sprintf('sparse_flag = %1.0f',sparse_flag))
@@ -248,5 +275,3 @@ disp(sprintf('Zeit: %8.4f',tim))
 % Ende lprob.m
 
 %fid_dae = 1;
-
-
