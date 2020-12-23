@@ -21,14 +21,14 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [F] = defgrad_3d(u_elem,dshape) 
-%Bestimmung des Deformationsgradienten F und der Volumenänderung J
+function [F] = defgrad_3d(u_elem,dshape)
+%Bestimmung des Deformationsgradienten F und der Volumenaenderung J
 
 % F = dx/dX
 %   = d(X+u)/dX

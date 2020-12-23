@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -39,7 +39,7 @@ delta_el = 1;
 kk_temp_size = 200; % Elemente
 kk = spalloc(numnp,numnp,round(numnp*numnp/100));
 kk_temp = spalloc(numnp,numnp,round(numnp*numnp/100));
-  
+
 node_out = zeros(numnp,ndm);
 displ_node_out = zeros(length(displ_node_in),1);
 force_node_out = zeros(length(force_node_in),1);
@@ -52,32 +52,32 @@ for i=1:numel
   kk_temp(elem_in(i,:),elem_in(i,:)) = 1;
     if (delta_el==kk_temp_size)
       kk = kk + kk_temp;
-      kk_temp = spalloc(numnp,numnp,round(numnp*numnp/100));     
+      kk_temp = spalloc(numnp,numnp,round(numnp*numnp/100));
       delta_el = 0;
     end
     delta_el = delta_el + 1;
-    
+
     percent=floor(50*i/numel);
 %    disp(sprintf('\b\b\b\b\b%2.0f %%',percent))
 end
 
 kk = kk + kk_temp;
- 
- 
+
+
 subplot(1,2,1)
 spy(kk);
-title(['Knotenkonektivität'])
+title(['Knotenkonektivitaet'])
 xlabel('Elemente');
 ylabel('Elemente');
 
-% symrcm gibt einen Permutationsvektor zurück, dabei ist der Wert
+% symrcm gibt einen Permutationsvektor zurueck, dabei ist der Wert
 % die alte Knotennummer und der Index die neue Knotennummer.
 % Bsp.: permt_vec(4)=12 -> alte Knotennr:12, neue Knotennr:4
 permut_vec = symrcm(kk);
 
 subplot(1,2,2)
 spy(kk(permut_vec,permut_vec));
-title(['Optimierte Knotenkonektivität'])
+title(['Optimierte Knotenkonektivitaet'])
 xlabel('Elemente');
 ylabel('Elemente');
 
@@ -101,9 +101,9 @@ for i=1:length(displ_node_in)
   displ_node_out(i) =  find(permut_vec==displ_node_in(i));
 end
 
-% neuen Lastvektor erzeugen (wenn nötig)
+% neuen Lastvektor erzeugen (wenn noetig)
 if (length(force_node_in)>0)
   for i=1:length(force_node_in)
     force_node_out(i) =  find(permut_vec==force_node_in(i));
-  end  
+  end
 end

@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -31,7 +31,7 @@
 % Einbau der Verschiebungsrandbedingungen in k
 % und Aufbau der rechten Seite aus Lastvektor und Residuum
 
-% Schleife über alle vorgegebenen Randverschiebungen (in displ abgelegt)
+% Schleife ueber alle vorgegebenen Randverschiebungen (in displ abgelegt)
 % Zeile komplett ausnullen nur an der Stelle pos eine 1
 
 

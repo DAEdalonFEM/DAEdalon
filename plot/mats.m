@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -37,59 +37,58 @@ figure(fid_dae);
 
 surf_data = spalloc(numnp,1,1);
 
-% Schleife über alle Elemente
+% Schleife ueber alle Elemente
 for aktele=1:numel
 
-  % Materialnummer für aktuelles Element raussuchen
-  %mat_nr= mat_nr_matr(el2mat(aktele));
-  mat_nr= el2mat(aktele);
- 
-  % aufbereiten der Daten fürs Element
-  evalin('base','surfnodes');
+    % Materialnummer fuer aktuelles Element raussuchen
+    %mat_nr = mat_nr_matr(el2mat(aktele));
+    mat_nr = el2mat(aktele);
 
-  len = size(x_surf);
-  surf_value = repmat(mat_nr,len,1);
-   
-  % Elementnummer bestimmen
-  elem_nr=elem_nr_matr(el2mat(aktele));
-  
-  % Element zeichnen
-  switch elem_nr
-   case {2,3,4,6,8,13,14,23,24,26,33,36,39,86,87,333}
-    
-    evalin('base','patch(x_surf,y_surf,surf_value)');  
-      
-  case {10}   % Stabelement
-      % surf_value auf max. Strichstärke von 8 normieren
-      %surf_value = surf_value/max(abs(surf_data))*8.0;
-        
-      %if surf_value >= 0.0 
-      %   pl_col = 'r';
-      %else
-      %   pl_col = 'b';
-      %end %if
+    % Elementnummer bestimmen
+    elem_nr = elem_nr_matr(el2mat(aktele));
 
-     string = ['plot3(x_surf,y_surf,z_surf,''',pl_col, ...
-             ''',''LineWidth'',',num2str(5),')'];
-     evalin('base', string);    
- 
-   
-  case {7,11}    % Volumenelemente
-      if elem_nr == 7   % Tetraederelement
-        anz_f = 4;
-      elseif elem_nr == 11   % Quaderelement
-        anz_f = 6;
-      end %if
-       
-     for k=1:anz_f
-        fuckstring = ['patch(''Vertices'',[x_surf,y_surf,z_surf],',...
-		    '''Faces'',face_surf(',num2str(k),',:),'...
-		    '''FaceVertexCData'',surf_value,'...
-		    '''FaceColor'',''interp'')'];
-        evalin('base',fuckstring);
-     end %for
-        
-  end %switch elem_nr
+    % Aufbereiten der Daten fuers Element
+    evalin('base','surfnodes');
+
+    len = size(x_surf);
+    surf_value = repmat(mat_nr,len,1);
+
+    % Element zeichnen
+    switch elem_nr
+        case surf_elem  % Surface-Elemente
+            evalin('base','patch(x_surf,y_surf,surf_value)');
+
+        case truss_2  % Stabelement
+            % surf_value auf max. Strichstaerke von 8 normieren
+            %surf_value = surf_value/max(abs(surf_data))*8.0;
+
+            %if surf_value >= 0.0
+            %   pl_col = 'r';
+            %else
+            %   pl_col = 'b';
+            %end %if
+
+           string = ['plot3(x_surf,y_surf,z_surf,''',pl_col, ...
+                     ''',''LineWidth'',',num2str(5),')'];
+           evalin('base', string);
+
+
+        case vol_elem  % Volumenelemente
+            if not(isempty(find([[tet_4, tet_10]{:}] == elem_nr)))  % Tetraederelement (4 oder 10 Knoten)
+                anz_f = 4;
+            elseif not(isempty(find([brick_8{:}] == elem_nr)))  % Quaderelement
+                anz_f = 6;
+            end %if
+
+           for k=1:anz_f
+               string = ['patch(''Vertices'',[x_surf,y_surf,z_surf],',...
+              	         '''Faces'',face_surf(',num2str(k),',:),'...
+              	         '''FaceVertexCData'',surf_value,'...
+              	         '''FaceColor'',''interp'')'];
+               evalin('base', string);
+           end %for
+
+    end %switch elem_nr
 end %aktele
 
 set(findobj('Type','patch'),'EdgeColor','none')
@@ -97,7 +96,7 @@ set(findobj('Type','patch'),'EdgeColor','none')
 colorbar;
 colormap(jet); % jet,bone,hsv
 
-title('Materialdatensätze');
+title('Materialdatensaetze');
 
 % Achsenbeschriftung
 xlabel('x');

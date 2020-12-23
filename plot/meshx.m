@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -42,18 +42,16 @@ defo_flag=1.0;
 initplot;
 hold on;
 
-% Schleife über alle Elemente
+% Schleife ueber alle Elemente
 for aktele=1:numel
-elem_nr=elem_nr_matr(el2mat(aktele));
-meshnodes;
-
-switch ndm
- case {2}                     % 2-D Elemente
-  plot(x_plot,y_plot,'r-');
-
- case {3}                     % 3-D Elemente
-  plot3(x_plot,y_plot,z_plot,'r-');  
- end %switch
+  elem_nr = elem_nr_matr(el2mat(aktele));
+  meshnodes;
+  switch ndm
+    case {2}  % 2-D Elemente
+      plot(x_plot,y_plot,'r-');
+    case {3}  % 3-D Elemente
+      plot3(x_plot,y_plot,z_plot,'r-');
+  end % switch
 end % aktele
 
 title(['Deformiertes Netz']);

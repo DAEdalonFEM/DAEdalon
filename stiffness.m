@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -30,7 +30,7 @@
 % stiffness.m
 % Ab Version 1.5 kann stiffness.m als Funktion durch
 % stiffness_func.m aufgerufen werden, damit stiffness auch
-% kompiliert werden kann. 
+% kompiliert werden kann.
 
 [k,r,u,hist_new,hist_user,cont_mat_node] = ...
     stiffness_func(nel,ndf,u,displ_u,displ_df,displ_node,displ_len, ...

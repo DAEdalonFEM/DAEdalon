@@ -23,7 +23,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -34,14 +34,14 @@
 % 'mesh0': Undeformiertes Netz
 % 'meshx': Deformiertes Netz, skaliert mit defo_scal (default = 100)
 % 'nodenum': Knotennummern dranschreiben
-% 'clearplot': Plotfenster löschen
+% 'clearplot': Plotfenster loeschen
 % 'dispx': x-Verschiebungen als Kontourplot ausgeben
 % 'dispy': y-Verschiebungen als Kontourplot ausgeben
-% 'boun': Lager einzeichnen: grün festgehaltene Verschiebungen
+% 'boun': Lager einzeichnen: gruen festgehaltene Verschiebungen
 %         gelb vorgebene Randverschiebungen
-% 'cont(x)': Contourplot der Größe x, die auf Elementebene in
+% 'cont(x)': Contourplot der Groesse x, die auf Elementebene in
 %            cont_mat_gp in Spalte x abgelegt ist
-             
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gui
 global fid_dae;
@@ -73,41 +73,41 @@ for i=1:numnp
      end
 
      if ndm==3
-       z_test = node(i,3) + defo_flag*defo_scal*unode(i,3);  
+       z_test = node(i,3) + defo_flag*defo_scal*unode(i,3);
        if z_max < z_test;
 	 z_max=z_test;
        end
        if z_min >z_test;
 	 z_min=z_test;
        end
-     end 
+     end
 end %numnp
 
-if ndm==2    
-  diameter=max([x_max-x_min,y_max-y_min]); 
+if ndm==2
+  diameter=max([x_max-x_min,y_max-y_min]);
   rand=0.15*diameter;
   lala=(diameter+2.0*rand)/2.0;
   xm = (x_min + x_max)/2.0;
   ym = (y_min + y_max)/2.0;
-   
+
   axis([xm-lala,xm+lala,ym-lala,ym+lala])
 %  axis([x_min-rand,x_min+diameter+rand,y_min-rand,y_min+diameter+rand])
-%  axis image 
+%  axis image
 axis square
 
 
 elseif ndm==3
-   diameter=max([x_max-x_min,y_max-y_min,z_max-z_min]);     
+   diameter=max([x_max-x_min,y_max-y_min,z_max-z_min]);
    rand=0.1*diameter;
   lala=(diameter+2.0*rand)/2.0;
    xm = (x_min + x_max)/2.0;
    ym = (y_min + y_max)/2.0;
    zm = (z_min + z_max)/2.0;
-     
+
    axis([xm-lala,xm+lala,ym-lala,ym+lala,zm-lala,zm+lala])
 
 %   axis([x_min-rand,x_min+diameter+rand,y_min-rand,y_min+diameter+rand, ...
-%	 z_min-rand,z_min+diameter+rand	])   
+%	 z_min-rand,z_min+diameter+rand	])
 
    view(135,45);
 %   axis image

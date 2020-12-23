@@ -21,19 +21,19 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % dis.m
-% Ausgabe aller Freiheitsgrade für Knoten node_number
+% Ausgabe aller Freiheitsgrade fuer Knoten node_number
 
 function dis(node_number)
 global ndf numnp u node;
 
-unode = reshape(u,ndf,numnp)'; 
+unode = reshape(u,ndf,numnp)';
 
 disp(sprintf('Knoten %.0f:  ',node_number))
 disp(sprintf('Koordinaten: '))

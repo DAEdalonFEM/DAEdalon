@@ -21,14 +21,14 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % boun.m
-% Lager anzeigen, feste Lager in grün, Verschiebungen in magenta
+% Lager anzeigen, feste Lager in gruen, Verschiebungen in magenta
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gui
@@ -68,7 +68,7 @@ for i=1:displ_len
      case 2
       plot3([xn(i),xn(i)],[yn(i)-bl,yn(i)+bl],[zn(i),zn(i)],'g-')
      case 3
-      plot3([xn(i),xn(i)],[yn(i),yn(i)],[zn(i)-bl,zn(i)+bl],'g-') 
+      plot3([xn(i),xn(i)],[yn(i),yn(i)],[zn(i)-bl,zn(i)+bl],'g-')
     end %switch
 
   else
@@ -78,16 +78,16 @@ for i=1:displ_len
       uu(i)=displ_u(i);
 
      case 2
-      vv(i)=displ_u(i); 
- 
+      vv(i)=displ_u(i);
+
      case 3
       ww(i)=displ_u(i);
     end %switch
-    
+
     if (displ_max < abs(displ_u(i)))
       displ_max=abs(displ_u(i));
     end
-    
+
   end %if
 
 end %i

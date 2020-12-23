@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -46,21 +46,21 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
-% hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
+%                 durch hist_new_elem ersetzt
+% hist_user_elem = wie hist_old_elem, jedoch kein Ueberschreiben bei
 %                  neuem Zeitschritt
 %
 % raus:
 % k_elem = Elementsteifigkeitsmatrix
-% r_elem = Elementresiduumsvektor (für Newton-Iteration)
-% cont_zaehler = Matrix in der Größen für Contour-Plot drinstehen
-% cont_nenner = Vektor zum Normieren vom globalen cont_zähler
+% r_elem = Elementresiduumsvektor (fuer Newton-Iteration)
+% cont_zaehler = Matrix in der Groessen fuer Contour-Plot drinstehen
+% cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
-% hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
+% hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %sprintf('elem4')
@@ -80,7 +80,7 @@ for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, det_X_xsi] = shape_quad_lin(x,gpcoor(aktgp,:));
-  
+
   % Bestimmung des Deformationsgradienten
   [F] = defgrad(u_elem,dshape);
 
@@ -100,12 +100,12 @@ for aktgp=1:numgp
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
 
   dv = gpweight(aktgp)*det_X_xsi;
 
-  % GP-History-Felder zurückspeichern
+  % GP-History-Felder zurueckspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
@@ -121,23 +121,23 @@ for aktgp=1:numgp
 
     % Zusammenbau von k_elem = b^t*D_mat*b*dv
     % und Residuumsvektor r = b^T * sigma
-    
-    k_elem = k_elem + b' * D_mat * b * dv; 
+
+    k_elem = k_elem + b' * D_mat * b * dv;
     r_elem = r_elem + b' * sig * dv;
 
-%  elseif isw == 8  
-    % Aufbau von zaehler und nenner für contourplot
+%  elseif isw == 8
+    % Aufbau von zaehler und nenner fuer contourplot
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6: sig_x,sig_y,sig_xy
 
     cont_mat_gp(1:6+mat_par(1)) = [vareps;sig;hist_new_gp]';
-    
+
     cont_zaehler(:,1:6+mat_par(1))=cont_zaehler(:,1:6+mat_par(1)) ...
-	+shape'.*shape'*cont_mat_gp*dv;	
+	+shape'.*shape'*cont_mat_gp*dv;
     cont_nenner=cont_nenner+shape'.*shape'*dv;
-  
+
 %  end %if
-  
+
 end  % Schleife aktgp
 

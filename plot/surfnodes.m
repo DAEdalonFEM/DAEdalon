@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -35,95 +35,81 @@
 %figure(fid_dae);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-elem_nr=elem_nr_matr(el2mat(aktele));
-     
 switch elem_nr
- case {2,102,333} % Dreieckelement 3 Knoten
-  
-  x_surf=node(el(aktele,1:nel),1)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel),1);
-  
-  y_surf=node(el(aktele,1:nel),2)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-  
-  surf_value = surf_data(el(aktele,1:nel));
-  
- % Dreieckelement / 8-Kn.-Viereckselem.           
- case {3,6,8,13,23,26,33,34,36,39,86,87,88,89,106} 
- 
-  % Knotennummerierung: nur Eckknoten      
-  x_surf=node(el(aktele,1:nel/2),1)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel/2),1);
-  
-  y_surf=node(el(aktele,1:nel/2),2)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel/2),2);
+    case triangle_3  % Dreieckselement (3 Knoten)
+        x_surf=node(el(aktele,1:nel),1)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel),1);
 
-  surf_value = surf_data(el(aktele,1:nel/2));
+        y_surf=node(el(aktele,1:nel),2)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel),2);
 
- case {4,14,24,104,444}  % Vierknotenelement
+        surf_value = surf_data(el(aktele,1:nel));
 
-  x_surf(1:nel)=node(el(aktele,1:nel),1)+ ...
-      defo_flag*defo_scal*unode(el(aktele,1:nel),1);
+    case [triangle_6, quad_8]  % Dreieckselement (6 Kn.) / Viereckselement (8 Kn.)
+        % Knotennummerierung: nur Eckknoten
+        x_surf=node(el(aktele,1:nel/2),1)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel/2),1);
 
-  y_surf(1:nel)=node(el(aktele,1:nel),2)+ ...
-      defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-   
-  surf_value = surf_data(el(aktele,1:nel));
+        y_surf=node(el(aktele,1:nel/2),2)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel/2),2);
 
- case {5,7}      % Tetraederelemente
-     
-  nr_vert = 4;
-  
-  x_surf=node(el(aktele,1:nr_vert),1)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nr_vert),1);
+        surf_value = surf_data(el(aktele,1:nel/2));
 
-  y_surf=node(el(aktele,1:nr_vert),2)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nr_vert),2);
-     
-  z_surf=node(el(aktele,1:nr_vert),3)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nr_vert),3);
-     
-  surf_value = surf_data(el(aktele,1:nr_vert));
-         
-  face_surf=[1 2 3; 2 1 4; 3 4 1; 4 3 2];
-     
-     
- case {11}      % Quaderelemente
-        
-  x_surf=node(el(aktele,1:nel),1)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel),1);
+    case quad_4  % Viereckselement (4 Knoten)
+        x_surf(1:nel)=node(el(aktele,1:nel),1)+ ...
+            defo_flag*defo_scal*unode(el(aktele,1:nel),1);
 
-  y_surf=node(el(aktele,1:nel),2)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-     
-  z_surf=node(el(aktele,1:nel),3)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel),3);
-     
-  surf_value = surf_data(el(aktele,1:nel));
-         
-  face_surf=[4 3 2 1; 2 3 7 6; 5 6 7 8; 1 5 8 4; 1 2 6 5; 3 4 8 7];
-     
-     
- case {10}     % 2-Knoten-Stabelemente
-     
-  x_surf=node(el(aktele,1:nel),1)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel),1);
+        y_surf(1:nel)=node(el(aktele,1:nel),2)+ ...
+            defo_flag*defo_scal*unode(el(aktele,1:nel),2);
 
-  y_surf=node(el(aktele,1:nel),2)+ ...
-	 defo_flag*defo_scal*unode(el(aktele,1:nel),2);
-     
-  if (ndm == 3)
-    z_surf=node(el(aktele,1:nel),3)+ ...
-	   defo_flag*defo_scal*unode(el(aktele,1:nel),3);
-  else
-    z_surf(1:nel)=0.0;
-  end %if
-    
-  surf_value = surf_data(aktele);
-  
-     
- otherwise
-  error('Element existiert nicht')
+        surf_value = surf_data(el(aktele,1:nel));
+
+    case [tet_4, tet_10]  % Tetraederelemente (4 & 10 Knoten)
+        nr_vert = 4;
+
+        x_surf=node(el(aktele,1:nr_vert),1)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nr_vert),1);
+
+        y_surf=node(el(aktele,1:nr_vert),2)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nr_vert),2);
+
+        z_surf=node(el(aktele,1:nr_vert),3)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nr_vert),3);
+
+        surf_value = surf_data(el(aktele,1:nr_vert));
+
+        face_surf=[1 2 3; 2 1 4; 3 4 1; 4 3 2];
+
+    case brick_8  % Quaderelement (8 Knoten)
+        x_surf=node(el(aktele,1:nel),1)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel),1);
+
+        y_surf=node(el(aktele,1:nel),2)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel),2);
+
+        z_surf=node(el(aktele,1:nel),3)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel),3);
+
+        surf_value = surf_data(el(aktele,1:nel));
+
+        face_surf=[4 3 2 1; 2 3 7 6; 5 6 7 8; 1 5 8 4; 1 2 6 5; 3 4 8 7];
+
+    case truss_2  % Stabelement (2 Knoten)
+        x_surf=node(el(aktele,1:nel),1)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel),1);
+
+        y_surf=node(el(aktele,1:nel),2)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nel),2);
+
+        if (ndm == 3)
+            z_surf=node(el(aktele,1:nel),3)+ ...
+                 defo_flag*defo_scal*unode(el(aktele,1:nel),3);
+        else
+            z_surf(1:nel)=0.0;
+        end %if
+
+        surf_value = surf_data(aktele);
+
+    otherwise
+        error('Element existiert nicht')
 end  % switch
-

@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -31,7 +31,7 @@ function [loadfactor] = loadfunc(tim)
 
 % loadfunc.m
 % Funktion, die vorgibt, wie sich die Randlasten/Randverschiebugen
-% in Abhängigkeit von der Zeit verändern
+% in Abhaengigkeit von der Zeit veraendern
 
 % Linear (Standardeinstellung)
 loadfactor = tim;

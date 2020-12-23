@@ -21,15 +21,15 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_tetra_lin(x,coor)
-%Formfunktion für 4Knoten-Tetraederelemente mit linearen Ansaetzen
-%x = globale Koordinaten, coor = isoparam. Koor für akt. GP 
+%Formfunktion fuer 4Knoten-Tetraederelemente mit linearen Ansaetzen
+%x = globale Koordinaten, coor = isoparam. Koor fuer akt. GP
 
 % Knotenbezeichung siehe  und Integration mit 1 GP
 r=coor(1);
@@ -62,7 +62,7 @@ nshape(4,3)= 1.0;
 
 % Berechnung dx/dr = sum(dN/dr*x)
 x_r=x'*nshape;
-r_x = inv(x_r); 
+r_x = inv(x_r);
 
 % Ableitungen der shapefunctions:
 %dN/dx = dN/dr * dr/dx

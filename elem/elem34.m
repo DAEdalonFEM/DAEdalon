@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -33,7 +33,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 	  hist_old_elem, hist_user_elem)
 
 % Dreieckselement mit 6 Knoten und quadratischen Ansatzfuntionen
-% große Defos, Refenzkonfiguration
+% grosse Defos, Refenzkonfiguration
 % numerische Bestimmung der Tangente
 %
 % rein:
@@ -47,21 +47,21 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % x = Elementkoordinaten (nel x ndm)
 % u_elem = Elementfeiheitsgrade (nel x ndf)
 % hist_old_elem = Elementhistory-Variablen aus letztem Zeitschritt
-%                 (gphist_max x numgp_max) -> femlab.m 
+%                 (gphist_max x numgp_max) -> femlab.m
 %                 Bei neuem Zeitschritt (time-Komando) wird hist_old_elem
-%                 durch hist_new_elem ersetzt 
-% hist_user_elem = wie hist_old_elem, jedoch kein Überschreiben bei
+%                 durch hist_new_elem ersetzt
+% hist_user_elem = wie hist_old_elem, jedoch kein Ueberschreiben bei
 %                  neuem Zeitschritt
 %
 % raus:
 % k_elem = Elementsteifigkeitsmatrix
-% r_elem = Elementresiduumsvektor (für Newton-Iteration)
-% cont_zaehler = Matrix in der Größen für Contour-Plot drinstehen
-% cont_nenner = Vektor zum Normieren vom globalen cont_zähler
+% r_elem = Elementresiduumsvektor (fuer Newton-Iteration)
+% cont_zaehler = Matrix in der Groessen fuer Contour-Plot drinstehen
+% cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
-% hist_new_elem = aktualisierte Werte (sind im nächsten Zeitschritt
+% hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
 %                 in hist_old_elem gespeichert
-% hist_user_elem = s.o. 
+% hist_user_elem = s.o.
 
 
 %Initialisierung
@@ -85,7 +85,7 @@ for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
   [shape, dshape, det_X_xsi] = shape_tri_quadr(x,gpcoor(aktgp,:));
-  
+
   % Bestimmung des Deformationsgradienten
   [F] = defgrad(u_elem,dshape);
 
@@ -94,7 +94,7 @@ for aktgp=1:numgp
   hist_user_gp = hist_user_elem(:,aktgp);
 
   %%%%%%%%%%%%%%%%%%%%%%
-  % Begin Materialaufruf   
+  % Begin Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%%
 
   % Materialname zusammenbasteln
@@ -105,19 +105,19 @@ for aktgp=1:numgp
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf 
+  % Ende Materialaufruf
   %%%%%%%%%%%%%%%%%%%%%
 
   dv = gpweight(aktgp)*det_X_xsi;
 
-  % GP-History-Felder zurückspeichern
+  % GP-History-Felder zurueckspeichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
-	      
+
   % Aufbau von k_mate und r_elem
   % siehe Wriggers p.121-129
 
-  % Aufstellen von b = [b_1, ...  ,b_nele] 
+  % Aufstellen von b = [b_1, ...  ,b_nele]
 
   for i=1:nel
     pos = 2*i-1;
@@ -130,9 +130,9 @@ for aktgp=1:numgp
   k_mate = k_mate + b' * D_mat * b * dv;
   r_elem = r_elem + b' * S * dv;
 
-    
+
   % Zusammenbau von k_geom
-    
+
   S_mat=[S(1) S(3); ...
 	 S(3) S(2)];
 
@@ -142,7 +142,7 @@ for aktgp=1:numgp
       jj = 2*j-1;
 
       % Wriggers Gleichung (4.84)
-      G_ij = (dshape(i,:)*S_mat*dshape(j,:)'*dv) * eye(2); 
+      G_ij = (dshape(i,:)*S_mat*dshape(j,:)'*dv) * eye(2);
       k_geom(ii:ii+1,jj:jj+1) = k_geom(ii:ii+1,jj:jj+1)+ G_ij;
 
     end % j
@@ -157,7 +157,7 @@ for aktgp=1:numgp
   cont_zaehler(:,1:6)=cont_zaehler(:,1:6) ...
       +shape'.*shape'*cont_mat_gp*dv;
   cont_nenner=cont_nenner+shape'.*shape'*dv;
-  
+
   %  end %if
 
 end  % Schleife aktgp
@@ -169,12 +169,12 @@ k_elem_ana = k_mate+k_geom;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %Berechnung der Tangente
-%%%%%%%%%%%%%%%%%%%%%%%%%%    
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Inkrement festlegen
 delta_u = 1.E-8;
 
-% Schleifen über alle Freiheitsgrade und Knoten
+% Schleifen ueber alle Freiheitsgrade und Knoten
 for ii=1:nel*ndf
 
   % Schleife ueber alle GP's
@@ -182,35 +182,35 @@ for ii=1:nel*ndf
 
     %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
     [shape, dshape, det_X_xsi] = shape_tri_quadr(x,gpcoor(aktgp,:));
-  
+
     % Variation einer Verschiebung
     u_elem_var = u_elem';
     u_elem_var(ii) = u_elem_var(ii) + delta_u;
     u_elem_var=u_elem_var';
-      
+
     % Bestimmung des Deformationsgradienten
     [F] = defgrad(u_elem_var,dshape);
-       
- 
+
+
     % GP-History-Felder zusmmenbauen:
     hist_old_gp = hist_old_elem(:,aktgp);
     hist_user_gp = hist_user_elem(:,aktgp);
-    
+
     %%%%%%%%%%%%%%%%%%%%%%
     % Begin Materialaufruf
     %%%%%%%%%%%%%%%%%%%%%%
-      
+
     [S,E,D_mat,hist_new_gp,hist_user_gp] ...
 	= feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
     %%%%%%%%%%%%%%%%%%%%%
-    % Ende Materialaufruf 
+    % Ende Materialaufruf
     %%%%%%%%%%%%%%%%%%%%%
-  
-    % GP-History-Felder nicht zurückspeichern
-    
+
+    % GP-History-Felder nicht zurueckspeichern
+
     dv = gpweight(aktgp)*det_X_xsi;
-      
+
     % Aufstellen von b = [b_1, ...  ,b_nele]
     for i=1:nel
       pos = 2*i-1;
@@ -218,12 +218,12 @@ for ii=1:nel*ndf
 			 F(1,2)*dshape(i,2)   F(2,2)*dshape(i,2) ; ...
 			 F(1,1)*dshape(i,2)+F(1,2)*dshape(i,1)     ...
 			 F(2,1)*dshape(i,2)+F(2,2)*dshape(i,1)];
-    end % i 
-    
-    
-    % Matrix mit Residuumsvektoren anlegen  
+    end % i
+
+
+    % Matrix mit Residuumsvektoren anlegen
     r_elem_var(:,ii) = r_elem_var(:,ii) + b' * S * dv;
-     
+
   end  % Schleife aktgp
 
 end % ii
@@ -231,4 +231,3 @@ end % ii
 % Numerische Tangente bilden
 k_elem =  r_elem_var - repmat(r_elem,1,ndf*nel);
 k_elem = k_elem/delta_u;
- 

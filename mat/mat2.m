@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -33,21 +33,21 @@ function [S,E,D_mat,hist_new_gp,hist_user_gp] ...
 % St. Venant - Material (2D) Wriggers p.127
 %
 % rein:
-% mat_par = Materialparameter (z.B. E, nu) 
+% mat_par = Materialparameter (z.B. E, nu)
 % F = Deformationsgradient dx/dX
 % hist_old_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 % hist_user_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 %
 % raus:
-% S = Spannungsgröße
-% E = zu S konjugierte Verzerrungsgröße
+% S = Spannungsgroesse
+% E = zu S konjugierte Verzerrungsgroesse
 % D_mat = linearisierte Materialtangente am GP
 % hist_new_gp = GP-Historyfeld, wie im Element (gphist_max x 1)
 % hist_user_gp = s.o.
 
 
 % Damit hist_new_gp belegt ist, auch wenn sich an den
-% hist.-Variablen nichts ändert:
+% hist.-Variablen nichts aendert:
 hist_new_gp=hist_old_gp;
 
 E=zeros(3,1);

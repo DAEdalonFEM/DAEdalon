@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -39,9 +39,9 @@ if strcmp(get(fid_f2f,'SelectionType'),'open')
     X = i;
     filename = handles.file_names(i);
     filename = filename{1,1};
- 
+
     cd parser
- 
+
     sys = computer;
     if isunix
         unix(['perl f2f.pl ',filename]);
@@ -50,6 +50,6 @@ if strcmp(get(fid_f2f,'SelectionType'),'open')
     if strncmp(sys, 'PC', 2)
         f2f = perl('f2f.pl ',filename)
     end
- 
+
     cd ..
 end

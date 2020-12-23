@@ -21,14 +21,14 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_brick_lin(x,coor)
-%shape-funktion für 3d-8-Knotenelemente mit lin. Ansaetzen
+%shape-funktion fuer 3d-8-Knotenelemente mit lin. Ansaetzen
 
 xsi =coor(1);
 eta =coor(2);
@@ -47,7 +47,7 @@ shape(6)= 0.125*(1.0+xsi)*(1.0-eta)*(1.0+zeta);
 shape(7)= 0.125*(1.0+xsi)*(1.0+eta)*(1.0+zeta);
 shape(8)= 0.125*(1.0-xsi)*(1.0+eta)*(1.0+zeta);
 
-% Ableitungen der Formfunktionen 
+% Ableitungen der Formfunktionen
 % nach xsi (:,1), eta (:,2) und zeta (:,3):
 
 nshape(1,1)=-0.125*(1.0-eta)*(1.0-zeta);  %1

@@ -21,14 +21,14 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ shape, dshape, j ] = shape_tri_lin( x, coor )
-% shape-funktion für 3-Knoten-Dreieckselemente mit linearen Ansaetzen
+% shape-funktion fuer 3-Knoten-Dreieckselemente mit linearen Ansaetzen
 % Knotenbezeichung wie in Hughes p.167 und Integration mit 3 GPs
 
 % shapefunctions ausgewertet an der Stelle (xsi,eta)

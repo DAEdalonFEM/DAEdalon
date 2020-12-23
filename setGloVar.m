@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -44,7 +44,7 @@ global node el u;
 global mat_nr mat_par;
 
 % zur komunikation zwischen einer funktion und einem skript (bspw. elem4)
-% daten von/zu funktion zu/von skript (fnc<->scr) ; speziell für skripts
+% daten von/zu funktion zu/von skript (fnc<->scr) ; speziell fuer skripts
 % von elemente
 global x u_elem unode shapeGp;
 
@@ -56,8 +56,8 @@ global dt dt_new
 global r
 global vers_nr
 global out_file_name histout_file_name
-global elem_nr_matr el2mat surf_value surf_data 
-global numgp_max gphist_max hist_old hist_new % fuer histout 
+global elem_nr_matr el2mat surf_value surf_data
+global numgp_max gphist_max hist_old hist_new % fuer histout
 global mat_set
 global contvar
 global sparse_flag;
@@ -73,5 +73,10 @@ global bounDisp_treat;
 global mat_oct_flag;                      % Projekt WiSe2015 - HBaa
 global pc_environ;                        % HBaa - 14.10.2016
 global dir_trenn;
-%
-%
+
+% variables for assigning element numbers to element types
+global truss_2
+global triangle_3 triangle_6 quad_4 quad_8
+global tet_4 tet_10 brick_8
+global surf_elem vol_elem
+

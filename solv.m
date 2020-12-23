@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -42,8 +42,8 @@ if (bounDisp_treat == 0)
   du=k\rhs;
   %du=k_cond\rhs_cond;
 else
-  % aT: reduziertes system lösen
-  du(poU) = k(poU,poU) \ rhs(poU);      
+  % aT: reduziertes system loesen
+  du(poU) = k(poU,poU) \ rhs(poU);
 end
 
 % Update des Verschiebungsvektors
@@ -51,7 +51,7 @@ end
 u=u+du;
 
 
-				       
+
 cont_flag=0;
 
 % Ende solv.m

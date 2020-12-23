@@ -21,19 +21,19 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [trafo_mat] = hatrafomat(a) 
+function [trafo_mat] = hatrafomat(a)
 
 % Aufbau der Transformationsmatrix trafo_mat, mit der man einen Tensor
-% 2-ter Stufe in Voigt-Notation im HA-System a zurück ins
-% ursprüngliche System transformiert:
+% 2-ter Stufe in Voigt-Notation im HA-System a zurueck ins
+% urspruengliche System transformiert:
 % Tensornotation:  A_neu = a * A_alt * a^T
-% Vektornotation:  A_neu_voigt = trafo_mat * A_alt_voigt 
+% Vektornotation:  A_neu_voigt = trafo_mat * A_alt_voigt
 % Trafo eines Tensors vierter Stufe D (6x6 Matrix in Voigt-Notation):
 % D_neu_voigt = trafo_mat * D_alt_voigt * trafo_mat^(-1)
 % Achtung es gilt NICHT trafomat^T = trafo_mat^(-1)

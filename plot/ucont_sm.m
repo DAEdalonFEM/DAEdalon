@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -43,12 +43,12 @@ mat_set = arg2;
 
 evalin('base','surf_data=u(cont_value:ndf:numnp*ndf);');
 
-% Schleife über alle Elemente EINES Datensatzes
+% Schleife ueber alle Elemente EINES Datensatzes
 listlength = mat2el(1,arg2);
 elements = mat2el( 2:listlength+1,arg2);
 for aktele = elements'
-  
-  
+
+
   % zeichnen der Elemente, ab jetzt durch Aufruf von cont_draw.m
   evalin('base','cont_draw');
 
@@ -73,4 +73,3 @@ ylabel('y');
 if (ndm==3)
   zlabel('z');
 end
-  

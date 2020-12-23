@@ -25,7 +25,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -38,7 +38,7 @@
 % numel   Anzahl der Elemente im Problem
 % nel     Anzahl der Knoten pro Element
 % ndf     Freiheitsgrade pro Knoten (nicht immer gleich ndm)
-% gesdof  Anzahl der Gesamtfreiheitsgrade 
+% gesdof  Anzahl der Gesamtfreiheitsgrade
 % numgp_max   Max. Anzahl der verwendeten Gausspunkte pro Element
 % nummat  Anzahl der unterschiedlichen verwendeten Materialgesetze
 
@@ -105,6 +105,9 @@ paraview_check_func
 % gui initialisieren
 crf
 gui_setup
+
+% assign element numbers to element types
+assign_elems;
 
 %
 % *** END ***

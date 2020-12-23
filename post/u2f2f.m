@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -31,11 +31,11 @@ function u2f2f(arg)
 
 % Rausschreiben des aktuellen Verschiebungsvektors in dem Format,
 % in dem die Verschiebungen in FEAP-Eingabefiles unter disp
-% gespeichert sind. arg ist der Name, der als Schlüsselword
+% gespeichert sind. arg ist der Name, der als Schluesselword
 % anstelle von disp rausgeschrieben wird.
 % Sinn:
-% Verschiebung des aktuellen GG-Zustandes können als
-% Anfangsverschiebung für dynamische Rechnungen verwendet werden. 
+% Verschiebung des aktuellen GG-Zustandes koennen als
+% Anfangsverschiebung fuer dynamische Rechnungen verwendet werden.
 
 global u numnp ndf
 
@@ -64,7 +64,7 @@ fprintf(fid,'\n%s\n',keyword);
 for i=1:num_zeilen
   fprintf(fid,'%d,%d',u_0(i,1),u_0(i,2));
   for j=3:num_spalten
-    fprintf(fid,',%0.6e',u_0(i,j));  
+    fprintf(fid,',%0.6e',u_0(i,j));
   end
   fprintf(fid,'\n');
 end

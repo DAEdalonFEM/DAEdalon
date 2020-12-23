@@ -23,14 +23,14 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % clearplot.m
-% - löschen des Plotfensters
+% - loeschen des Plotfensters
 % - defo_flag=0
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,4 +52,4 @@ z_min=1.0e9;
 set(gcf,'NumberTitle','off');                  % HBaa - 2015/11/17
 set(gcf,'Name','DAEdalon Plot-Fenster')
 
-initplot; 
+initplot;

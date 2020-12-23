@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -57,7 +57,7 @@ end
 % Script ausfuehren falls check=1
 if check == 1
     cd post
-    
+
     sys = computer;
     if isunix
         unix(['perl sig_u.pl ',f_in,' ',f_out]);
@@ -67,7 +67,7 @@ if check == 1
         arg = ['perl sig_u.pl ',f_in,' ',f_out];
         sig_u = system(arg);
     end
-    
+
     cd ..
 else
     disp('Script nicht ausgefuehrt!')

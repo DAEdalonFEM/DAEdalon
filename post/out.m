@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -30,16 +30,16 @@
 function out(arg)
 global elem_nr ndm ndf cont_flag cont_mat_node u node
 global tim r numel numnp
-% Ausgabe aller berechneten Größen zum aktuellen Zeitpunkt
+% Ausgabe aller berechneten Groessen zum aktuellen Zeitpunkt
 
 out_value = arg;
 
 % Aufbau von cont_mat_node durch aufruf von projection
 
-% evalin ruft mfiles auf, wobei alle Variablen gültig sind, die auch
-% im workspace verfügbar sind
+% evalin ruft mfiles auf, wobei alle Variablen gueltig sind, die auch
+% im workspace verfuegbar sind
 
-% nicht mehr nötig, da alles in stiffness aufgebaut wird, StE
+% nicht mehr noetig, da alles in stiffness aufgebaut wird, StE
 % 14.03.03
 %if cont_flag ~=1
 %  evalin('base','projection');
@@ -64,9 +64,9 @@ r_size = size(rnode); %= [numnp,ndf];
 
 cont_size = size(cont_mat_node);
 
-% Größe der Matrix out_mat
+% Groesse der Matrix out_mat
 num_zeilen = u_size(1,1);
-num_spalten =1 + ndm + u_size(1,2) + r_size(1,2) + cont_size(1,2); 
+num_spalten =1 + ndm + u_size(1,2) + r_size(1,2) + cont_size(1,2);
 
 out_mat(:,1) =[1:num_zeilen]';
 out_mat(:,2:num_spalten)=[node unode rnode cont_mat_node];
@@ -89,13 +89,13 @@ fprintf(fid,'reac (Spalte %1.0f-%1.0f),  ' ...
 	, hhh,hhh+r_size(1,2)-1);
 hhh = hhh + r_size(1,2);
 fprintf(fid,'epsilon,  sigma,  int.Var (Spalte %1.0f-%1.0f)\n' ...
-	, hhh,hhh+cont_size(1,2)-1); 
+	, hhh,hhh+cont_size(1,2)-1);
 
 % Werte schreiben
 for i=1:num_zeilen
   fprintf(fid,'%d  ',out_mat(i,1));
   for j=2:num_spalten
-    fprintf(fid,'%0.6e  ',out_mat(i,j));  
+    fprintf(fid,'%0.6e  ',out_mat(i,j));
   end
   fprintf(fid,'\n');
 end

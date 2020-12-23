@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -46,9 +46,9 @@
 if (tim ==0)
 
   sDs = 0;
-  bounDisp_treat = 1; 
+  bounDisp_treat = 1;
   load_flag = 0;
-  
+
   stiffness;
   syst;
   dUp = repmat( du, [1,2] );            % init. fuer blockelimination
@@ -71,7 +71,7 @@ disp( sprintf( '\nP''*dUp (csp) : %f (%i)', tmp, csp ) );
 lamK = lam;
 uK = u;
 
-% praediktorschritt: bestimmung des skalierungsfaktors für lastniveau
+% praediktorschritt: bestimmung des skalierungsfaktors fuer lastniveau
 dLam = csp * ds / chk0( norm( dUp(:,1), 2 ) );
 lam = lam + dLam;
 lam0 = lam;

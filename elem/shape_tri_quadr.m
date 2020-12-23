@@ -21,15 +21,15 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_tri_quadr(x,coor)
-%shape-funktion für 6Knoten-Dreieckselemente mit quadratischen Ansaetzen
-%x = globale Koordinaten, coor = isoparam. Koor für akt. GP 
+%shape-funktion fuer 6Knoten-Dreieckselemente mit quadratischen Ansaetzen
+%x = globale Koordinaten, coor = isoparam. Koor fuer akt. GP
 
 % Knotenbezeichung wie in Hughes p.166-169 und Integration mit 3 GPs
 r=coor(1);

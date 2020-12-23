@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -52,16 +52,16 @@ for j = 1:arg
 
   % Outputfiles schreiben
   if (~isempty(out_file_name))
-    out(out_file_name);     
+    out(out_file_name);
   end
-   
+
   if (~isempty(histout_file_name))
-    histout(histout_file_name);     
+    histout(histout_file_name);
   end
 
   % movie files speichern
 %  cla;
 %  evalin('base','meshx;');
-%  evalin('base','movie_array(round(tim/dt)) = getframe;'); 
-  
+%  evalin('base','movie_array(round(tim/dt)) = getframe;');
+
 end

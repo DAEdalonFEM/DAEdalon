@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -41,8 +41,8 @@ figure(fid_dae);
 cont_value = arg1;
 mat_set = arg2;
 
-% evalin ruft mfiles auf, wobei alle Variablen gültig sind, die auch
-% im workspace verfügbar sind
+% evalin ruft mfiles auf, wobei alle Variablen gueltig sind, die auch
+% im workspace verfuegbar sind
 
 % Aufruf von stiffness, durch setzen von mat_set = arg2 werden aber
 % nur die Elemente mit Materialdatensatz mat_set assembliert
@@ -56,17 +56,17 @@ evalin('base','stiffness;');
 
 evalin('base','surf_data=cont_mat_node(:,[cont_value]);');
 
-% Schleife über alle Elemente EINES Datensatzes
+% Schleife ueber alle Elemente EINES Datensatzes
 listlength = mat2el(1,arg2);
 elements = mat2el( 2:listlength+1,arg2);
 for aktele = elements'
 
   % zeichnen der Elemente, ab jetzt durch Aufruf von cont_draw.m
-  evalin('base','cont_draw'); 
-  
+  evalin('base','cont_draw');
+
 end
-  
-  
+
+
 cont_max = max(surf_data);
 cont_min = min(surf_data);
 
@@ -86,7 +86,7 @@ if (ndm==3)
   zlabel('z');
 end
 
-% nochmal aufrufen mit Schleife über alle Materialdatensätze, damit
+% nochmal aufrufen mit Schleife ueber alle Materialdatensaetze, damit
 % alles wieder beim alten ist.
 mat_set=1:nummat;
 evalin('base','stiffness;');

@@ -10,7 +10,7 @@ Element number | Dimensions | Number of nodes | Form | Shape functions | Descrip
 `elem5` | 3D | 4 nodes | Tetrahedral | linear | large strains
 `elem6` | 2D | 6 nodes | Triangle | quadratic | small strains, plane strain derived from 3D formulation
 `elem7` | 3D | 10 nodes | Tetrahedral | quadratic | small strains
-`elem8` | 2D | ?? nodes | Quadrilateral | quadratic | (with reduced (2x2) integration ?!?!)
+`elem8` | 2D | 8 nodes | Quadrilateral | quadratic | (with reduced (2x2) integration)
 `elem10` | 3D | 2 nodes | Truss | linear | small strains
 `elem11` | 3D | 8 nodes | Brick | linear | large strains
 `elem34` | 2D | 6 nodes | Triangle | quadratic | large strains, numerical tangent

@@ -1,3 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                  %
+%    DAEdalon Finite-Element-Project                               %
+%                                                                  %
+%    Copyright 2019 D. Kuechle                                     %
+%    Contact: http://www.daedalon.org                              %
+%                                                                  %
+%                                                                  %
+%    This file is part of DAEdalon.                                %
+%                                                                  %
+%    DAEdalon is free software; you can redistribute it            %
+%    and/or modify it under the terms of the GNU General           %
+%    Public License as published by the Free Software Foundation;  %
+%    either version 2 of the License, or (at your option)          %
+%    any later version.                                            %
+%                                                                  %
+%    DAEdalon is distributed in the hope that it will be           %
+%    useful, but WITHOUT ANY WARRANTY; without even the            %
+%    implied warranty of MERCHANTABILITY or FITNESS FOR A          %
+%    PARTICULAR PURPOSE.  See the GNU General Public License       %
+%    for more details.                                             %
+%                                                                  %
+%    You should have received a copy of the GNU General            %
+%    Public License along with DAEdalon; if not, write to the      %
+%    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
+%    Boston, MA  02111-1307  USA                                   %
+%                                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 function inp_convert()
 
 % Als Funktion implementiert, damit Variablen anschliessend geloescht werden.
@@ -90,7 +120,7 @@ if (isfile([outOrdner,filesep,'node.inp']) ==1 )
 
 end
 
-%ABFRAGE Emodul & nu : Solange bis Werte für Emodul & Poissonszahl i.O.
+%ABFRAGE Emodul & nu : Solange bis Werte fuer Emodul & Poissonszahl i.O.
 while Emod<=Emodmin || nu>numax || nu<numin
 
   prompttxt1 = 'E-Modul E > 0 (Einheiten beachten! Bsp.: mm -> MPa, m -> Pa)';
@@ -190,9 +220,9 @@ while ischar(tline)
         %bis Pause-Zeile (eline)
         if((length(a)>=sline)&&(length(a)<=(eline)))
             count=count+1;
-            %Umschreiben in gekuertztes Array und Kommata löschen
+            %Umschreiben in gekuertztes Array und Kommata loeschen
             m_node{count,1}=strrep(a{length(a),1},',','');
-            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array löschen (z.B 45,46,47,48...)
+            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array loeschen (z.B 45,46,47,48...)
             empt=strfind(m_node{count,1},' ');
             %Engueltige Nodes rausschreiben in Cell-Array
             node{count,1}=m_node{count,1}((empt(1)+1):end) ;
@@ -221,7 +251,7 @@ while ischar(tline)
             count=count+1;
             %Kuerzen des Cell-Arrays a und Kommata loeschen
             m_el{count,1}=strrep(a{length(a),1},',','');
-            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array löschen (z.B 45,46,47,48...)
+            %Voranngestellte Durchnummerierung in erster Spalte des Strings im Array loeschen (z.B 45,46,47,48...)
             empt=strfind( m_el{count,1},' ');
             %Engueltige Nodes rausschreiben in Cell-Array
             el{count,1}=[num2str(material),' ',m_el{count,1}((empt(1)+1):end)];
@@ -270,7 +300,7 @@ fprintf(fid_mat, '%g\t', [se1]); %Zeile 2: Anzahl an Integrationspunkten (Zeile 
 fprintf(fid_mat, '\n');
 fprintf(fid_mat, '%g\t', [4]); %Zeile 3: Fester Wert (Materialanzahl)
 fprintf(fid_mat, '\n');
-fprintf(fid_mat, '%g\t', [0]); %Zeile 4: Fester Wert (Inelastizität)
+fprintf(fid_mat, '%g\t', [0]); %Zeile 4: Fester Wert (Inelastizitaet)
 fprintf(fid_mat, '\n');
 fprintf(fid_mat, '%g\t', [Emod]); %Zeile 5: E-Modul in MPa
 fprintf(fid_mat, '\n');

@@ -21,14 +21,14 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % reac.m
-% Reaktionskräfte mit Pfeilen anzeigen
+% Reaktionskraefte mit Pfeilen anzeigen
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gui
@@ -44,20 +44,19 @@ zcoor=zeros(numnp,1);
 for i=1:numnp
   xcoor(i)=node(i,1)+ defo_flag*defo_scal*unode(i,1);
   ycoor(i)=node(i,2) + defo_flag*defo_scal*unode(i,2);
-  
+
   if ndm == 2
     zcoor(i)=0.0;
     rnode(i,3) = 0.0;
   elseif ndm==3
     zcoor(i)=node(i,3) + defo_flag*defo_scal*unode(i,3);
   end
-  
+
 end %i
 
 % keine Skalierung der Vektoren in quiver3, funktioniert naemlich
 % nicht richtig, sondern von Hand
 max_abs = max([max(abs(rnode)) 1.0E-6]);
 rnode_plt = rnode/max_abs*rand*0.8;               % HBaa - 11.01.2016
-title(['Reaktionskräfte']);
+title(['Reaktionskraefte']);
 quiver3(xcoor,ycoor,zcoor,rnode_plt(:,1),rnode_plt(:,2),rnode_plt(:,3),0,'r')
-  

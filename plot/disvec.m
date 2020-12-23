@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -41,20 +41,20 @@ hold on;
 
 unode=reshape(u,ndf,numnp)';
 
-% Schleife über alle Knoten
+% Schleife ueber alle Knoten
 for aktnode = 1:numnp
   xn = node(aktnode,1);
-  yn = node(aktnode,2);  
+  yn = node(aktnode,2);
   zn = 0.0;
 
   xu = defo_scal*unode(aktnode,1);
-  yu =  defo_scal*unode(aktnode,2);  
+  yu =  defo_scal*unode(aktnode,2);
   zu = 0.0;
   if (ndm==3)
   zu =  defo_scal*unode(aktnode,3);
   end
 
-quiver3(xn,yn,zn,xu,yu,zu,0,'r-')  
+quiver3(xn,yn,zn,xu,yu,zu,0,'r-')
 
 end
 

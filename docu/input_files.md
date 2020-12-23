@@ -26,8 +26,8 @@ The number in the file name will serve as the material set identifier, see first
 Parameter | Description
 --- | ---
 4 | element type, here: `elem4.m`
-4 | number of integration points
-1 | material number, here: `mat1.m`
+4 | number of integration points (only for storage/history/plot reason)
+1 | material model number, here: `mat1.m` (don't confuse with mat1.inp)
 0 | material parameter 1, reserved for inelasticity
 2.1e5 | material parameter 2, here: Young's modulus for `mat1.m`
 0.3 | material parameter 3, here: Poisson ratio for `mat1.m`
@@ -37,7 +37,7 @@ Parameter | Description
 --- | ---
 0 | number of nodes (if zero, nodes will be counted from `nodes.inp`)
 0 | number of elements (if zero, elements will be counted from `el.inp`)
-1 | total number of material sets
+1 | total number of material sets = total number of matX.inp files
 2 | number of physical dimensions
 2 | number of degrees of freedom per node
 4 | number of nodes per element

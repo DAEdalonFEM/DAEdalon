@@ -21,15 +21,15 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_tetra_quadr(x,coor)
-%shape-funktion für 10Knoten-Tetraederelemente mit quadratischen Ansaetzen
-%x = globale Koordinaten, coor = isoparam. Koor für akt. GP 
+%shape-funktion fuer 10Knoten-Tetraederelemente mit quadratischen Ansaetzen
+%x = globale Koordinaten, coor = isoparam. Koor fuer akt. GP
 
 % Knotenbezeichung siehe Wriggers p. 117 und Integration mit 5 GPen
 r=coor(1);
@@ -94,7 +94,7 @@ nshape(10,3)=4.0*s;
 %Berechung dx/dr = sum(dN/dr*x)
 
 x_r=x'*nshape;
-r_x = inv(x_r); 
+r_x = inv(x_r);
 
 % Ableitungen der shapefunctions:
 %dN/dx = dN/dr * dr/dx

@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -35,36 +35,36 @@ if(tim==0)
 
 else
   steps_total = steps_total + 1;
-  
+
   % Output-files schreiben
   if (~isempty(out_file_name) & mod(steps_total,out_incr)==0)
-    out(out_file_name);     
+    out(out_file_name);
   end
-   
+
   if (~isempty(histout_file_name) & mod(steps_total,out_incr)==0)
-    histout(histout_file_name);     
+    histout(histout_file_name);
   end
 
   % Restart-file schreiben
   if (~isempty(rst_file_name) & mod(steps_total,rst_incr)==0)
   rst_write(rst_file_name);
   end
-  
+
    % falls vorhanden fuehre benutzerskript aus
   %if evalin( 'base', 'exist( ''userSkript'', ''var'' )' )
   if (~isempty(userSkript))
   evalin( 'base', userSkript )
   end
-  
+
   % movie array speichern
-  % ansehen der moviez mit dem Befehl movie(movie_array) 
+  % ansehen der moviez mit dem Befehl movie(movie_array)
   if (movie_flag==1)
-    cla; 
+    cla;
     evalin('base','meshx;');
     evalin('base','movie_array(round(tim/dt)) = getframe(gca);');
   end
-  
- 
+
+
 
 end
 

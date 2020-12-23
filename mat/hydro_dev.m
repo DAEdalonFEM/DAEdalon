@@ -21,13 +21,13 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [kugel, deviator] = hydro_dev(tensor)  
+function [kugel, deviator] = hydro_dev(tensor)
 
 % Bestimmung des hydrostischen Anteils und des Deviators von
 % tensor,dabei ist tensor in Vektornotation geschieben:

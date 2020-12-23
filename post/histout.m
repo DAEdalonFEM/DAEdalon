@@ -21,7 +21,7 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
@@ -45,7 +45,7 @@ file_name=strcat('./output/',arg,'_',num2str(ti),'.out');
 % Zusammenbau der Ausgabematrix:
 % (numel x history-variablen*GPs)
 
-% Größe der Matrix out_mat
+% Groesse der Matrix out_mat
 num_zeilen = numel;
 num_spalten = numgp_max*gphist_max + 1;
 
@@ -67,14 +67,14 @@ for iii = 1:numgp_max
 	  ,iii,hhh,hhh+gphist_max-1);
   hhh = hhh + gphist_max;
 end
- 
-fprintf(fid,'\n'); 
+
+fprintf(fid,'\n');
 
 % Werte schreiben
 for i=1:num_zeilen
   fprintf(fid,'%d  ',out_mat(i,1));
   for j=2:num_spalten
-    fprintf(fid,'%0.6e  ',out_mat(i,j));  
+    fprintf(fid,'%0.6e  ',out_mat(i,j));
   end
   fprintf(fid,'\n');
 end

@@ -21,14 +21,14 @@
 %    for more details.                                             %
 %                                                                  %
 %    You should have received a copy of the GNU General            %
-%    Public License along with Foobar; if not, write to the        %
+%    Public License along with DAEdalon; if not, write to the      %
 %    Free Software Foundation, Inc., 59 Temple Place, Suite 330,   %
 %    Boston, MA  02111-1307  USA                                   %
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [shape,dshape,j] = shape_quad_quad(x,coor)
-%shape-funktion für Vierknotenelemente mit lin. Ansaetzen
+%shape-funktion fuer Vierknotenelemente mit lin. Ansaetzen
 
 xsi=coor(1);
 eta=coor(2);
