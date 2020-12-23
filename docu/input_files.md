@@ -13,6 +13,7 @@ Every line of `nodes.inp` represents one node.
 
 ### Element connectivity: `el.inp`
 Every line of `el.inp` represents one element.
+The first column refers to the material input file `matX.inp`.
 
 `material set number` | `first node` | `second node` | ... | `last node`
 --- | --- | --- | --- | ---
