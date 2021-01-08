@@ -32,21 +32,21 @@
 % variablen aus der aktuellen matlab-sitzung zugreifen muessen
 
 % gesamtproblembezogene skalare groessen
-global elem_nr ndf ndm nel numnp numel nummat mat2el;
+global elem_nr ndf ndm nel numnp numel nummat mat2el
 
 % elementbezogene felder
-global shape dshape detvol gpcoor gpweight k_elem r_elem cont_mat_gp aktele;
+global shape dshape detvol gpcoor gpweight k_elem r_elem cont_mat_gp aktele
 
 % gesamtproblembezogene felder und vektoren
-global node el u;
+global node el u
 
 % gesamtproblembezogene parameter zur beschreibung des materialverhaltens
-global mat_nr mat_par;
+global mat_nr mat_par
 
 % zur komunikation zwischen einer funktion und einem skript (bspw. elem4)
 % daten von/zu funktion zu/von skript (fnc<->scr) ; speziell fuer skripts
 % von elemente
-global x u_elem unode shapeGp;
+global x u_elem unode shapeGp
 
 global cont_mat_node cont_value
 global cont_flag
@@ -60,19 +60,20 @@ global elem_nr_matr el2mat surf_value surf_data
 global numgp_max gphist_max hist_old hist_new % fuer histout
 global mat_set
 global contvar
-global sparse_flag;
-global load_flag;
+global sparse_flag
+global load_flag
 global movie_flag
-global defo_scal;
+global loadfactor
+global defo_scal
 global steps_total
 global rst_file_name
-global out_incr rst_incr;
-global userSkript;
-global lam;
-global bounDisp_treat;
-global mat_oct_flag;                      % Projekt WiSe2015 - HBaa
-global pc_environ;                        % HBaa - 14.10.2016
-global dir_trenn;
+global out_incr rst_incr
+global userSkript
+global lam
+global bounDisp_treat
+global mat_oct_flag                      % Projekt WiSe2015 - HBaa
+global pc_environ                        % HBaa - 14.10.2016
+global dir_trenn
 
 % variables for assigning element numbers to element types
 global truss_2

@@ -37,16 +37,16 @@ else
   steps_total = steps_total + 1;
 
   % Output-files schreiben
-  if (~isempty(out_file_name) & mod(steps_total,out_incr)==0)
+  if (~isempty(out_file_name) && mod(steps_total,out_incr)==0)
     out(out_file_name);
   end
 
-  if (~isempty(histout_file_name) & mod(steps_total,out_incr)==0)
+  if (~isempty(histout_file_name) && mod(steps_total,out_incr)==0)
     histout(histout_file_name);
   end
 
   % Restart-file schreiben
-  if (~isempty(rst_file_name) & mod(steps_total,rst_incr)==0)
+  if (~isempty(rst_file_name) && mod(steps_total,rst_incr)==0)
   rst_write(rst_file_name);
   end
 
@@ -64,8 +64,6 @@ else
     evalin('base','movie_array(round(tim/dt)) = getframe(gca);');
   end
 
-
-
 end
 
 tim = tim + dt;
@@ -78,5 +76,13 @@ res_norm = 1.0;
 
 % History-Felder umspeichern:
 hist_old = hist_new;
+
+% Lastfaktor aktualisieren:
+if (load_flag == 1)
+  loadfactor = loadfunc(tim);
+else
+  loadfactor = 1;
+end
+disp(sprintf('Lastfaktor: %8.4f', loadfactor))
 
 % Ende time.m

@@ -60,14 +60,6 @@ cont_norm=1.0E-12*ones(numnp,1);
 
 % Schleife ueber alle Elemente
 
-% Faktor bestimmen mit dem die Randverschiebungen skaliert werden
-if (load_flag==1)
-  loadfactor = loadfunc(tim);
-else
-  loadfactor = 1;
-end
-
-
 % vorgegebene Verschiebungsrandbed. in u einbauen
 %for i=1:displ_len                     % Schleife ueber alle Randverschiebungen
 %  pos=ndf*(displ_node(i)-1)+displ_df(i);% globale Position im GlSyst

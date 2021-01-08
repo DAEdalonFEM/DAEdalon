@@ -27,17 +27,17 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [loadfactor] = loadfunc(tim)
+function [factor] = loadfunc(tim)
 
 % loadfunc.m
 % Funktion, die vorgibt, wie sich die Randlasten/Randverschiebugen
 % in Abhaengigkeit von der Zeit veraendern
 
 % Linear (Standardeinstellung)
-loadfactor = tim;
+factor = tim;
 
 % Sinuskurve:
 %f1 = 100.0;
-%loadfactor = sin(tim/f1*pi);
+%factor = sin(tim/f1*pi);
 
 % Ende loadfunc.m

@@ -35,13 +35,6 @@
 % Zeile komplett ausnullen nur an der Stelle pos eine 1
 
 
-% Faktor bestimmen mit dem die Randverschiebungen skaliert werden
-if (load_flag==1)
-  loadfactor = loadfunc(tim);
-else
-  loadfactor = 1;
-end
-
 % rechte Seite, zusammengesetzt aus Randlasten p und Residuum r
 rhs = -r + loadfactor * lam * p;
 
