@@ -32,7 +32,7 @@
 % initplot.m
 % vor dem ersten Plotten muss 'initplot' aufgerufen werden
 % 'mesh0': Undeformiertes Netz
-% 'meshx': Deformiertes Netz, skaliert mit defo_scal (default = 100)
+% 'meshx': Deformiertes Netz, skaliert mit defo_scal (default = 1)
 % 'nodenum': Knotennummern dranschreiben
 % 'clearplot': Plotfenster loeschen
 % 'dispx': x-Verschiebungen als Kontourplot ausgeben

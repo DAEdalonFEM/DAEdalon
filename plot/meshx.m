@@ -54,7 +54,11 @@ for aktele=1:numel
   end % switch
 end % aktele
 
-title(['Deformiertes Netz']);
+if (defo_scal == 1)
+  title(['Deformiertes Netz']);
+else
+  title([sprintf('Deformiertes Netz, scal = %8.2f', defo_scal)]);
+end
 
 % Achsenbeschriftung
 xlabel('x');
