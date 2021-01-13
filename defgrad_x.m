@@ -30,7 +30,7 @@
 
 function [F] = defgrad_x(u_elem,dshape)
      %Bestimmung des Deformationsgradienten F aus grad(u) in R_x
-% F^(-1) = dX/dx     = Grad(x)
+% F^(-1) = dX/dx     = grad(X)
 %        = d(x-u)/dx
 %        = I - du/dx = I - grad(u)
 
