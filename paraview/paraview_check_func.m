@@ -12,13 +12,13 @@ paracheckfile = strcat('paraview',filesep,'paraview_check.txt');
 
 % Lade paraview_check.txt, oder lege es an (Inhalt: '0'), falls nicht vorhanden.
 try
-    load(paracheckfile);
+    paraview_check = load(paracheckfile);
 catch
     % Setze paraview_check in paraview_check.txt auf '0'
     paraID = fopen(paracheckfile, 'w');
     fprintf(paraID,'0');
     fclose(paraID);
-    load(paracheckfile);
+    paraview_check = load(paracheckfile);
 end
 
 % Pruefen, ob Paraview Config-Ordner vorhanden ist, falls noch nicht getan
