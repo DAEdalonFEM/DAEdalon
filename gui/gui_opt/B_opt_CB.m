@@ -136,12 +136,9 @@ w = ww/2 - 0.1*Bh;
 cT = get(fid_opt,'Color');
 
 % checkbox color
-sys = computer;
 if isunix
     cc = 'w';
-end
-
-if strncmp(sys, 'PC', 2)
+elseif ispc
     cc = cT;
 end
 
@@ -305,7 +302,7 @@ global dt;
 
 global E_dt;
 E_dt = uicontrol(fid_opt,'Style','edit',...
-                         'String',dt,...
+                         'String',num2str(dt),...
                          'BackgroundColor','w');
 
 set(E_dt,'pos',pE_dt)
@@ -342,7 +339,7 @@ global defo_scal;
 
 global E_scal;
 E_scal = uicontrol(fid_opt,'Style','edit',...
-                           'String',defo_scal,...
+                           'String',num2str(defo_scal),...
                            'BackgroundColor','w');
 
 set(E_scal,'pos',pE_scal)
@@ -447,7 +444,7 @@ global out_incr;
 
 global E_oincr;
 E_oincr = uicontrol(fid_opt,'Style','edit',...
-                            'String',out_incr,...
+                            'String',num2str(out_incr),...
                             'BackgroundColor','w');
 
 set(E_oincr,'pos',pE_oincr)
@@ -515,7 +512,7 @@ global rst_incr;
 
 global E_rincr;
 E_rincr = uicontrol(fid_opt,'Style','edit',...
-                            'String',rst_incr,...
+                            'String',num2str(rst_incr),...
                             'BackgroundColor','w');
 
 set(E_rincr,'pos',pE_rincr)
