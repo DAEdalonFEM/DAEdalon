@@ -60,25 +60,25 @@ for i=1:numnp
      y_test = node(i,2) + defo_flag*defo_scal*unode(i,2);
 
      if x_max < x_test;
-     x_max=x_test;
+       x_max=x_test;
      end
-     if x_min >x_test;
-     x_min=x_test;
+     if x_min > x_test;
+       x_min=x_test;
      end
-     if y_max <  y_test;
-     y_max= y_test;
+     if y_max < y_test;
+       y_max=y_test;
      end
-     if y_min >  y_test;
-     y_min= y_test;
+     if y_min > y_test;
+       y_min=y_test;
      end
 
      if ndm==3
        z_test = node(i,3) + defo_flag*defo_scal*unode(i,3);
        if z_max < z_test;
-	 z_max=z_test;
+         z_max=z_test;
        end
-       if z_min >z_test;
-	 z_min=z_test;
+       if z_min > z_test;
+         z_min=z_test;
        end
      end
 end %numnp
@@ -93,23 +93,22 @@ if ndm==2
   axis([xm-lala,xm+lala,ym-lala,ym+lala])
 %  axis([x_min-rand,x_min+diameter+rand,y_min-rand,y_min+diameter+rand])
 %  axis image
-axis square
-
+  axis square
 
 elseif ndm==3
-   diameter=max([x_max-x_min,y_max-y_min,z_max-z_min]);
-   rand=0.1*diameter;
+  diameter=max([x_max-x_min,y_max-y_min,z_max-z_min]);
+  rand=0.1*diameter;
   lala=(diameter+2.0*rand)/2.0;
-   xm = (x_min + x_max)/2.0;
-   ym = (y_min + y_max)/2.0;
-   zm = (z_min + z_max)/2.0;
+  xm = (x_min + x_max)/2.0;
+  ym = (y_min + y_max)/2.0;
+  zm = (z_min + z_max)/2.0;
 
-   axis([xm-lala,xm+lala,ym-lala,ym+lala,zm-lala,zm+lala])
+  axis([xm-lala,xm+lala,ym-lala,ym+lala,zm-lala,zm+lala])
 
-%   axis([x_min-rand,x_min+diameter+rand,y_min-rand,y_min+diameter+rand, ...
-%	 z_min-rand,z_min+diameter+rand	])
+%  axis([x_min-rand,x_min+diameter+rand,y_min-rand,y_min+diameter+rand, ...
+%	 z_min-rand,z_min+diameter+rand])
 
-   view(135,45);
+  view(135,45);
 %   axis image
   axis square
 end
