@@ -2,8 +2,8 @@
 
 The input files are read from the directory `./input`.
 
-### Nodal coordinates: `nodes.inp`
-Every line of `nodes.inp` represents one node.
+### Nodal coordinates: `node.inp`
+Every line of `node.inp` represents one node.
 
 `x-coord` | `y-coord` | `z-coord`
 --- | --- | ---
