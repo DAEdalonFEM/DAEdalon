@@ -74,19 +74,19 @@ for aktele=1:numel
 
 
         case vol_elem  % Volumenelemente
-            if not(isempty(find([[tet_4, tet_10]{:}] == elem_nr)))  % Tetraederelement (4 oder 10 Knoten)
+            if ismember(elem_nr, cell2mat([tet_4, tet_10]))  % Tetraederelement (4 oder 10 Knoten)
                 anz_f = 4;
-            elseif not(isempty(find([brick_8{:}] == elem_nr)))  % Quaderelement
+            elseif ismember(elem_nr, cell2mat(brick_8))      % Quaderelement
                 anz_f = 6;
             end %if
 
-           for k=1:anz_f
-               string = ['patch(''Vertices'',[x_surf,y_surf,z_surf],',...
-              	         '''Faces'',face_surf(',num2str(k),',:),'...
-              	         '''FaceVertexCData'',surf_value,'...
-              	         '''FaceColor'',''interp'')'];
-               evalin('base', string);
-           end %for
+            for k=1:anz_f
+                string = ['patch(''Vertices'',[x_surf,y_surf,z_surf],',...
+                          '''Faces'',face_surf(',num2str(k),',:),'...
+                          '''FaceVertexCData'',surf_value,'...
+                          '''FaceColor'',''interp'')'];
+                evalin('base', string);
+            end %for
 
     end %switch elem_nr
 end %aktele

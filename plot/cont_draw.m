@@ -70,9 +70,9 @@ switch elem_nr
         evalin('base', string);
 
     case vol_elem  % Volumenelemente
-        if not(isempty(find([[tet_4, tet_10]{:}] == elem_nr)))  % Tetraederelement (4 oder 10 Knoten)
+        if ismember(elem_nr, cell2mat([tet_4, tet_10]))  % Tetraederelement (4 oder 10 Knoten)
             anz_f = 4;
-        elseif not(isempty(find([brick_8{:}] == elem_nr)))  % Quaderelement
+        elseif ismember(elem_nr, cell2mat(brick_8))      % Quaderelement
             anz_f = 6;
         end %if
 
