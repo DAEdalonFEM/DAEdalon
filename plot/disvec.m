@@ -58,8 +58,11 @@ quiver3(xn,yn,zn,xu,yu,zu,0,'r-')
 
 end
 
-
-title(['Knotenverschiebungen']);
+if (defo_scal == 1)
+  title(['Knotenverschiebungen']);
+else
+  title([sprintf('Knotenverschiebungen, defo_scal = %8.2f', defo_scal)]);
+end
 
 % Achsenbeschriftung
 xlabel('x');

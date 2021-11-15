@@ -57,7 +57,7 @@ end % aktele
 if (defo_scal == 1)
   title(['Deformiertes Netz']);
 else
-  title([sprintf('Deformiertes Netz, scal = %8.2f', defo_scal)]);
+  title([sprintf('Deformiertes Netz, defo_scal = %8.2f', defo_scal)]);
 end
 
 % Achsenbeschriftung
