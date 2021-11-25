@@ -31,8 +31,8 @@ function [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
     = mat1(mat_par,F,hist_old_gp,hist_user_gp)
 
 
-fall = 'esz'
-%fall = 'evz'
+fall = 'esz';
+%fall = 'evz';
 
 
 % lin. elast Matarialverhalten ESZ oder EVZ 2D
