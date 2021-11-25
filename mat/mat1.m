@@ -30,7 +30,12 @@
 function [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
     = mat1(mat_par,F,hist_old_gp,hist_user_gp)
 
-% lin. elast Matarialverhalten EVZ 2D
+
+fall = 'esz'
+%fall = 'evz'
+
+
+% lin. elast Matarialverhalten ESZ oder EVZ 2D
 % Berechnung des E-tensors (elast. Anteil der Materialtangente)
 %
 % rein:
@@ -54,7 +59,7 @@ hist_new_gp=hist_old_gp;
 nhv=mat_par(1); % Anzahl der History-Variablen pro GP
 Emod=mat_par(2);
 nu=mat_par(3);
-C_el = etensor(Emod,nu);
+C_el = etensor(Emod,nu,fall);
 
 vareps=zeros(3,1);
 D_mat = C_el;

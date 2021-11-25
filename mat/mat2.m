@@ -54,7 +54,7 @@ E=zeros(3,1);
 % Berechnung des E-tensors (elast. Anteil der Materialtangente)
 Emod=mat_par(2);
 nu=mat_par(3);
-C_el = etensor(Emod,nu);
+C_el = etensor(Emod,nu,'evz');
 D_mat = C_el;
 
 % Green-Lagrange-VT: E = 0.5 * ( F^T*F - 1)

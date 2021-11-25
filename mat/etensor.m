@@ -27,14 +27,13 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function d = etensor(E,nu)
-% gibt den E-Tensor fuer EVZ in 2D zurueck
+function d = etensor(E,nu,fall)
+% gibt den E-Tensor fuer ESZ oder EVZ in 2D zurueck
 
-     lambda = nu*E/((1.0+nu)*(1-2.0*nu));
-     mu = E/(2.0*(1.0+nu));
-
-     d = [lambda+2.0*mu lambda 0.0;
-	  lambda lambda+2.0*mu 0.0;
-	  0.0 0.0 mu];
-
-
+     if fall == 'esz'
+        d = [1, nu, 0; nu, 1, 0; 0, 0, (1-nu)/2] * E / (1-nu*nu);
+     elseif fall == 'evz'
+        d = [1-nu, nu, 0; nu, 1-nu, 0; 0, 0, (1-2*nu)/2] * E / ((1+nu)*(1-2*nu));
+     else
+       error('Variable "fall" muss als "esz" oder "evz" angegeben werden!')
+     end
