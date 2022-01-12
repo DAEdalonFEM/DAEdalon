@@ -11,7 +11,7 @@ Command | Description
 `residuum` | calculate the residual $\sqrt{\Delta **u** \cdot \Delta **u**}$
 `time` | increment the time by `dt` (&rarr; increments the boundary displacements and loads, since they are scaled by `tim` (if `load_flag = 1` has been set)). Create output and restart files, execute user scripts, if the necessary variables have been set (see below). The current time is stored in `tim`
 `go` | execute the commands `stiffness`, `syst`, `solv`, `residuum`
-`loop(XX)` | loops over XX time steps. In each time step a maximum of 15 Newton iterations are done. If the tolerance for convergence (1e-10) is reached, the time will be incremented by `dt`, proceeding with the solution of the next time step.
+`loop(XX)` | loops over XX time steps. In each time step a maximum of 15 Newton iterations are done. If the tolerance for convergence (1e-9) is reached, the time will be incremented by `dt`, proceeding with the solution of the next time step.
 `sf` | switches sparse solver on or off
 `lf` | switches scaling of boundary displacements and loads on or off
 `mf` | switch to generate a movie `movie_array` ???
