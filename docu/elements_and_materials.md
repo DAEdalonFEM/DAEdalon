@@ -28,8 +28,10 @@ Element number | Dimensions | Number of nodes | Form | Shape functions | Descrip
 Element number | Dimensions | Number of nodes | Form | Shape functions | Description
 --- | :---: | :---: | --- | --- | ---
 `elem5` | 3D | 4 nodes | Tetrahedral | linear | large strains
+`elem50` | 3D | 4 nodes | Tetrahedral | linear | small strains
 `elem7` | 3D | 10 nodes | Tetrahedral | quadratic | small strains
 `elem11` | 3D | 8 nodes | Brick | linear | large strains
+`elem110` | 3D | 8 nodes | Brick | linear | small strains
 
 ## Available material formulations
 
