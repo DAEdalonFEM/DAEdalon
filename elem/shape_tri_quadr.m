@@ -76,3 +76,6 @@ r_x = inv(x_r); % ohne ^T, getestet 26.02.2002 fuer shape_quad_lin, StE
 %dshape(:,2) = nshape(:,1)*r_x(1,2) + nshape(:,2)*r_x(2,2);
 dshape=nshape*r_x;
 j= det(x_r);
+if j <= 0
+	disp('ACHTUNG: J in Element negativ!')
+end

@@ -62,3 +62,6 @@ xsi_x = inv(x_xsi); % ohne ^T, getestet 26.02.2002 StE
 %dshape(:,2) = nshape(:,1)*xsi_x(1,2) + nshape(:,2)*xsi_x(2,2);
 dshape=nshape*xsi_x;
 j= det(x_xsi);
+if j <= 0
+	disp('ACHTUNG: J in Element negativ!')
+end

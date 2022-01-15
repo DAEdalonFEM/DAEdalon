@@ -103,3 +103,6 @@ r_x = inv(x_r);
 %dshape(:,3) = nshape(:,1)*r_x(1,3) + nshape(:,2)*r_x(2,3) + nshape(:,3)*r_x(3,3);
 dshape=nshape*r_x;
 j= det(x_r);
+if j <= 0
+	disp('ACHTUNG: J in Element negativ!')
+end
