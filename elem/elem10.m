@@ -59,7 +59,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
-%                 in hist_old_elem gespeichert
+%                 in hist_old_elem gespeichert)
 % hist_user_elem = s.o.
 
 
@@ -70,50 +70,44 @@ cont_zaehler=zeros(1,contvar);
 cont_nenner=zeros(nel,1);
 
 
-  % Einlesen der Materialwerte
-  E_mod = mat_par(2);
-  A = mat_par(3);
+% Einlesen der Materialwerte
+E_mod = mat_par(2);
+A = mat_par(3);
 
-  % Berechnung des Einheitsvektors in Axialrichtung
-  % der Elementlaenge
-  t = x(2,:)' - x(1,:)';
-  L = norm(t);
-  t = t/L;
+% Berechnung des Einheitsvektors in Axialrichtung
+% der Elementlaenge
+t = x(2,:)' - x(1,:)';
+L = norm(t);
+t = t/L;
 
-  % Berechnung der lokalen Verschiebung
-  u_axial = (u_elem(2,:) - u_elem(1,:))*t;
+% Berechnung der lokalen Verschiebung
+u_axial = (u_elem(2,:) - u_elem(1,:))*t;
 
-  % Berechnung der Dehnung
-  epsilon = u_axial/L;
+% Berechnung der Dehnung
+epsilon = u_axial/L;
 
-  % Berechnung der Spannung
-  sig = E_mod*epsilon;
+% Berechnung der Spannung
+sig = E_mod*epsilon;
 
-
-  % GP-History-Felder zurueckspeichern
-  hist_new_elem = hist_old_elem;
-  hist_user_elem = hist_user_elem;
+% GP-History-Felder speichern
+hist_new_elem = hist_old_elem;
+hist_user_elem = hist_user_elem;
 
 %  if isw ~= 8   % Aufbau von k_elem und r_elem
+  % Aufstellen von B
+  B = [-t',t']/L;
 
-    % Aufstellen von B
-    B = [-t',t']/L;
-
-    % Zusammenbau von k_elem
-    k_elem = B' * E_mod*A * B * L;
-
-    % und Residuumsvektor r
-    r_elem = B' * sig*A*L;
+  % Zusammenbau von k_elem
+  % und Residuumsvektor r_elem
+  k_elem = B' * E_mod*A * B * L;
+  r_elem = B' * sig*A*L;
 
 %  elseif isw == 8
-    % Aufbau von zaehler und nenner fuer contourplot
-    % Contour-Plotausgabe
-    % Aufbau der Matrix cont_mat_gp:
-    % cont_mat_gp(1): eps_xx; cont_mat_gp(2): sig_xx
-
-    cont_mat_gp(1:2) = [epsilon;sig]';
-    cont_zaehler(1:2)= cont_mat_gp;
-    cont_nenner=1.0;
+  % Aufbau von zaehler und nenner fuer contourplot
+  % Contour-Plotausgabe
+  % Aufbau der Matrix cont_mat_gp:
+  % cont_mat_gp(1): eps_xx ; cont_mat_gp(2): sig_xx
+  cont_mat_gp(1:2) = [epsilon;sig]';
+  cont_zaehler(1:2)= cont_mat_gp;
+  cont_nenner=1.0;
 %  end %if
-
-  %end  % Schleife aktgp

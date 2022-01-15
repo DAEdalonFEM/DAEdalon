@@ -28,17 +28,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [F] = defgrad(u_elem,dshape)
-%Bestimmung des Deformationsgradienten F und der Volumenaenderung J
+%Bestimmung des Deformationsgradienten F
 
 % F = dx/dX
 %   = d(X+u)/dX
 %   = I + du/dX
 
 u_x = u_elem' * dshape;
-F = u_x + eye(2);
-
-% J = dv/dV
-%   = det(dx/dX)
-%   = def(F)
-%J = det(F)
+F = u_x + eye(ndm);
 
