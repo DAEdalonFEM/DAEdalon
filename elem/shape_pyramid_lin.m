@@ -2,7 +2,7 @@
 %                                                                  %
 %    DAEdalon Finite-Element-Project                               %
 %                                                                  %
-%    Copyright 2020 Steven Becker                                  %
+%    Copyright 2022 Steven Becker                                  %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
 %                                                                  %
@@ -27,25 +27,55 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+function [shape,dshape,j] = shape_pyramid_lin(x,coor)
+%Formfunktion fuer 5Knoten-Pyramidenelemente mit linearen Ansaetzen
+%x = globale Koordinaten, coor = isoparam. Koor fuer akt. GP
 
-% Assign element numbers to element types
+% Koordinatenbezeichnung
+r=coor(1);  % xi
+s=coor(2);  % eta
+t=coor(3);  % zeta
 
-% Element type <--> Element numbers (elemXY.m)
+% shapefunctions ausgewertet an der Stelle (xsi,eta,zeta):
+shape(1) = 0.25*(1.0 - r - s - t + r*s/(1-t));
+shape(2) = 0.25*(1.0 + r - s - t - r*s/(1-t));
+shape(3) = 0.25*(1.0 + r + s - t + r*s/(1-t));
+shape(4) = 0.25*(1.0 - r + s - t - r*s/(1-t));
+shape(5) = t;
 
-% Truss elements
-truss_2 = {10};
+% Berechnung dN/dr, dN/ds, dN/dt ...
+% dN(u)/dx = dN(u)/du * du/dx
+nshape(1,1)=0.25*(-1.0 + s/(1-t));
+nshape(1,2)=0.25*(-1.0 + r/(1-t));
+nshape(1,3)=0.25*(-1.0 + r*s/((1-t)**2));
 
-% Surface elements
-triangle_3 = {2,102,333};
-triangle_6 = {3,6,13,23,26,33,34,36,39,86,87,88,89,106};
-quad_4 = {4,14,24,104,444};
-quad_8 = {8};
+nshape(2,1)=0.25*(+1.0 - s/(1-t));
+nshape(2,2)=0.25*(-1.0 - r/(1-t));
+nshape(2,3)=0.25*(-1.0 - r*s/((1-t)**2));
 
-% Volume elements
-tet_4 = {5,50};
-tet_10 = {7};
-brick_8 = {9,11,110};
-pyramid_5 = {15};
+nshape(3,1)=0.25*(+1.0 + s/(1-t));
+nshape(3,2)=0.25*(+1.0 + r/(1-t));
+nshape(3,3)=0.25*(-1.0 + r*s/((1-t)**2));
 
-surf_elem = [triangle_3, triangle_6, quad_4, quad_8];
-vol_elem  = [tet_4, tet_10, brick_8, pyramid_5];
+nshape(4,1)=0.25*(-1.0 - s/(1-t));
+nshape(4,2)=0.25*(+1.0 - r/(1-t));
+nshape(4,3)=0.25*(-1.0 - r*s/((1-t)**2));
+
+nshape(5,1)=0.0
+nshape(5,2)=0.0
+nshape(5,3)=1.0
+
+% Berechnung dx/dr = sum(dN/dr*x)
+x_r=x'*nshape;
+r_x = inv(x_r);
+
+% Ableitungen der shapefunctions:
+%dN/dx = dN/dr * dr/dx
+%dshape(:,1) = nshape(:,1)*r_x(1,1) + nshape(:,2)*r_x(2,1) + nshape(:,3)*r_x(3,1);
+%dshape(:,2) = nshape(:,1)*r_x(1,2) + nshape(:,2)*r_x(2,2) + nshape(:,3)*r_x(3,2);
+%dshape(:,3) = nshape(:,1)*r_x(1,3) + nshape(:,2)*r_x(2,3) + nshape(:,3)*r_x(3,3);
+dshape=nshape*r_x;
+j = det(x_r);
+if j <= 0
+	disp('ACHTUNG: J in Element negativ!')
+end

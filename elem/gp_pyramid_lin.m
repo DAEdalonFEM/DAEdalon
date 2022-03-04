@@ -2,7 +2,7 @@
 %                                                                  %
 %    DAEdalon Finite-Element-Project                               %
 %                                                                  %
-%    Copyright 2020 Steven Becker                                  %
+%    Copyright 2022 Steven Becker                                  %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
 %                                                                  %
@@ -27,25 +27,9 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%Rueckgabe der noetigen GP an denen das Integral ausgewertet wird
 
-% Assign element numbers to element types
+function [gpcoor, gpweight]= gp_pyramid_lin
 
-% Element type <--> Element numbers (elemXY.m)
-
-% Truss elements
-truss_2 = {10};
-
-% Surface elements
-triangle_3 = {2,102,333};
-triangle_6 = {3,6,13,23,26,33,34,36,39,86,87,88,89,106};
-quad_4 = {4,14,24,104,444};
-quad_8 = {8};
-
-% Volume elements
-tet_4 = {5,50};
-tet_10 = {7};
-brick_8 = {9,11,110};
-pyramid_5 = {15};
-
-surf_elem = [triangle_3, triangle_6, quad_4, quad_8];
-vol_elem  = [tet_4, tet_10, brick_8, pyramid_5];
+gpcoor=[0.0, 0.0, 0.25];
+gpweight=[4/3];

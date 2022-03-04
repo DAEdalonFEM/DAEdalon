@@ -78,6 +78,6 @@ global dir_trenn
 % variables for assigning element numbers to element types
 global truss_2
 global triangle_3 triangle_6 quad_4 quad_8
-global tet_4 tet_10 brick_8
+global tet_4 tet_10 brick_8 pyramid_5
 global surf_elem vol_elem
 
