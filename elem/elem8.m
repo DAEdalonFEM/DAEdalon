@@ -60,11 +60,9 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
-%                 in hist_old_elem gespeichert
+%                 in hist_old_elem gespeichert)
 % hist_user_elem = s.o.
 
-
-%sprintf('elem4')
 
 %Initialisierung
 k_elem=zeros(ndf*nel);
@@ -76,54 +74,40 @@ cont_nenner=zeros(nel,1);
 [gpcoor, gpweight] = gp_quad_lin;
 numgp=length(gpweight);
 
-% Schleife ueber alle GPs
+% Schleife ueber alle GP
 for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
-  [shape, dshape, det_X_xsi] = shape_quad_quad(x,gpcoor(aktgp,:));
+  [shape, dshape, detvol] = shape_quad_quad(x,gpcoor(aktgp,:));
 
   % Bestimmung des Deformationsgradienten
-  [F] = defgrad(u_elem,dshape);
+  F = defgrad(u_elem,dshape);
 
-  % GP-History-Felder zusmmenbauen:
+  % GP-History-Felder zusammenbauen
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
 
-  %%%%%%%%%%%%%%%%%%%%%%
-  % Begin Materialaufruf (direkt eingetragen)
-  %%%%%%%%%%%%%%%%%%%%%%
-
-  % Materialname zusammenbasteln
-  %mat_name=strcat('mat',num2str(mat_nr));
-
-  % Anspringen von mat_name
-
-  [sig, vareps, D_mat,hist_new_gp,hist_user_gp] ...
+  % Materialaufruf
+  [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
       = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
-  %%%%%%%%%%%%%%%%%%%%%
-  % Ende Materialaufruf
-  %%%%%%%%%%%%%%%%%%%%%
+  dv = gpweight(aktgp)*detvol;
 
-  dv = gpweight(aktgp)*det_X_xsi;
-
-  % GP-History-Felder zurueckspeichern
+  % GP-History-Felder speichern
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
 %  if isw ~= 8   % Aufbau von k_elem und r_elem
-
     % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.152
     for i=1:nel
       pos = 2*i-1;
-      b(1:3,pos:pos+1)=[dshape(i,1)     0      ;      ...
-			0      dshape(i,2);      ...
-			dshape(i,2) dshape(i,1)];
+      b(1:3,pos:pos+1)=[dshape(i,1)     0          ;...
+                        0               dshape(i,2);...
+                        dshape(i,2)     dshape(i,1)];
     end % i
 
     % Zusammenbau von k_elem = b^t*D_mat*b*dv
-    % und Residuumsvektor r = b^T * sigma
-
+    % und Residuumsvektor r_elem = b^T * sigma
     k_elem = k_elem + b' * D_mat * b * dv;
     r_elem = r_elem + b' * sig * dv;
 
@@ -132,14 +116,9 @@ for aktgp=1:numgp
     % Contour-Plotausgabe
     % Aufbau der Matrix cont_mat_gp:
     % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6: sig_x,sig_y,sig_xy
-
     cont_mat_gp(1:6+mat_par(1)) = [vareps;sig;hist_new_gp]';
-
-    cont_zaehler(:,1:6+mat_par(1))=cont_zaehler(:,1:6+mat_par(1)) ...
-	+shape'.*shape'*cont_mat_gp*dv;
+    cont_zaehler(:,1:6+mat_par(1))=cont_zaehler(:,1:6+mat_par(1))+shape'.*shape'*cont_mat_gp*dv;
     cont_nenner=cont_nenner+shape'.*shape'*dv;
-
 %  end %if
 
 end  % Schleife aktgp
-

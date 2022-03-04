@@ -2,7 +2,9 @@
 %                                                                  %
 %    DAEdalon Finite-Element-Project                               %
 %                                                                  %
-%    Copyright 2003 Steffen Eckert                                 %
+%    Copyright 2002 Steffen Eckert/Oliver Goy                      %
+%              2015 Herbert Baaser @ FH Bingen                     %
+%              2022 Steven Becker                                  %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
 %                                                                  %
@@ -29,11 +31,12 @@
 
 function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 	  hist_new_elem, hist_user_elem] = ...
-    elem2(isw, nel, ndf, contvar, mat_name, mat_par, x, u_elem, ...
+    elem50(isw, nel, ndf, contvar, mat_name, mat_par, x, u_elem, ...
 	  hist_old_elem, hist_user_elem)
 
-% Dreieckselement mit 3 Knoten und linearen Ansatzfuntionen
+% Tetraederelement mit 4 Knoten und linearen Ansatzfuntionen
 % kleine Defos
+% Aufruf von 3-D Materialgesetz
 %
 % rein:
 % isw = switch, if isw==8 dann Aufbau der Contourmatrix, sonst
@@ -70,14 +73,14 @@ cont_zaehler=zeros(nel,contvar);
 cont_nenner=zeros(nel,1);
 
 % Auslesen der Gausspunkte und der Gewichte
-[gpcoor, gpweight] = gp_tri_lin;
+[gpcoor, gpweight] = gp_tetra_lin;
 numgp=length(gpweight);
 
 % Schleife ueber alle GP
 for aktgp=1:numgp
 
   %Auslesen der shape-functions und Ableitungen, sowie det(dx/dxi)
-  [shape, dshape, detvol] = shape_tri_lin(x,gpcoor(aktgp,:));
+  [shape, dshape, detvol] = shape_tetra_lin(x,gpcoor(aktgp,:));
 
   % Bestimmung des Deformationsgradienten
   F = defgrad(u_elem,dshape);
@@ -96,28 +99,29 @@ for aktgp=1:numgp
   hist_new_elem(:,aktgp) = hist_new_gp;
   hist_user_elem(:,aktgp) = hist_user_gp;
 
-%  if isw ~= 8   % Aufbau von k_elem und r_elem
-    % Aufstellen von b = [b_1, ...  ,b_nele] siehe Hughes p.152
-    for i=1:nel
-      pos = 2*i-1;
-      b(1:3,pos:pos+1)=[dshape(i,1)     0          ;...
-                        0               dshape(i,2);...
-                        dshape(i,2)     dshape(i,1)];
-    end % i
+  % Aufstellen von b = [b_1, ... ,b_nel] siehe Hughes p.87/152
+  for i=1:nel
+    pos = (i-1)*3 + 1;  % 1, 4, 7, ...
+    b(1:6,pos:pos+2)=[dshape(i,1)  0            0          ;  ...
+                      0            dshape(i,2)  0          ;  ...
+                      0            0            dshape(i,3);  ...
+                      dshape(i,2)  dshape(i,1)  0          ;  ...
+                      0            dshape(i,3)  dshape(i,2);  ...
+                      dshape(i,3)  0            dshape(i,1)];
+  end % i
 
-    % Zusammenbau von k_elem = b^t*D_mat*b*dv
-    % und Residuumsvektor r_elem = b^T * sigma
-    k_elem = k_elem + b' * D_mat * b * dv;
-    r_elem = r_elem + b' * sig * dv;
+  % Zusammenbau von k_elem = b^t*D_mat*b*dv
+  % und Residuumsvektor r_elem = b^T * sigma
+  k_elem = k_elem + b' * D_mat * b * dv;
+  r_elem = r_elem + b' * sig * dv;
 
-%  elseif isw == 8
-    % Aufbau von zaehler und nenner fuer contourplot
-    % Contour-Plotausgabe
-    % Aufbau der Matrix cont_mat_gp:
-    % Spalte 1-3: eps_x,eps_y,eps_xy ; Spalte 4-6: sig_x,sig_y,sig_xy
-    cont_mat_gp(1:6) = [vareps;sig]';
-    cont_zaehler(:,1:6)=cont_zaehler(:,1:6)+shape'.*shape'*cont_mat_gp*dv;
-    cont_nenner=cont_nenner+shape'.*shape'*dv;
-%  end %if
+  % Aufbau von zaehler und nenner fuer contourplot
+  % Contour-Plotausgabe
+  % Aufbau der Matrix cont_mat_gp:
+  % Spalte 1-6: eps_x,eps_y,eps_z,eps_xy,... ;
+  % Spalte 7-12: sig_x,sig_y,sig_z,sig_xy,...
+  cont_mat_gp(1:12) = [vareps;sig]';
+  cont_zaehler(:,1:12)=cont_zaehler(:,1:12)+shape'.*shape'*cont_mat_gp*dv;
+  cont_nenner=cont_nenner+shape'.*shape'*dv;
 
 end  % Schleife aktgp

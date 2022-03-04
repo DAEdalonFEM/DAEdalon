@@ -12,7 +12,7 @@ Befehl | Beschreibung
 `residuum` | Berechnung des Residuums $\sqrt{\Delta **u** \cdot \Delta **u**}$
 `time` | Zeit um das Zeitinkrement `dt` inkrementieren (&rarr; Inkrementieren der Randverschiebungen, -lasten, da diese mit `tim` skaliert werden (sofern `load_flag = 1` gesetzt ist)). Erzeugen von Ausgabe- und Restartfiles sowie Ausführen von User-Scripts, falls die notwendigen Variablen zugewiesen sind. Die aktuelle Zeit wird in `tim` gespeichert.
 `go` | Ausführen der Befehle `stiffness`, `syst`, `solv`, `residuum`
-`loop(XX)` | Führt XX Zeitschritte durch. Innerhalb des Zeitschrittes werden maximal 15 Newton-Iterationen ausgeführt. Sobald das Residuum < 1e-10 ist, wird die Zeit um `dt` inkrementiert und das neue Gleichgewicht ausiteriert
+`loop(XX)` | Führt XX Zeitschritte durch. Innerhalb des Zeitschrittes werden maximal 15 Newton-Iterationen ausgeführt. Sobald das Residuum < 1e-9 ist, wird die Zeit um `dt` inkrementiert und das neue Gleichgewicht ausiteriert
 `sf` | Schaltet den Sparse-Solver ein bzw. aus
 `lf` | Schaltet die Skalierung der Randlasten und -verschiebungen mit der Zeit ein bzw. aus
 `mf` | Schalter zum Rausschreiben eines Movies in `movie_array`

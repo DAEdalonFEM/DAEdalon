@@ -72,5 +72,5 @@ r_x = inv(x_r);
 dshape=nshape*r_x;
 j = det(x_r);
 if j <= 0
-	disp('ACHTUNG J in Element negativ !')
+	disp('ACHTUNG: J in Element negativ!')
 end
