@@ -42,9 +42,9 @@ quad_4 = {4,14,24,104,444};
 quad_8 = {8};
 
 % Volume elements
-tet_4 = {5};
+tet_4 = {5,50};
 tet_10 = {7};
-brick_8 = {9, 11};
+brick_8 = {9,11,110};
 pyramid_5 = {15};
 
 surf_elem = [triangle_3, triangle_6, quad_4, quad_8];

@@ -87,19 +87,35 @@ elseif ndf==3
 end
 
 %Schreiben der Kraftrandbedingungen
-if force_len > 0
-  % Kraft_RB initialisieren
-  Kraft_RB = zeros(numnp,3);
-  % force ist gespeichert als (Knoten, FHG, Kraftwert).
-  % Kraft_RB mit diesen Werten fuellen
-  for i=1:force_len
-    Kraft_RB(force(i,1),force(i,2)) = force(i,3);
-  end
-  % Eintraege von Kraft_RB hintereiander als Vektor darstellen.
-  % Dazu muss Kraft_RB transponiert werden
-  Kraft_RB = reshape(Kraft_RB',[],1);
-  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Kraft_RB" NumberOfComponents="3" format="ascii">');
-  fprintf(fid,'%f ',Kraft_RB);
+% Kraft_RB initialisieren
+Kraft_RB = zeros(numnp,3);
+% force ist gespeichert als (Knoten, FHG, Kraftwert).
+% Kraft_RB mit diesen Werten fuellen
+for i=1:force_len
+  Kraft_RB(force(i,1),force(i,2)) = force(i,3);
+end
+% Eintraege von Kraft_RB hintereiander als Vektor darstellen.
+% Dazu muss Kraft_RB transponiert werden
+Kraft_RB = reshape(Kraft_RB',[],1);
+fprintf(fid,'%s\n','<DataArray type="Float64" Name="Kraft_RB" NumberOfComponents="3" format="ascii">');
+fprintf(fid,'%f ',Kraft_RB);
+fprintf(fid,'\n%s\n','</DataArray>');
+
+%Schreiben der Reaktionskraft (wird immer mit drei Komponenten ausgegeben!)
+%(r abzueglich der Kraftrandbedingungen entspricht den Reaktionskraeften an den Lagerstellen)
+if ndf==2
+  % Das Array r enthaelt nur Eintraege fuer die x- und die y-Komponente,
+  % daher wird r um die fehlende 3. Vektorkomponente erweitert.
+  r_tmp = reshape(r,ndf,numnp);           % r in die Form (ndf x numnp) bringen und als r_tmp abspeichern
+  r_tmp = cat(1, r_tmp, zeros(1,numnp));  % Die fehlende dritte Dimension an r_tmp anhaengen, d.h. eine dritte Zeile ans Ende von r_tmp anhaengen, die numnp Spalten hat
+  r_tmp = reshape(r_tmp, [], 1);          % r_tmp in die Form eines Vektors mit 3*numnp Eintraegen bringen
+  
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Reaktionskraft" NumberOfComponents="3" format="ascii">');
+  fprintf(fid,'%f ',r_tmp-Kraft_RB);
+  fprintf(fid,'\n%s\n','</DataArray>');
+elseif ndf==3
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Reaktionskraft" NumberOfComponents="3" format="ascii">');
+  fprintf(fid,'%f ',r-Kraft_RB);
   fprintf(fid,'\n%s\n','</DataArray>');
 end
 
