@@ -167,6 +167,9 @@ elseif ndm==3
     % lin. Tet
     elseif nel==4
         vtktype=10;
+    % lin. Pyramide
+    elseif nel==5
+        vtktype=14;
     % lin. Hex
     elseif nel==8
         vtktype=12;

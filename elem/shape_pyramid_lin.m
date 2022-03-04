@@ -2,7 +2,7 @@
 %                                                                  %
 %    DAEdalon Finite-Element-Project                               %
 %                                                                  %
-%    Copyright 2002/2003 Steffen Eckert                            %
+%    Copyright 2022 Steven Becker                                  %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
 %                                                                  %
@@ -27,57 +27,55 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% setGloVar.m
-% wird von verschiedenen funtionen benutzt, die auf unten stehende
-% variablen aus der aktuellen matlab-sitzung zugreifen muessen
+function [shape,dshape,j] = shape_pyramid_lin(x,coor)
+%Formfunktion fuer 5Knoten-Pyramidenelemente mit linearen Ansaetzen
+%x = globale Koordinaten, coor = isoparam. Koor fuer akt. GP
 
-% gesamtproblembezogene skalare groessen
-global elem_nr ndf ndm nel numnp numel nummat mat2el
+% Koordinatenbezeichnung
+r=coor(1);  % xi
+s=coor(2);  % eta
+t=coor(3);  % zeta
 
-% elementbezogene felder
-global shape dshape detvol gpcoor gpweight k_elem r_elem cont_mat_gp aktele
+% shapefunctions ausgewertet an der Stelle (xsi,eta,zeta):
+shape(1) = 0.25*(1.0 - r - s - t + r*s/(1-t));
+shape(2) = 0.25*(1.0 + r - s - t - r*s/(1-t));
+shape(3) = 0.25*(1.0 + r + s - t + r*s/(1-t));
+shape(4) = 0.25*(1.0 - r + s - t - r*s/(1-t));
+shape(5) = t;
 
-% gesamtproblembezogene felder und vektoren
-global node el u
+% Berechnung dN/dr, dN/ds, dN/dt ...
+% dN(u)/dx = dN(u)/du * du/dx
+nshape(1,1)=0.25*(-1.0 + s/(1-t));
+nshape(1,2)=0.25*(-1.0 + r/(1-t));
+nshape(1,3)=0.25*(-1.0 + r*s/((1-t)**2));
 
-% gesamtproblembezogene parameter zur beschreibung des materialverhaltens
-global mat_nr mat_par
+nshape(2,1)=0.25*(+1.0 - s/(1-t));
+nshape(2,2)=0.25*(-1.0 - r/(1-t));
+nshape(2,3)=0.25*(-1.0 - r*s/((1-t)**2));
 
-% zur komunikation zwischen einer funktion und einem skript (bspw. elem4)
-% daten von/zu funktion zu/von skript (fnc<->scr) ; speziell fuer skripts
-% von elemente
-global x u_elem unode shapeGp
+nshape(3,1)=0.25*(+1.0 + s/(1-t));
+nshape(3,2)=0.25*(+1.0 + r/(1-t));
+nshape(3,3)=0.25*(-1.0 + r*s/((1-t)**2));
 
-global cont_mat_node cont_value
-global cont_flag
-global resid res_norm tim
-global cont_mat_node
-global dt dt_new
-global r
-global vers_nr
-global out_file_name histout_file_name
-global elem_nr_matr el2mat surf_value surf_data
-global numgp_max gphist_max hist_old hist_new % fuer histout
-global mat_set
-global contvar
-global sparse_flag
-global load_flag
-global movie_flag
-global loadfactor
-global defo_scal
-global steps_total
-global rst_file_name
-global out_incr rst_incr
-global userSkript
-global lam
-global bounDisp_treat
-global mat_oct_flag                      % Projekt WiSe2015 - HBaa
-global pc_environ                        % HBaa - 14.10.2016
-global dir_trenn
+nshape(4,1)=0.25*(-1.0 - s/(1-t));
+nshape(4,2)=0.25*(+1.0 - r/(1-t));
+nshape(4,3)=0.25*(-1.0 - r*s/((1-t)**2));
 
-% variables for assigning element numbers to element types
-global truss_2
-global triangle_3 triangle_6 quad_4 quad_8
-global tet_4 tet_10 brick_8 pyramid_5
-global surf_elem vol_elem
+nshape(5,1)=0.0
+nshape(5,2)=0.0
+nshape(5,3)=1.0
 
+% Berechnung dx/dr = sum(dN/dr*x)
+x_r=x'*nshape;
+r_x = inv(x_r);
+
+% Ableitungen der shapefunctions:
+%dN/dx = dN/dr * dr/dx
+%dshape(:,1) = nshape(:,1)*r_x(1,1) + nshape(:,2)*r_x(2,1) + nshape(:,3)*r_x(3,1);
+%dshape(:,2) = nshape(:,1)*r_x(1,2) + nshape(:,2)*r_x(2,2) + nshape(:,3)*r_x(3,2);
+%dshape(:,3) = nshape(:,1)*r_x(1,3) + nshape(:,2)*r_x(2,3) + nshape(:,3)*r_x(3,3);
+dshape=nshape*r_x;
+j = det(x_r);
+if j <= 0
+	disp('ACHTUNG J in Element negativ !')
+end

@@ -45,6 +45,7 @@ quad_8 = {8};
 tet_4 = {5};
 tet_10 = {7};
 brick_8 = {9, 11};
+pyramid_5 = {15};
 
 surf_elem = [triangle_3, triangle_6, quad_4, quad_8];
-vol_elem  = [tet_4, tet_10, brick_8];
+vol_elem  = [tet_4, tet_10, brick_8, pyramid_5];

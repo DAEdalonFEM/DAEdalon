@@ -2,7 +2,7 @@
 %                                                                  %
 %    DAEdalon Finite-Element-Project                               %
 %                                                                  %
-%    Copyright 2002/2003 Steffen Eckert                            %
+%    Copyright 2022 Steven Becker                                  %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
 %                                                                  %
@@ -27,57 +27,9 @@
 %                                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% setGloVar.m
-% wird von verschiedenen funtionen benutzt, die auf unten stehende
-% variablen aus der aktuellen matlab-sitzung zugreifen muessen
+%Rueckgabe der noetigen GP an denen das Integral ausgewertet wird
 
-% gesamtproblembezogene skalare groessen
-global elem_nr ndf ndm nel numnp numel nummat mat2el
+function [gpcoor, gpweight]= gp_pyramid_lin
 
-% elementbezogene felder
-global shape dshape detvol gpcoor gpweight k_elem r_elem cont_mat_gp aktele
-
-% gesamtproblembezogene felder und vektoren
-global node el u
-
-% gesamtproblembezogene parameter zur beschreibung des materialverhaltens
-global mat_nr mat_par
-
-% zur komunikation zwischen einer funktion und einem skript (bspw. elem4)
-% daten von/zu funktion zu/von skript (fnc<->scr) ; speziell fuer skripts
-% von elemente
-global x u_elem unode shapeGp
-
-global cont_mat_node cont_value
-global cont_flag
-global resid res_norm tim
-global cont_mat_node
-global dt dt_new
-global r
-global vers_nr
-global out_file_name histout_file_name
-global elem_nr_matr el2mat surf_value surf_data
-global numgp_max gphist_max hist_old hist_new % fuer histout
-global mat_set
-global contvar
-global sparse_flag
-global load_flag
-global movie_flag
-global loadfactor
-global defo_scal
-global steps_total
-global rst_file_name
-global out_incr rst_incr
-global userSkript
-global lam
-global bounDisp_treat
-global mat_oct_flag                      % Projekt WiSe2015 - HBaa
-global pc_environ                        % HBaa - 14.10.2016
-global dir_trenn
-
-% variables for assigning element numbers to element types
-global truss_2
-global triangle_3 triangle_6 quad_4 quad_8
-global tet_4 tet_10 brick_8 pyramid_5
-global surf_elem vol_elem
-
+gpcoor=[0.0, 0.0, 0.25];
+gpweight=[4/3];
