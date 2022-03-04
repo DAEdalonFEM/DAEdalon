@@ -5,6 +5,7 @@
 %    Copyright 2022 Steven Becker                                  %
 %    Contact: http://www.daedalon.org                              %
 %                                                                  %
+%                                                                  %
 %    This file is part of DAEdalon.                                %
 %                                                                  %
 %    DAEdalon is free software; you can redistribute it            %
@@ -33,6 +34,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 
 % 5-Knoten Pyramidenelement mit tri-linearen Ansatzfuntionen
 % kleine Defos
+% Aufruf von 3-D Materialgesetz
 %
 % rein:
 % isw = switch, if isw==8 dann Aufbau der Contourmatrix, sonst
@@ -58,7 +60,7 @@ function [k_elem, r_elem, cont_zaehler, cont_nenner, ...
 % cont_nenner = Vektor zum Normieren vom globalen cont_zaehler
 %               siehe projection.m
 % hist_new_elem = aktualisierte Werte (sind im naechsten Zeitschritt
-%                 in hist_old_elem gespeichert
+%                 in hist_old_elem gespeichert)
 % hist_user_elem = s.o.
 
 
@@ -79,15 +81,15 @@ for aktgp=1:numgp
   [shape, dshape, detvol] = shape_pyramid_lin(x,gpcoor(aktgp,:));
 
   % Bestimmung des Deformationsgradienten
-  F = defgrad_3d(u_elem,dshape);
+  F = defgrad(u_elem,dshape);
 
-  % GP-History-Felder zusammenbauen:
+  % GP-History-Felder zusammenbauen
   hist_old_gp = hist_old_elem(:,aktgp);
   hist_user_gp = hist_user_elem(:,aktgp);
 
   % Materialaufruf
-  [sig, vareps, D_mat,hist_new_gp,hist_user_gp] ...
-         = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
+  [sig,vareps,D_mat,hist_new_gp,hist_user_gp] ...
+      = feval(mat_name,mat_par,F,hist_old_gp,hist_user_gp);
 
   dv = gpweight(aktgp)*detvol;
 
@@ -121,4 +123,3 @@ for aktgp=1:numgp
   cont_nenner=cont_nenner+shape'.*shape'*dv;
 
 end  % Schleife aktgp
-

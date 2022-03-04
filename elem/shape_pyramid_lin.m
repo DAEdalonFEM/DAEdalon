@@ -61,9 +61,9 @@ nshape(4,1)=0.25*(-1.0 - s/(1-t));
 nshape(4,2)=0.25*(+1.0 - r/(1-t));
 nshape(4,3)=0.25*(-1.0 - r*s/((1-t)**2));
 
-nshape(5,1)=0.0
-nshape(5,2)=0.0
-nshape(5,3)=1.0
+nshape(5,1)=0.0;
+nshape(5,2)=0.0;
+nshape(5,3)=1.0;
 
 % Berechnung dx/dr = sum(dN/dr*x)
 x_r=x'*nshape;
