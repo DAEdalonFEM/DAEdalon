@@ -61,7 +61,7 @@ end
 if (defo_scal == 1)
   title(['Knotenverschiebungen']);
 else
-  title([sprintf('Knotenverschiebungen, defo_scal = %8.2f', defo_scal)]);
+  title([sprintf('Knotenverschiebungen, defo\\_scal = %8.2f', defo_scal)]);
 end
 
 % Achsenbeschriftung
