@@ -68,9 +68,9 @@ fprintf(fid,'%f ',u);
 fprintf(fid,'\n%s\n','</DataArray>');
 
 %Schreiben der Dehnungen und Spannungen
-%Ermittlung, dass es sich nicht um Stabelemente, sondern um Kontinuumselemente handelt
+%Ermittlung, ob es sich um Kontinuumselemente handelt
 %(Abfrage klappt nur, solange das Beispiel ausschliesslich durch eine Art von Element aufgebaut ist)
-if ~ismember(elem_nr_matr, cell2mat(truss_2))
+if ismember(elem_nr_matr, cell2mat([surf_elem, vol_elem]))
   if ndf==2
     fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="3" format="ascii">');
     fprintf(fid,'%f ',cont_mat_node(:,1:3)');
