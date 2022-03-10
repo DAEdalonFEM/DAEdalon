@@ -68,22 +68,26 @@ fprintf(fid,'%f ',u);
 fprintf(fid,'\n%s\n','</DataArray>');
 
 %Schreiben der Dehnungen und Spannungen
-if ndf==2
-  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="3" format="ascii">');
-  fprintf(fid,'%f ',cont_mat_node(:,1:3)');
-  fprintf(fid,'\n%s\n','</DataArray>');
+%Ermittlung, dass es sich nicht um Stabelemente, sondern um Kontinuumselemente handelt
+%(Abfrage klappt nur, solange das Beispiel ausschliesslich durch eine Art von Element aufgebaut ist)
+if ~ismember(elem_nr_matr, cell2mat(truss_2))
+  if ndf==2
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="3" format="ascii">');
+    fprintf(fid,'%f ',cont_mat_node(:,1:3)');
+    fprintf(fid,'\n%s\n','</DataArray>');
 
-  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="3" format="ascii">');
-  fprintf(fid,'%f ',cont_mat_node(:,4:6)');
-  fprintf(fid,'\n%s\n','</DataArray>');
-elseif ndf==3
-  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="6" format="ascii">');
-  fprintf(fid,'%f ',cont_mat_node(:,1:6)');
-  fprintf(fid,'\n%s\n','</DataArray>');
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="3" format="ascii">');
+    fprintf(fid,'%f ',cont_mat_node(:,4:6)');
+    fprintf(fid,'\n%s\n','</DataArray>');
+  elseif ndf==3
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="6" format="ascii">');
+    fprintf(fid,'%f ',cont_mat_node(:,1:6)');
+    fprintf(fid,'\n%s\n','</DataArray>');
 
-  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="6" format="ascii">');
-  fprintf(fid,'%f ',cont_mat_node(:,7:12)');
-  fprintf(fid,'\n%s\n','</DataArray>');
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="6" format="ascii">');
+    fprintf(fid,'%f ',cont_mat_node(:,7:12)');
+    fprintf(fid,'\n%s\n','</DataArray>');
+  end
 end
 
 %Schreiben der Kraftrandbedingungen
@@ -109,7 +113,7 @@ if ndf==2
   r_tmp = reshape(r,ndf,numnp);           % r in die Form (ndf x numnp) bringen und als r_tmp abspeichern
   r_tmp = cat(1, r_tmp, zeros(1,numnp));  % Die fehlende dritte Dimension an r_tmp anhaengen, d.h. eine dritte Zeile ans Ende von r_tmp anhaengen, die numnp Spalten hat
   r_tmp = reshape(r_tmp, [], 1);          % r_tmp in die Form eines Vektors mit 3*numnp Eintraegen bringen
-  
+
   fprintf(fid,'%s\n','<DataArray type="Float64" Name="Reaktionskraft" NumberOfComponents="3" format="ascii">');
   fprintf(fid,'%f ',r_tmp-Kraft_RB);
   fprintf(fid,'\n%s\n','</DataArray>');
@@ -205,6 +209,25 @@ fprintf(fid,'%i ',type);
 fprintf(fid,'\n%s\n','</DataArray>');
 
 fprintf(fid,'%s\n','</Cells>');
+
+%Stabdehnungen und -spannungen als (diskrete) elementbezogene Groessen herausschreiben, statt (kontinuierlich) knotenbezogen.
+%Ermittlung, ob es sich um ein Stabbeispiel handelt
+%(Abfrage klappt nur, solange das Beispiel ausschliesslich durch eine Art von Element aufgebaut ist)
+if ismember(elem_nr_matr, cell2mat(truss_2))
+  %CellData oeffnen
+  fprintf(fid,'%s\n','<CellData>');
+  %DataArray Dehnungen
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="1" format="ascii">');
+  fprintf(fid,'%f ',cont_mat_node(:,1)');
+  fprintf(fid,'\n%s\n','</DataArray>');
+  %DataArray Dehnungen
+  fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="1" format="ascii">');
+  fprintf(fid,'%f ',cont_mat_node(:,2)');
+  fprintf(fid,'\n%s\n','</DataArray>');
+  %CellData schliessen
+  fprintf(fid,'%s\n','</CellData>');
+end
+
 fprintf(fid,'%s\n','</Piece>');
 fprintf(fid,'%s\n','</UnstructuredGrid>');
 fprintf(fid,'%s\n','</VTKFile>');
