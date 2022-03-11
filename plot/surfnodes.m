@@ -80,6 +80,24 @@ switch elem_nr
 
         face_surf=[1 2 3; 2 1 4; 3 4 1; 4 3 2];
 
+    case pyramid_5  % Pyramidenelement (5 Knoten)
+        nr_vert = 5;
+
+        x_surf=node(el(aktele,1:nr_vert),1)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nr_vert),1);
+
+        y_surf=node(el(aktele,1:nr_vert),2)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nr_vert),2);
+
+        z_surf=node(el(aktele,1:nr_vert),3)+ ...
+               defo_flag*defo_scal*unode(el(aktele,1:nr_vert),3);
+
+        surf_value = surf_data(el(aktele,1:nr_vert));
+
+        % Da es Flaechen mit 3 und 4 Knoten gibt, brauchen die Flaechen mit 3 Knoten
+        % im Array noch einen vierten Eintrag. Hier wird einfach der erste Eintrag am Ende wiederholt.
+        face_surf=[1 2 3 4; 2 1 5 2; 3 2 5 3; 4 3 5 4; 1 4 5 1];
+
     case brick_8  % Quaderelement (8 Knoten)
         x_surf=node(el(aktele,1:nel),1)+ ...
                defo_flag*defo_scal*unode(el(aktele,1:nel),1);
