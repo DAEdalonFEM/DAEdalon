@@ -51,7 +51,7 @@ for aktele=1:numel
     evalin('base','surfnodes');
 
     len = size(x_surf);
-    surf_value = repmat(mat_nr,len,1);
+    surf_value = repmat(mat_nr,len);
 
     % Element zeichnen
     switch elem_nr
@@ -76,7 +76,7 @@ for aktele=1:numel
         case vol_elem  % Volumenelemente
             if ismember(elem_nr, cell2mat([tet_4, tet_10]))  % Tetraederelement (4 oder 10 Knoten)
                 anz_f = 4;
-	    elseif ismember(elem_nr, cell2mat(pyramid_5))    % Pyramidenelement
+            elseif ismember(elem_nr, cell2mat(pyramid_5))    % Pyramidenelement
                 anz_f = 5;
             elseif ismember(elem_nr, cell2mat(brick_8))      % Quaderelement
                 anz_f = 6;
