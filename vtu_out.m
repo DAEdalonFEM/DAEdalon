@@ -72,19 +72,19 @@ fprintf(fid,'\n%s\n','</DataArray>');
 %(Abfrage klappt nur, solange das Beispiel ausschliesslich durch eine Art von Element aufgebaut ist)
 if ismember(elem_nr_matr, cell2mat([surf_elem, vol_elem]))
   if ndf==2
-    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="3" format="ascii">');
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="3" ComponentName0="eps_xx" ComponentName1="eps_yy" ComponentName2="2*eps_xy" format="ascii">');
     fprintf(fid,'%f ',cont_mat_node(:,1:3)');
     fprintf(fid,'\n%s\n','</DataArray>');
 
-    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="3" format="ascii">');
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="3" ComponentName0="sig_xx" ComponentName1="sig_yy" ComponentName2="sig_xy" format="ascii">');
     fprintf(fid,'%f ',cont_mat_node(:,4:6)');
     fprintf(fid,'\n%s\n','</DataArray>');
   elseif ndf==3
-    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="6" format="ascii">');
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="6" ComponentName0="eps_xx" ComponentName1="eps_yy" ComponentName2="eps_zz" ComponentName3="2*eps_xy" ComponentName4="2*eps_yz" ComponentName5="2*eps_xz" format="ascii">');
     fprintf(fid,'%f ',cont_mat_node(:,1:6)');
     fprintf(fid,'\n%s\n','</DataArray>');
 
-    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="6" format="ascii">');
+    fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="6" ComponentName0="sig_xx" ComponentName1="sig_yy" ComponentName2="sig_zz" ComponentName3="sig_xy" ComponentName4="sig_yz" ComponentName5="sig_xz" format="ascii">');
     fprintf(fid,'%f ',cont_mat_node(:,7:12)');
     fprintf(fid,'\n%s\n','</DataArray>');
   end
