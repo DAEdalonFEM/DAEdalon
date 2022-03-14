@@ -209,13 +209,12 @@ fprintf(fid,'%i ',type);
 fprintf(fid,'\n%s\n','</DataArray>');
 
 fprintf(fid,'%s\n','</Cells>');
+fprintf(fid,'%s\n','<CellData>');
 
 %Stabdehnungen und -spannungen als (diskrete) elementbezogene Groessen herausschreiben, statt (kontinuierlich) knotenbezogen.
 %Ermittlung, ob es sich um ein Stabbeispiel handelt
 %(Abfrage klappt nur, solange das Beispiel ausschliesslich durch eine Art von Element aufgebaut ist)
 if ismember(elem_nr_matr, cell2mat(truss_2))
-  %CellData oeffnen
-  fprintf(fid,'%s\n','<CellData>');
   %DataArray Dehnungen
   fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="1" format="ascii">');
   fprintf(fid,'%f ',cont_mat_node(:,1)');
@@ -224,10 +223,15 @@ if ismember(elem_nr_matr, cell2mat(truss_2))
   fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="1" format="ascii">');
   fprintf(fid,'%f ',cont_mat_node(:,2)');
   fprintf(fid,'\n%s\n','</DataArray>');
-  %CellData schliessen
-  fprintf(fid,'%s\n','</CellData>');
+end
+%Materialnummer herausschreiben, falls mehr als ein Materialdatensatz verwendet wird
+if nummat > 1
+  fprintf(fid,'%s\n','<DataArray type="UInt8" Name="Material" format="ascii">');
+  fprintf(fid,'%i ',el2mat);
+  fprintf(fid,'\n%s\n','</DataArray>');
 end
 
+fprintf(fid,'%s\n','</CellData>');
 fprintf(fid,'%s\n','</Piece>');
 fprintf(fid,'%s\n','</UnstructuredGrid>');
 fprintf(fid,'%s\n','</VTKFile>');
