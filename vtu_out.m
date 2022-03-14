@@ -220,7 +220,7 @@ if ismember(elem_nr_matr, cell2mat(truss_2))
   fprintf(fid,'%s\n','<DataArray type="Float64" Name="Dehnungen" NumberOfComponents="1" format="ascii">');
   fprintf(fid,'%f ',cont_mat_node(:,1)');
   fprintf(fid,'\n%s\n','</DataArray>');
-  %DataArray Dehnungen
+  %DataArray Spannungen
   fprintf(fid,'%s\n','<DataArray type="Float64" Name="Spannungen" NumberOfComponents="1" format="ascii">');
   fprintf(fid,'%f ',cont_mat_node(:,2)');
   fprintf(fid,'\n%s\n','</DataArray>');
